@@ -3,6 +3,7 @@
 <head>
   <style>
     :root {
+      /* Color variables */
       --instagram-blue: #0095F6;
       --instagram-gradient-start: #405DE6;
       --instagram-gradient-mid: #5851DB;
@@ -21,6 +22,84 @@
       --dark-text-secondary: #a8a8a8;
       --dark-border: #373737;
       --dark-separator: #262626;
+      
+      /* Typography system */
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --font-size-xs: 11px;
+      --font-size-sm: 12px;
+      --font-size-md: 14px;
+      --font-size-lg: 16px;
+      --font-size-xl: 18px;
+      --font-size-xxl: 22px;
+      
+      --font-weight-regular: 400;
+      --font-weight-medium: 500;
+      --font-weight-semibold: 600;
+      --font-weight-bold: 700;
+      
+      --line-height-tight: 1.2;
+      --line-height-normal: 1.4;
+      --line-height-relaxed: 1.6;
+      
+      /* Spacing system */
+      --space-xxs: 4px;
+      --space-xs: 8px;
+      --space-sm: 12px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 32px;
+      
+      /* Borders and shadows */
+      --border-radius-sm: 4px;
+      --border-radius-md: 8px;
+      --border-radius-lg: 12px;
+      --border-radius-full: 9999px;
+      
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+      --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+      --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+    }
+    
+    /* Reset all scrollbar styling */
+    * {
+      scrollbar-width: none; /* Hide Firefox scrollbar */
+      -ms-overflow-style: none; /* Hide IE/Edge scrollbar */
+    }
+    
+    /* Hide WebKit scrollbar but keep functionality */
+    ::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      height: 0;
+    }
+    
+    /* Custom scrollbar implementation using pseudo-elements */
+    .section, .tab-content.active {
+      position: relative;
+      overflow-y: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    
+    .section::after, .tab-content.active::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 4px;
+      height: 100%;
+      background: transparent;
+      pointer-events: none;
+    }
+    
+    .section:hover::after, .tab-content.active:hover::after {
+      background: rgba(255, 255, 255, 0.2);
+    }
+    
+    html {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
     }
     
     * {
@@ -30,118 +109,204 @@
     }
     
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: var(--font-family);
       margin: 0;
-      padding: 16px;
+      padding: var(--space-sm);
+      padding-right: var(--space-sm) !important;
+      padding-bottom: var(--space-xs) !important;
       color: var(--dark-text-primary);
       background-color: var(--dark-bg-primary);
+      overflow-x: hidden;
+      height: 100vh;
+      box-sizing: border-box;
+      font-size: var(--font-size-md);
+      line-height: var(--line-height-normal);
+      letter-spacing: 0.01em;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+      margin: 0;
+      line-height: var(--line-height-tight);
+      font-weight: var(--font-weight-semibold);
+    }
+    
+    h1 {
+      font-size: var(--font-size-xxl);
+      margin-bottom: var(--space-md);
+    }
+    
+    h2 {
+      font-size: var(--font-size-xl);
+      margin-bottom: var(--space-sm);
+    }
+    
+    h3 {
+      font-size: var(--font-size-lg);
+      margin-bottom: var(--space-xs);
+    }
+    
+    p {
+      margin: 0 0 var(--space-sm) 0;
     }
     
     .section {
       background-color: var(--dark-bg-secondary);
       border: 1px solid var(--dark-border);
-      border-radius: 8px;
-      padding: 16px;
-      margin-bottom: 16px;
+      border-radius: var(--border-radius-md);
+      padding: var(--space-md);
+      padding-right: var(--space-md) !important;
+      margin-bottom: var(--space-md);
+      max-height: 400px;
+      overflow-y: auto;
+      position: relative;
+      box-sizing: border-box;
+      box-shadow: var(--shadow-sm);
     }
     
     .section-title {
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 12px;
+      font-size: var(--font-size-md);
+      font-weight: var(--font-weight-semibold);
+      margin-bottom: var(--space-sm);
       color: var(--dark-text-primary);
+      letter-spacing: 0.02em;
     }
     
     label {
       display: block;
-      margin-bottom: 8px;
-      font-size: 12px;
-      font-weight: 500;
+      margin-bottom: var(--space-xs);
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
       color: var(--dark-text-secondary);
+      letter-spacing: 0.03em;
     }
     
     select, input {
       width: 100%;
-      padding: 10px;
-      border-radius: 4px;
+      padding: var(--space-sm);
+      border-radius: var(--border-radius-sm);
       border: 1px solid var(--dark-border);
       background-color: var(--dark-bg-elevated);
       color: var(--dark-text-primary);
-      margin-bottom: 12px;
-      font-size: 12px;
-      transition: border-color 0.3s;
+      margin-bottom: var(--space-sm);
+      font-size: var(--font-size-sm);
+      transition: all 0.2s ease;
+      backdrop-filter: blur(5px);
     }
     
     select:focus, input:focus {
       border-color: var(--instagram-blue);
       outline: none;
+      box-shadow: 0 0 0 2px rgba(0, 149, 246, 0.2);
     }
     
     button {
-      background-color: var(--instagram-blue);
+      background: linear-gradient(135deg, var(--instagram-blue), #0077c2);
       color: white;
       border: none;
-      border-radius: 4px;
-      padding: 8px 16px;
+      border-radius: var(--border-radius-sm);
+      padding: var(--space-sm) var(--space-md);
       cursor: pointer;
-      font-size: 14px;
-      font-weight: 600;
-      transition: background-color 0.3s;
+      font-size: var(--font-size-md);
+      font-weight: var(--font-weight-semibold);
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+      letter-spacing: 0.02em;
+    }
+    
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: all 0.6s ease;
     }
     
     button:hover {
-      background-color: #0085E0;
+      background: linear-gradient(135deg, #0077c2, var(--instagram-blue));
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    button:hover::before {
+      left: 100%;
     }
     
     button.secondary {
-      background-color: transparent;
+      background: transparent;
       color: var(--instagram-blue);
       border: 1px solid var(--dark-border);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
     }
     
     button.secondary:hover {
       background-color: rgba(0, 149, 246, 0.1);
+      border-color: var(--instagram-blue);
     }
     
     .actions {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: var(--space-xxs);
+      margin-bottom: 0;
     }
     
     .preview-container {
-      margin-bottom: 16px;
+      margin-bottom: var(--space-md);
       border: 1px solid var(--dark-border);
-      border-radius: 8px;
+      border-radius: var(--border-radius-md);
       overflow: hidden;
       background-color: var(--dark-bg-secondary);
+      margin-right: 0 !important;
+      padding-right: 0 !important;
+      box-sizing: border-box;
+      box-shadow: var(--shadow-md);
+      position: relative;
+    }
+    
+    .preview-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
     }
     
     .instagram-post {
       width: 100%;
       display: flex;
       flex-direction: column;
+      margin-right: 0 !important;
+      padding-right: 0 !important;
+      box-sizing: border-box;
     }
     
     .post-header {
       display: flex;
       align-items: center;
-      padding: 12px;
+      padding: var(--space-sm);
       border-bottom: 1px solid var(--dark-separator);
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), transparent);
     }
     
     .profile-pic {
       width: 32px;
       height: 32px;
-      border-radius: 50%;
-      margin-right: 12px;
+      border-radius: var(--border-radius-full);
+      margin-right: var(--space-sm);
       background: linear-gradient(45deg, var(--instagram-gradient-start), var(--instagram-gradient-end));
       display: flex;
       align-items: center;
       justify-content: center;
       color: white;
-      font-weight: bold;
-      font-size: 14px;
+      font-weight: var(--font-weight-bold);
+      font-size: var(--font-size-md);
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
     }
     
     .user-info {
@@ -149,14 +314,14 @@
     }
     
     .username {
-      font-weight: 600;
-      font-size: 14px;
+      font-weight: var(--font-weight-semibold);
+      font-size: var(--font-size-md);
       margin-bottom: 2px;
       color: var(--dark-text-primary);
     }
     
     .location {
-      font-size: 12px;
+      font-size: var(--font-size-sm);
       color: var(--dark-text-secondary);
     }
     
@@ -168,6 +333,9 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      margin-right: 0 !important;
+      padding-right: 0 !important;
+      box-sizing: border-box;
     }
     
     .carousel-preview {
@@ -205,14 +373,14 @@
     
     .carousel-wrapper {
       display: flex;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
       width: 100%;
       height: 100%;
       background-color: var(--dark-bg-primary);
     }
     
     .carousel-wrapper.smooth {
-      transition: transform 0.3s ease;
+      transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
     }
     
     .carousel-item {
@@ -241,13 +409,16 @@
     
     .slide-number {
       position: absolute;
-      top: 8px;
-      right: 8px;
-      background-color: rgba(0, 0, 0, 0.4);
+      top: var(--space-xs);
+      right: var(--space-xs);
+      background-color: rgba(0, 0, 0, 0.6);
       color: white;
-      font-size: 10px;
+      font-size: var(--font-size-xs);
       padding: 2px 6px;
-      border-radius: 10px;
+      border-radius: var(--border-radius-full);
+      backdrop-filter: blur(4px);
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+      letter-spacing: 0.03em;
     }
     
     .carousel-nav {
@@ -259,72 +430,84 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 16px;
       pointer-events: none;
+      height: 100%;
+      width: 100%;
+      z-index: 5;
     }
     
     .nav-arrow {
-      width: 30px;
-      height: 30px;
+      width: 32px;
+      height: 32px;
       background-color: rgba(38, 38, 38, 0.8);
-      border-radius: 50%;
+      border-radius: var(--border-radius-full);
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       pointer-events: auto;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      box-shadow: var(--shadow-md);
       opacity: 0.9;
       color: var(--dark-text-primary);
+      transition: all 0.2s ease;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+    }
+    
+    .nav-arrow.prev {
+      left: var(--space-xs);
+    }
+    
+    .nav-arrow.next {
+      right: var(--space-xs);
     }
     
     .nav-arrow:hover {
       opacity: 1;
       background-color: var(--dark-bg-elevated);
+      transform: translateY(-50%) scale(1.05);
     }
     
     .carousel-indicator {
       display: flex;
       justify-content: center;
       gap: 4px;
-      padding: 12px 0;
+      padding: var(--space-sm) 0;
       background-color: var(--dark-bg-secondary);
       border-bottom: 1px solid var(--dark-separator);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
     }
     
     .indicator-dot {
       width: 6px;
       height: 6px;
-      border-radius: 50%;
+      border-radius: var(--border-radius-full);
       background-color: #555555;
+      transition: all 0.2s ease;
     }
     
     .indicator-dot.active {
       background-color: var(--instagram-blue);
+      box-shadow: 0 0 0 1px rgba(0, 149, 246, 0.3);
     }
     
     .post-actions {
-      display: flex;
-      padding: 12px;
-      border-bottom: 1px solid var(--dark-separator);
-    }
-    
-    .post-action {
-      margin-right: 16px;
-      cursor: pointer;
-      color: var(--dark-text-primary);
-    }
-    
-    .post-action svg {
-      width: 24px;
-      height: 24px;
+      display: none; /* Hide the Instagram-like action buttons */
     }
     
     .post-caption {
-      padding: 12px;
-      font-size: 14px;
-      line-height: 1.4;
+      padding: var(--space-xs) var(--space-sm);
+      font-size: var(--font-size-sm);
+      line-height: var(--line-height-normal);
       color: var(--dark-text-primary);
+    }
+    
+    .post-date {
+      display: none; /* Hide the post date */
     }
     
     .caption-username {
@@ -333,32 +516,59 @@
       color: var(--dark-text-primary);
     }
     
-    .post-date {
-      padding: 0 12px 12px;
-      font-size: 10px;
-      color: var(--dark-text-secondary);
-      text-transform: uppercase;
-    }
-    
     .tab-container {
       display: flex;
       border-bottom: 1px solid var(--dark-separator);
-      margin-bottom: 16px;
+      margin-bottom: var(--space-md);
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--border-radius-sm) var(--border-radius-sm) 0 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), transparent);
+    }
+    
+    .tab-container::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--dark-separator), transparent);
     }
     
     .tab {
       flex: 1;
       text-align: center;
-      padding: 10px;
+      padding: var(--space-sm);
       cursor: pointer;
-      font-size: 14px;
-      font-weight: 600;
+      font-size: var(--font-size-md);
+      font-weight: var(--font-weight-medium);
       color: var(--dark-text-secondary);
+      position: relative;
+      transition: all 0.2s ease;
+      letter-spacing: 0.02em;
+    }
+    
+    .tab:hover {
+      color: var(--dark-text-primary);
+      background-color: rgba(255, 255, 255, 0.03);
     }
     
     .tab.active {
       color: var(--instagram-blue);
       border-bottom: 2px solid var(--instagram-blue);
+      font-weight: var(--font-weight-semibold);
+    }
+    
+    .tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--instagram-blue), transparent);
+      opacity: 0.8;
     }
     
     .tab-content {
@@ -367,52 +577,150 @@
     
     .tab-content.active {
       display: block;
+      max-height: calc(100vh - 100px);
+      overflow-y: auto;
+      position: relative;
+      padding-right: 2px !important; /* Reduced padding */
+      box-sizing: border-box;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0.8; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     
     .info-message {
       background-color: var(--dark-bg-elevated);
-      border-radius: 4px;
-      padding: 8px 12px;
-      font-size: 12px;
+      border-radius: var(--border-radius-sm);
+      padding: var(--space-xs) var(--space-sm);
+      font-size: var(--font-size-sm);
       color: var(--dark-text-secondary);
-      margin-bottom: 12px;
+      margin-bottom: var(--space-sm);
+      border-left: 2px solid rgba(0, 149, 246, 0.5);
+      letter-spacing: 0.01em;
+      line-height: var(--line-height-relaxed);
     }
 
     .placeholder-text {
       text-align: center;
-      padding: 20px;
+      padding: var(--space-lg);
       color: var(--dark-text-secondary);
-      font-size: 16px;
-      line-height: 1.5;
+      font-size: var(--font-size-lg);
+      line-height: var(--line-height-relaxed);
       max-width: 80%;
       margin: 0 auto;
+      letter-spacing: 0.01em;
     }
 
     .note {
-      font-size: 12px;
+      font-size: var(--font-size-xs);
       color: var(--dark-text-secondary);
-      margin-top: 8px;
+      margin-top: var(--space-xxs);
       font-style: italic;
+      letter-spacing: 0.01em;
+      line-height: var(--line-height-tight);
     }
     
     .convert-prompt {
-      background-color: rgba(0, 149, 246, 0.1);
+      background: linear-gradient(135deg, rgba(0, 149, 246, 0.05), rgba(0, 149, 246, 0.1));
       border: 1px solid rgba(0, 149, 246, 0.2);
-      border-radius: 8px;
-      padding: 12px;
-      margin-top: 12px;
+      border-radius: var(--border-radius-md);
+      padding: var(--space-sm);
+      margin-top: var(--space-sm);
       text-align: center;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .convert-prompt::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0, 149, 246, 0.3), transparent);
     }
     
     .convert-prompt p {
-      font-size: 13px;
-      margin-bottom: 10px;
+      font-size: var(--font-size-sm);
+      margin-bottom: var(--space-sm);
       color: var(--dark-text-primary);
+      letter-spacing: 0.01em;
+      line-height: var(--line-height-normal);
+    }
+    
+    /* Add modal styling */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.2s ease-out;
+    }
+    
+    .modal-content {
+      background: linear-gradient(135deg, var(--dark-bg-secondary), var(--dark-bg-elevated));
+      border-radius: var(--border-radius-md);
+      padding: var(--space-md);
+      max-width: 320px;
+      width: 100%;
+      box-shadow: var(--shadow-lg), 0 0 0 1px rgba(255, 255, 255, 0.05);
+      position: relative;
+      overflow: hidden;
+      animation: scaleIn 0.3s ease-out;
+    }
+    
+    .modal-content::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    }
+    
+    .modal-title {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-semibold);
+      margin-bottom: var(--space-sm);
+      color: var(--dark-text-primary);
+      text-align: center;
+      letter-spacing: 0.02em;
+    }
+    
+    .modal-message {
+      font-size: var(--font-size-md);
+      line-height: var(--line-height-relaxed);
+      margin-bottom: var(--space-md);
+      color: var(--dark-text-secondary);
+      text-align: center;
+    }
+    
+    .modal-actions {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
     }
     
     /* Add slider styles */
     .carousel-slider {
-      padding: 12px 16px;
+      padding: var(--space-sm) var(--space-md);
       background-color: var(--dark-bg-secondary);
       border-bottom: none;
       position: relative;
@@ -430,38 +738,47 @@
     
     .carousel-slider input[type="range"]::-webkit-slider-runnable-track {
       width: 100%;
-      height: 1px;
-      background: rgba(255, 255, 255, 0.2);
+      height: 2px;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
       border: none;
+      border-radius: var(--border-radius-full);
     }
     
     .carousel-slider input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
-      height: 12px;
-      width: 12px;
-      border-radius: 50%;
-      background: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      height: 14px;
+      width: 14px;
+      border-radius: var(--border-radius-full);
+      background: linear-gradient(135deg, #fff, #e0e0e0);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       cursor: pointer;
-      margin-top: -5.5px;
-      box-shadow: none;
+      margin-top: -6px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+    
+    .carousel-slider input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.1);
+      box-shadow: var(--shadow-md);
     }
     
     .carousel-slider input[type="range"]::-moz-range-track {
       width: 100%;
-      height: 1px;
-      background: rgba(255, 255, 255, 0.2);
+      height: 2px;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
       border: none;
+      border-radius: var(--border-radius-full);
     }
     
     .carousel-slider input[type="range"]::-moz-range-thumb {
-      height: 12px;
-      width: 12px;
-      border-radius: 50%;
-      background: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      height: 14px;
+      width: 14px;
+      border-radius: var(--border-radius-full);
+      background: linear-gradient(135deg, #fff, #e0e0e0);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       cursor: pointer;
-      box-shadow: none;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
     }
     
     .carousel-slider input[type="range"]:focus {
@@ -481,14 +798,69 @@
     .loading-spinner {
       width: 40px;
       height: 40px;
-      border: 3px solid rgba(255, 255, 255, 0.1);
-      border-radius: 50%;
+      border: 3px solid rgba(255, 255, 255, 0.05);
+      border-radius: var(--border-radius-full);
       border-top-color: var(--instagram-blue);
       animation: spin 1s ease-in-out infinite;
+      box-shadow: 0 0 10px rgba(0, 149, 246, 0.2);
     }
     
     @keyframes spin {
       to { transform: rotate(360deg); }
+    }
+    
+    /* Mobile device styles */
+    @media (max-width: 480px) {
+      body {
+        padding: var(--space-sm);
+        padding-right: var(--space-sm) !important;
+        font-size: var(--font-size-sm);
+      }
+      
+      .section {
+        padding: var(--space-sm);
+        padding-right: var(--space-sm) !important;
+        max-height: 350px;
+        margin-bottom: var(--space-sm);
+      }
+      
+      .section-title {
+        font-size: var(--font-size-sm);
+        margin-bottom: var(--space-xs);
+      }
+      
+      button {
+        padding: var(--space-xs) var(--space-sm);
+        font-size: var(--font-size-sm);
+      }
+      
+      .modal-content {
+        max-width: 280px;
+        padding: var(--space-sm);
+      }
+      
+      .modal-title {
+        font-size: var(--font-size-md);
+      }
+      
+      .modal-message {
+        font-size: var(--font-size-sm);
+      }
+      
+      /* Custom scrollbar adjustments for mobile */
+      .custom-scrollbar-indicator {
+        width: 3px !important;
+        right: 0 !important;
+        opacity: 0.5 !important;
+      }
+      
+      /* Force scrollbar to be flush with edge */
+      .tab-content.active,
+      .section,
+      .preview-container {
+        margin-right: 0 !important;
+        padding-right: 8px !important;
+      }
     }
   </style>
   
@@ -554,31 +926,10 @@
           </div>
         </div>
         
-        <div class="post-actions">
-          <div class="post-action">
-            <svg aria-label="Like" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24">
-              <path d="M16.792 3.904A4.989 4.989 0 0 1 21.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0 0 1 4.708-5.218 4.21 4.21 0 0 1 3.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0 0 1 3.679-1.938m0-2a6.04 6.04 0 0 0-4.797 2.127 6.052 6.052 0 0 0-4.787-2.127A6.985 6.985 0 0 0 .5 9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 0 0 3.518 3.018 2 2 0 0 0 2.174 0 45.263 45.263 0 0 0 3.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025 4.98-4.32 4.98-7.94a6.985 6.985 0 0 0-6.708-7.218Z"></path>
-            </svg>
-          </div>
-          <div class="post-action">
-            <svg aria-label="Comment" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24">
-              <path d="M20.656 17.008a9.993 9.993 0 1 0-3.59 3.615L22 22Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2"></path>
-            </svg>
-          </div>
-          <div class="post-action">
-            <svg aria-label="Share Post" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24">
-              <line fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2" x1="22" x2="9.218" y1="3" y2="10.083"></line>
-              <polygon fill="none" points="11.698 20.334 22 3.001 2 3.001 9.218 10.084 11.698 20.334" stroke="currentColor" stroke-linejoin="round" stroke-width="2"></polygon>
-            </svg>
-          </div>
-        </div>
-        
         <div class="post-caption">
           <span class="caption-username">figmadesign</span>
           <span id="previewCaption">Check out this Instagram carousel created with the Carousel Creator plugin!</span>
         </div>
-        
-        <div class="post-date">Just now</div>
         
         <div id="convertPrompt" class="convert-prompt" style="display: none;">
           <p>This is a regular frame. Convert it to an Instagram carousel to add guides and enable multi-slide export.</p>
@@ -588,7 +939,7 @@
     </div>
     
     <div class="actions">
-      <button id="export" style="background-color: var(--instagram-blue); font-size: 15px; padding: 12px; width: 100%;">Export Slides</button>
+      <button id="export" style="background-color: var(--instagram-blue); font-size: var(--font-size-md); padding: var(--space-xs) var(--space-sm); width: 100%;">Export Slides</button>
       <p class="note">Note: Visual indicators and guide lines are only visible in Figma. They will be automatically removed during export.</p>
     </div>
   </div>
@@ -648,8 +999,14 @@
           
           tab.classList.add('active');
           document.getElementById(tab.dataset.tab + '-tab').classList.add('active');
+          
+          // Initialize custom scrollbars after tab switch
+          initCustomScrollbars();
         });
       });
+      
+      // Initialize custom scrollbar indicators
+      initCustomScrollbars();
       
       // Create carousel
       const createBtn = document.getElementById('create');
@@ -671,6 +1028,94 @@
             const previewTab = document.querySelector('[data-tab="preview"]');
             if (previewTab) previewTab.click();
           }, 500);
+        }
+      }
+      
+      // Function to initialize custom scrollbars
+      function initCustomScrollbars() {
+        // Find all scrollable elements
+        const scrollableElements = document.querySelectorAll('.section, .tab-content.active');
+        
+        scrollableElements.forEach(element => {
+          // Create custom scrollbar indicator if it doesn't exist
+          if (!element.querySelector('.custom-scrollbar-indicator')) {
+            const scrollIndicator = document.createElement('div');
+            scrollIndicator.className = 'custom-scrollbar-indicator';
+            scrollIndicator.style.position = 'absolute';
+            scrollIndicator.style.top = '0';
+            scrollIndicator.style.right = '0';
+            scrollIndicator.style.width = '4px';
+            scrollIndicator.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+            scrollIndicator.style.opacity = '0';
+            scrollIndicator.style.transition = 'opacity 0.3s';
+            scrollIndicator.style.zIndex = '100';
+            scrollIndicator.style.borderRadius = '2px';
+            element.appendChild(scrollIndicator);
+            
+            // Update scrollbar on scroll
+            element.addEventListener('scroll', updateScrollIndicator);
+            
+            // Show scrollbar on hover
+            element.addEventListener('mouseenter', () => {
+              const indicator = element.querySelector('.custom-scrollbar-indicator');
+              if (indicator) indicator.style.opacity = '1';
+            });
+            
+            // Hide scrollbar when not hovering
+            element.addEventListener('mouseleave', () => {
+              const indicator = element.querySelector('.custom-scrollbar-indicator');
+              if (indicator && !element.classList.contains('scrolling')) {
+                indicator.style.opacity = '0';
+              }
+            });
+            
+            // Initial update
+            updateScrollIndicator.call(element);
+          }
+        });
+      }
+      
+      // Function to update custom scrollbar indicator
+      function updateScrollIndicator() {
+        const element = this;
+        const indicator = element.querySelector('.custom-scrollbar-indicator');
+        
+        if (indicator) {
+          // Calculate scrollbar height and position
+          const scrollHeight = element.scrollHeight;
+          const clientHeight = element.clientHeight;
+          
+          if (scrollHeight <= clientHeight) {
+            // No need for scrollbar
+            indicator.style.display = 'none';
+            return;
+          }
+          
+          indicator.style.display = 'block';
+          
+          // Calculate the height of the scrollbar thumb
+          const thumbHeight = Math.max(30, (clientHeight / scrollHeight) * clientHeight);
+          indicator.style.height = thumbHeight + 'px';
+          
+          // Calculate the position of the scrollbar thumb
+          const scrollRatio = element.scrollTop / (scrollHeight - clientHeight);
+          const thumbPosition = scrollRatio * (clientHeight - thumbHeight);
+          indicator.style.transform = `translateY(${thumbPosition}px)`;
+          
+          // Show scrollbar while scrolling
+          indicator.style.opacity = '1';
+          
+          // Mark as scrolling
+          element.classList.add('scrolling');
+          
+          // Hide after a delay if not hovering
+          clearTimeout(element.scrollTimer);
+          element.scrollTimer = setTimeout(() => {
+            if (!element.matches(':hover')) {
+              indicator.style.opacity = '0';
+            }
+            element.classList.remove('scrolling');
+          }, 1000);
         }
       }
       
@@ -742,6 +1187,9 @@
       if (prevSlideBtn) {
         prevSlideBtn.addEventListener('click', prevSlide);
       }
+      
+      // Re-initialize custom scrollbars when window resizes
+      window.addEventListener('resize', initCustomScrollbars);
     });
     
     // Carousel preview functionality
@@ -792,8 +1240,23 @@
       const prevArrow = document.getElementById('prevSlide');
       const nextArrow = document.getElementById('nextSlide');
       
-      if (prevArrow) prevArrow.style.display = (exactPosition !== null ? exactPosition <= 0.1 : currentSlide === 0) ? 'none' : 'flex';
-      if (nextArrow) nextArrow.style.display = (exactPosition !== null ? exactPosition >= slideCount - 0.9 : currentSlide === slideCount - 1) ? 'none' : 'flex';
+      if (prevArrow) {
+        // Always hide prev arrow on first slide
+        if (exactPosition !== null) {
+          prevArrow.style.display = exactPosition <= 0.1 ? 'none' : 'flex';
+        } else {
+          prevArrow.style.display = currentSlide === 0 ? 'none' : 'flex';
+        }
+      }
+      
+      if (nextArrow) {
+        // Always hide next arrow on last slide
+        if (exactPosition !== null) {
+          nextArrow.style.display = exactPosition >= slideCount - 0.9 ? 'none' : 'flex';
+        } else {
+          nextArrow.style.display = currentSlide === slideCount - 1 ? 'none' : 'flex';
+        }
+      }
     }
     
     function nextSlide() {
@@ -951,6 +1414,20 @@
             currentSlide = Math.round(exactPosition);
             updateCarouselPosition(true);
           });
+        }
+        
+        // Set up navigation arrows
+        const prevArrow = document.getElementById('prevSlide');
+        const nextArrow = document.getElementById('nextSlide');
+        
+        if (prevArrow) {
+          // Initially hide prev arrow on first slide
+          prevArrow.style.display = currentSlide === 0 ? 'none' : 'flex';
+        }
+        
+        if (nextArrow) {
+          // Initially hide next arrow on last slide
+          nextArrow.style.display = slideCount <= 1 ? 'none' : 'flex';
         }
         
         // Update carousel position
@@ -1162,6 +1639,20 @@
           });
         }
         
+        // Set up navigation arrows
+        const prevArrow = document.getElementById('prevSlide');
+        const nextArrow = document.getElementById('nextSlide');
+        
+        if (prevArrow) {
+          // Initially hide prev arrow on first slide
+          prevArrow.style.display = currentSlide === 0 ? 'none' : 'flex';
+        }
+        
+        if (nextArrow) {
+          // Initially hide next arrow on last slide
+          nextArrow.style.display = slideCount <= 1 ? 'none' : 'flex';
+        }
+        
         // Update carousel position
         updateCarouselPosition();
       } else if (message.type === 'compatibility-result') {
@@ -1178,80 +1669,89 @@
         if (carouselContainer) carouselContainer.style.display = 'none';
         if (convertPrompt) convertPrompt.style.display = 'none';
       } else if (message.type === 'confirm-resize') {
-        // Show a confirmation dialog for resizing frame height
-        const shouldResize = confirm(message.message);
+        // Show a confirmation dialog for resizing frame height using our custom modal
+        const dialog = document.createElement('div');
+        dialog.className = 'modal-overlay';
         
-        // Send response back to the plugin
-        parent.postMessage({
-          pluginMessage: {
-            type: 'resize-response',
-            shouldResize: shouldResize
-          }
-        }, '*');
+        const dialogContent = document.createElement('div');
+        dialogContent.className = 'modal-content';
+        
+        const title = document.createElement('h3');
+        title.className = 'modal-title';
+        title.textContent = 'Adjust Frame Height?';
+        
+        const messageText = document.createElement('p');
+        messageText.className = 'modal-message';
+        messageText.textContent = message.message;
+        
+        const buttonContainer = document.createElement('div');
+        buttonContainer.className = 'modal-actions';
+        
+        const confirmButton = document.createElement('button');
+        confirmButton.textContent = 'Adjust Height';
+        
+        const cancelButton = document.createElement('button');
+        cancelButton.textContent = 'Keep Current Height';
+        cancelButton.className = 'secondary';
+        
+        confirmButton.onclick = () => {
+          document.body.removeChild(dialog);
+          parent.postMessage({
+            pluginMessage: {
+              type: 'resize-response',
+              shouldResize: true
+            }
+          }, '*');
+        };
+        
+        cancelButton.onclick = () => {
+          document.body.removeChild(dialog);
+          parent.postMessage({
+            pluginMessage: {
+              type: 'resize-response',
+              shouldResize: false
+            }
+          }, '*');
+        };
+        
+        buttonContainer.appendChild(confirmButton);
+        buttonContainer.appendChild(cancelButton);
+        
+        dialogContent.appendChild(title);
+        dialogContent.appendChild(messageText);
+        dialogContent.appendChild(buttonContainer);
+        dialog.appendChild(dialogContent);
+        
+        document.body.appendChild(dialog);
       } else if (message.type === 'handle-partial-slide') {
         // Create a custom dialog for handling partial slides
         const dialog = document.createElement('div');
-        dialog.style.position = 'fixed';
-        dialog.style.top = '0';
-        dialog.style.left = '0';
-        dialog.style.right = '0';
-        dialog.style.bottom = '0';
-        dialog.style.backgroundColor = 'rgba(0,0,0,0.5)';
-        dialog.style.zIndex = '999';
-        dialog.style.display = 'flex';
-        dialog.style.alignItems = 'center';
-        dialog.style.justifyContent = 'center';
+        dialog.className = 'modal-overlay';
         
         const dialogContent = document.createElement('div');
-        dialogContent.style.backgroundColor = 'white';
-        dialogContent.style.borderRadius = '8px';
-        dialogContent.style.padding = '20px';
-        dialogContent.style.maxWidth = '320px';
-        dialogContent.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+        dialogContent.className = 'modal-content';
         
         const title = document.createElement('h3');
+        title.className = 'modal-title';
         title.textContent = 'Partial Slide Detected';
-        title.style.margin = '0 0 12px 0';
         
         const messageText = document.createElement('p');
+        messageText.className = 'modal-message';
         messageText.textContent = message.message;
-        messageText.style.margin = '0 0 16px 0';
-        messageText.style.lineHeight = '1.4';
         
         const buttonContainer = document.createElement('div');
-        buttonContainer.style.display = 'flex';
-        buttonContainer.style.flexDirection = 'column';
-        buttonContainer.style.gap = '8px';
+        buttonContainer.className = 'modal-actions';
         
         const expandButton = document.createElement('button');
         expandButton.textContent = 'Expand to full slide';
-        expandButton.style.padding = '8px';
-        expandButton.style.backgroundColor = '#0095F6';
-        expandButton.style.color = 'white';
-        expandButton.style.border = 'none';
-        expandButton.style.borderRadius = '4px';
-        expandButton.style.cursor = 'pointer';
-        expandButton.style.fontWeight = '600';
         
         const trimButton = document.createElement('button');
         trimButton.textContent = 'Trim partial slide';
-        trimButton.style.padding = '8px';
-        trimButton.style.backgroundColor = '#EFEFEF';
-        trimButton.style.color = '#262626';
-        trimButton.style.border = 'none';
-        trimButton.style.borderRadius = '4px';
-        trimButton.style.cursor = 'pointer';
-        trimButton.style.fontWeight = '600';
+        trimButton.className = 'secondary';
         
         const keepButton = document.createElement('button');
-        keepButton.textContent = 'Keep as is (content will be cut off)';
-        keepButton.style.padding = '8px';
-        keepButton.style.backgroundColor = '#EFEFEF';
-        keepButton.style.color = '#262626';
-        keepButton.style.border = 'none';
-        keepButton.style.borderRadius = '4px';
-        keepButton.style.cursor = 'pointer';
-        keepButton.style.fontWeight = '600';
+        keepButton.textContent = 'Keep as is';
+        keepButton.className = 'secondary';
         
         expandButton.onclick = () => {
           document.body.removeChild(dialog);
