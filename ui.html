@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    :root {
+      --instagram-blue: #0095F6;
+      --instagram-gradient-start: #405DE6;
+      --instagram-gradient-mid: #5851DB;
+      --instagram-gradient-mid2: #833AB4;
+      --instagram-gradient-mid3: #C13584;
+      --instagram-gradient-mid4: #E1306C;
+      --instagram-gradient-end: #FD1D1D;
+      --instagram-yellow: #FCAF45;
+      --instagram-orange: #F77737;
+      
+      /* Dark mode colors */
+      --dark-bg-primary: #121212;
+      --dark-bg-secondary: #1f1f1f;
+      --dark-bg-elevated: #2a2a2a;
+      --dark-text-primary: #f5f5f5;
+      --dark-text-secondary: #a8a8a8;
+      --dark-border: #373737;
+      --dark-separator: #262626;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 16px;
+      color: var(--dark-text-primary);
+      background-color: var(--dark-bg-primary);
+    }
+    
+    .section {
+      background-color: var(--dark-bg-secondary);
+      border: 1px solid var(--dark-border);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    
+    .section-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--dark-text-primary);
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--dark-text-secondary);
+    }
+    
+    select, input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 4px;
+      border: 1px solid var(--dark-border);
+      background-color: var(--dark-bg-elevated);
+      color: var(--dark-text-primary);
+      margin-bottom: 12px;
+      font-size: 12px;
+      transition: border-color 0.3s;
+    }
+    
+    select:focus, input:focus {
+      border-color: var(--instagram-blue);
+      outline: none;
+    }
+    
+    button {
+      background-color: var(--instagram-blue);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 16px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: background-color 0.3s;
+    }
+    
+    button:hover {
+      background-color: #0085E0;
+    }
+    
+    button.secondary {
+      background-color: transparent;
+      color: var(--instagram-blue);
+      border: 1px solid var(--dark-border);
+    }
+    
+    button.secondary:hover {
+      background-color: rgba(0, 149, 246, 0.1);
+    }
+    
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .preview-container {
+      margin-bottom: 16px;
+      border: 1px solid var(--dark-border);
+      border-radius: 8px;
+      overflow: hidden;
+      background-color: var(--dark-bg-secondary);
+    }
+    
+    .instagram-post {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .post-header {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      border-bottom: 1px solid var(--dark-separator);
+    }
+    
+    .profile-pic {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      margin-right: 12px;
+      background: linear-gradient(45deg, var(--instagram-gradient-start), var(--instagram-gradient-end));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+    }
+    
+    .user-info {
+      flex-grow: 1;
+    }
+    
+    .username {
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 2px;
+      color: var(--dark-text-primary);
+    }
+    
+    .location {
+      font-size: 12px;
+      color: var(--dark-text-secondary);
+    }
+    
+    .carousel-container {
+      position: relative;
+      width: 100%;
+      background-color: black;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .carousel-preview {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      background-color: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0;
+    }
+    
+    /* Default aspect ratio (1:1) */
+    .carousel-preview {
+      aspect-ratio: 1 / 1;
+    }
+    
+    /* Specific aspect ratios based on resolution */
+    .carousel-preview.ratio-1080x1080 {
+      aspect-ratio: 1 / 1;
+    }
+    
+    .carousel-preview.ratio-1080x1920 {
+      aspect-ratio: 9 / 16;
+    }
+    
+    .carousel-preview.ratio-1080x1350 {
+      aspect-ratio: 4 / 5;
+    }
+    
+    .carousel-preview.ratio-1080x608 {
+      aspect-ratio: 16 / 9;
+    }
+    
+    .carousel-wrapper {
+      display: flex;
+      transition: transform 0.3s ease;
+      width: 100%;
+      height: 100%;
+      background-color: var(--dark-bg-primary);
+    }
+    
+    .carousel-wrapper.smooth {
+      transition: transform 0.3s ease;
+    }
+    
+    .carousel-item {
+      min-width: 100%;
+      height: 100%;
+      background-color: var(--dark-bg-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      flex-shrink: 0;
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+      border: none;
+    }
+    
+    .carousel-item img {
+      max-width: 100%;
+      max-height: 100%;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+    
+    .slide-number {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background-color: rgba(0, 0, 0, 0.4);
+      color: white;
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 10px;
+    }
+    
+    .carousel-nav {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 16px;
+      pointer-events: none;
+    }
+    
+    .nav-arrow {
+      width: 30px;
+      height: 30px;
+      background-color: rgba(38, 38, 38, 0.8);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      pointer-events: auto;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      opacity: 0.9;
+      color: var(--dark-text-primary);
+    }
+    
+    .nav-arrow:hover {
+      opacity: 1;
+      background-color: var(--dark-bg-elevated);
+    }
+    
+    .carousel-indicator {
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+      padding: 12px 0;
+      background-color: var(--dark-bg-secondary);
+      border-bottom: 1px solid var(--dark-separator);
+    }
+    
+    .indicator-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #555555;
+    }
+    
+    .indicator-dot.active {
+      background-color: var(--instagram-blue);
+    }
+    
+    .post-actions {
+      display: flex;
+      padding: 12px;
+      border-bottom: 1px solid var(--dark-separator);
+    }
+    
+    .post-action {
+      margin-right: 16px;
+      cursor: pointer;
+      color: var(--dark-text-primary);
+    }
+    
+    .post-action svg {
+      width: 24px;
+      height: 24px;
+    }
+    
+    .post-caption {
+      padding: 12px;
+      font-size: 14px;
+      line-height: 1.4;
+      color: var(--dark-text-primary);
+    }
+    
+    .caption-username {
+      font-weight: 600;
+      margin-right: 4px;
+      color: var(--dark-text-primary);
+    }
+    
+    .post-date {
+      padding: 0 12px 12px;
+      font-size: 10px;
+      color: var(--dark-text-secondary);
+      text-transform: uppercase;
+    }
+    
+    .tab-container {
+      display: flex;
+      border-bottom: 1px solid var(--dark-separator);
+      margin-bottom: 16px;
+    }
+    
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 10px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--dark-text-secondary);
+    }
+    
+    .tab.active {
+      color: var(--instagram-blue);
+      border-bottom: 2px solid var(--instagram-blue);
+    }
+    
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    .info-message {
+      background-color: var(--dark-bg-elevated);
+      border-radius: 4px;
+      padding: 8px 12px;
+      font-size: 12px;
+      color: var(--dark-text-secondary);
+      margin-bottom: 12px;
+    }
+
+    .placeholder-text {
+      text-align: center;
+      padding: 20px;
+      color: var(--dark-text-secondary);
+      font-size: 16px;
+      line-height: 1.5;
+      max-width: 80%;
+      margin: 0 auto;
+    }
+
+    .note {
+      font-size: 12px;
+      color: var(--dark-text-secondary);
+      margin-top: 8px;
+      font-style: italic;
+    }
+    
+    .convert-prompt {
+      background-color: rgba(0, 149, 246, 0.1);
+      border: 1px solid rgba(0, 149, 246, 0.2);
+      border-radius: 8px;
+      padding: 12px;
+      margin-top: 12px;
+      text-align: center;
+    }
+    
+    .convert-prompt p {
+      font-size: 13px;
+      margin-bottom: 10px;
+      color: var(--dark-text-primary);
+    }
+    
+    /* Add slider styles */
+    .carousel-slider {
+      padding: 12px 16px;
+      background-color: var(--dark-bg-secondary);
+      border-bottom: none;
+      position: relative;
+    }
+    
+    .carousel-slider input[type="range"] {
+      width: 100%;
+      height: 20px;
+      -webkit-appearance: none;
+      background: transparent;
+      position: relative;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .carousel-slider input[type="range"]::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+    }
+    
+    .carousel-slider input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      height: 12px;
+      width: 12px;
+      border-radius: 50%;
+      background: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+      margin-top: -5.5px;
+      box-shadow: none;
+    }
+    
+    .carousel-slider input[type="range"]::-moz-range-track {
+      width: 100%;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+    }
+    
+    .carousel-slider input[type="range"]::-moz-range-thumb {
+      height: 12px;
+      width: 12px;
+      border-radius: 50%;
+      background: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+      box-shadow: none;
+    }
+    
+    .carousel-slider input[type="range"]:focus {
+      outline: none;
+    }
+    
+    /* Remove the before element and progress bar styles as we want just a simple line */
+    .carousel-slider::before {
+      display: none;
+    }
+    
+    .carousel-slider input[type="range"] {
+      background: none;
+    }
+
+    /* Add loading spinner styles */
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      border-top-color: var(--instagram-blue);
+      animation: spin 1s ease-in-out infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+  
+</head>
+<body>
+  <div class="tab-container">
+    <div class="tab active" data-tab="preview">Preview</div>
+    <div class="tab" data-tab="create">Create</div>
+    <div class="tab" data-tab="convert">Convert</div>
+  </div>
+  
+  <div class="tab-content active" id="preview-tab">
+    <div class="preview-container" id="previewContainer">
+      <div class="instagram-post">
+        <div class="post-header">
+          <div class="profile-pic">F</div>
+          <div class="user-info">
+            <div class="username">figmadesign</div>
+            <div class="location" id="previewResolution">Instagram Carousel</div>
+          </div>
+        </div>
+        
+        <div id="welcomeMessage" style="display: block; padding: 20px; text-align: center; background-color: var(--dark-bg-secondary); min-height: 300px; display: flex; align-items: center; justify-content: center;">
+          <div class="placeholder-text">
+            Select a carousel frame in your design to see a preview here.
+          </div>
+        </div>
+        
+        <div id="loadingMessage" style="display: none; padding: 20px; text-align: center; background-color: var(--dark-bg-secondary); min-height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+          <div class="loading-spinner"></div>
+          <div class="placeholder-text" style="margin-top: 16px;">
+            Generating preview...
+          </div>
+        </div>
+        
+        <div class="carousel-container" id="carouselContainer" style="display: none;">
+          <div class="carousel-preview" id="carouselPreview">
+            <div class="carousel-wrapper" id="carouselWrapper">
+              <!-- Preview frames will be inserted here -->
+            </div>
+          </div>
+          
+          <div class="carousel-nav" id="carouselNav">
+            <div class="nav-arrow prev" id="prevSlide">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </div>
+            <div class="nav-arrow next" id="nextSlide">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </div>
+          </div>
+          
+          <!-- Add slider control -->
+          <div class="carousel-slider">
+            <input type="range" id="carouselSlider" min="0" step="0.01" value="0">
+          </div>
+          
+          <div class="carousel-indicator" id="carouselIndicator">
+            <!-- Indicator dots will be inserted here -->
+          </div>
+        </div>
+        
+        <div class="post-actions">
+          <div class="post-action">
+            <svg aria-label="Like" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24">
+              <path d="M16.792 3.904A4.989 4.989 0 0 1 21.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0 0 1 4.708-5.218 4.21 4.21 0 0 1 3.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0 0 1 3.679-1.938m0-2a6.04 6.04 0 0 0-4.797 2.127 6.052 6.052 0 0 0-4.787-2.127A6.985 6.985 0 0 0 .5 9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 0 0 3.518 3.018 2 2 0 0 0 2.174 0 45.263 45.263 0 0 0 3.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025 4.98-4.32 4.98-7.94a6.985 6.985 0 0 0-6.708-7.218Z"></path>
+            </svg>
+          </div>
+          <div class="post-action">
+            <svg aria-label="Comment" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24">
+              <path d="M20.656 17.008a9.993 9.993 0 1 0-3.59 3.615L22 22Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2"></path>
+            </svg>
+          </div>
+          <div class="post-action">
+            <svg aria-label="Share Post" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24">
+              <line fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2" x1="22" x2="9.218" y1="3" y2="10.083"></line>
+              <polygon fill="none" points="11.698 20.334 22 3.001 2 3.001 9.218 10.084 11.698 20.334" stroke="currentColor" stroke-linejoin="round" stroke-width="2"></polygon>
+            </svg>
+          </div>
+        </div>
+        
+        <div class="post-caption">
+          <span class="caption-username">figmadesign</span>
+          <span id="previewCaption">Check out this Instagram carousel created with the Carousel Creator plugin!</span>
+        </div>
+        
+        <div class="post-date">Just now</div>
+        
+        <div id="convertPrompt" class="convert-prompt" style="display: none;">
+          <p>This is a regular frame. Convert it to an Instagram carousel to add guides and enable multi-slide export.</p>
+          <button id="quickConvert" class="secondary">Convert to Carousel</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="actions">
+      <button id="export" style="background-color: var(--instagram-blue); font-size: 15px; padding: 12px; width: 100%;">Export Slides</button>
+      <p class="note">Note: Visual indicators and guide lines are only visible in Figma. They will be automatically removed during export.</p>
+    </div>
+  </div>
+  
+  <div class="tab-content" id="create-tab">
+    <div class="section">
+      <div class="section-title">Create New Carousel</div>
+      
+      <label for="resolution">Resolution Preset</label>
+      <select id="resolution">
+        <option value="1080x1080">Instagram Post (1080×1080)</option>
+        <option value="1080x1920">Instagram Story (1080×1920)</option>
+        <option value="1080x1350">Instagram Portrait (1080×1350)</option>
+        <option value="1080x608">Instagram Landscape (1080×608)</option>
+      </select>
+      
+      <label for="frames">Number of Frames</label>
+      <input type="number" id="frames" min="1" max="10" value="3">
+      
+      <div class="actions">
+        <button id="create">Create Carousel</button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="tab-content" id="convert-tab">
+    <div class="section">
+      <div class="section-title">Convert Existing Frame</div>
+      
+      <div class="info-message">
+        Select a frame in your design, then click "Convert to Carousel" to add slide guides.
+      </div>
+      
+      <label for="convert-resolution">Resolution Preset</label>
+      <select id="convert-resolution">
+        <option value="1080x1080">Instagram Post (1080×1080)</option>
+        <option value="1080x1920">Instagram Story (1080×1920)</option>
+        <option value="1080x1350">Instagram Portrait (1080×1350)</option>
+        <option value="1080x608">Instagram Landscape (1080×608)</option>
+      </select>
+      
+      <div class="actions">
+        <button id="convert">Convert to Carousel</button>
+        <button id="check-compatibility" class="secondary">Check Compatibility</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+    // Tab switching
+    document.addEventListener('DOMContentLoaded', function() {
+      // Tab switching
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+          document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+          
+          tab.classList.add('active');
+          document.getElementById(tab.dataset.tab + '-tab').classList.add('active');
+        });
+      });
+      
+      // Create carousel
+      const createBtn = document.getElementById('create');
+      if (createBtn) {
+        createBtn.onclick = () => {
+          const resolution = document.getElementById('resolution').value;
+          const frameCount = parseInt(document.getElementById('frames').value, 10);
+          
+          parent.postMessage({ 
+            pluginMessage: { 
+              type: 'create-carousel', 
+              resolution: resolution,
+              frameCount: frameCount
+            }
+          }, '*');
+          
+          // Switch to preview tab after creating
+          setTimeout(() => {
+            const previewTab = document.querySelector('[data-tab="preview"]');
+            if (previewTab) previewTab.click();
+          }, 500);
+        }
+      }
+      
+      // Convert existing frame
+      const convertBtn = document.getElementById('convert');
+      if (convertBtn) {
+        convertBtn.onclick = () => {
+          const resolution = document.getElementById('convert-resolution').value;
+          
+          parent.postMessage({ 
+            pluginMessage: { 
+              type: 'convert-to-carousel',
+              resolution: resolution
+            }
+          }, '*');
+          
+          // Switch to preview tab after converting
+          setTimeout(() => {
+            const previewTab = document.querySelector('[data-tab="preview"]');
+            if (previewTab) previewTab.click();
+          }, 500);
+        }
+      }
+      
+      // Quick convert button in preview
+      const quickConvertBtn = document.getElementById('quickConvert');
+      if (quickConvertBtn) {
+        quickConvertBtn.onclick = () => {
+          // Get the best match resolution stored in the button's data attribute
+          const bestMatchResolution = quickConvertBtn.getAttribute('data-resolution') || '1080x1080';
+          
+          parent.postMessage({ 
+            pluginMessage: { 
+              type: 'convert-to-carousel',
+              resolution: bestMatchResolution
+            }
+          }, '*');
+        }
+      }
+      
+      // Check compatibility
+      const checkBtn = document.getElementById('check-compatibility');
+      if (checkBtn) {
+        checkBtn.onclick = () => {
+          parent.postMessage({ 
+            pluginMessage: { 
+              type: 'check-compatibility'
+            }
+          }, '*');
+        }
+      }
+
+      // Export carousel
+      const exportBtn = document.getElementById('export');
+      if (exportBtn) {
+        exportBtn.onclick = () => {
+          parent.postMessage({ pluginMessage: { type: 'export-carousel' } }, '*');
+        }
+      }
+      
+      // Add event listeners for navigation arrows
+      const nextSlideBtn = document.getElementById('nextSlide');
+      const prevSlideBtn = document.getElementById('prevSlide');
+      
+      if (nextSlideBtn) {
+        nextSlideBtn.addEventListener('click', nextSlide);
+      }
+      
+      if (prevSlideBtn) {
+        prevSlideBtn.addEventListener('click', prevSlide);
+      }
+    });
+    
+    // Carousel preview functionality
+    let currentSlide = 0;
+    let slideCount = 0;
+    
+    function updateCarouselPosition(animate = true, exactPosition = null) {
+      const wrapper = document.getElementById('carouselWrapper');
+      const slider = document.getElementById('carouselSlider');
+      if (!wrapper) return;
+      
+      const slideWidth = wrapper.offsetWidth;
+      
+      // Allow for exact fractional positioning when provided
+      let newPosition;
+      if (exactPosition !== null) {
+        // Ensure pixel-perfect positioning to avoid subpixel rendering issues
+        newPosition = -Math.round(exactPosition * slideWidth);
+      } else {
+        newPosition = -Math.round(currentSlide * slideWidth);
+      }
+      
+      if (animate) {
+        wrapper.classList.add('smooth');
+      } else {
+        wrapper.classList.remove('smooth');
+      }
+      
+      // Use translateX with integer values to avoid subpixel rendering
+      wrapper.style.transform = `translateX(${newPosition}px)`;
+      
+      // Update slider position if we're not in the middle of a slider drag
+      if (exactPosition === null && slider) {
+        slider.value = currentSlide;
+      }
+      
+      // Update indicator dots - highlight the closest one
+      const closestSlide = exactPosition !== null ? Math.round(exactPosition) : currentSlide;
+      document.querySelectorAll('.indicator-dot').forEach((dot, index) => {
+        if (index === closestSlide) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      });
+      
+      // Update navigation arrows visibility
+      const prevArrow = document.getElementById('prevSlide');
+      const nextArrow = document.getElementById('nextSlide');
+      
+      if (prevArrow) prevArrow.style.display = (exactPosition !== null ? exactPosition <= 0.1 : currentSlide === 0) ? 'none' : 'flex';
+      if (nextArrow) nextArrow.style.display = (exactPosition !== null ? exactPosition >= slideCount - 0.9 : currentSlide === slideCount - 1) ? 'none' : 'flex';
+    }
+    
+    function nextSlide() {
+      if (currentSlide < slideCount - 1) {
+        currentSlide++;
+        updateCarouselPosition();
+      }
+    }
+    
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        updateCarouselPosition();
+      }
+    }
+
+    // Listen for messages from the plugin code
+    window.onmessage = (event) => {
+      const message = event.data.pluginMessage;
+      console.log('Received message:', message);
+      
+      if (message.type === 'request-current-slide') {
+        // Send the current slide index back to the plugin
+        parent.postMessage({
+          pluginMessage: {
+            type: 'current-slide-response',
+            currentSlide: currentSlide
+          }
+        }, '*');
+      }
+      else if (message.type === 'preview-loading') {
+        // Show loading state
+        const welcomeMessage = document.getElementById('welcomeMessage');
+        const loadingMessage = document.getElementById('loadingMessage');
+        const carouselContainer = document.getElementById('carouselContainer');
+        
+        if (welcomeMessage) welcomeMessage.style.display = 'none';
+        if (loadingMessage) loadingMessage.style.display = 'flex';
+        if (carouselContainer) carouselContainer.style.display = 'none';
+      }
+      else if (message.type === 'preview-metadata') {
+        // Initialize carousel structure based on metadata
+        const previewContainer = document.getElementById('previewContainer');
+        const carouselPreview = document.getElementById('carouselPreview');
+        const carouselWrapper = document.getElementById('carouselWrapper');
+        const carouselIndicator = document.getElementById('carouselIndicator');
+        const welcomeMessage = document.getElementById('welcomeMessage');
+        const loadingMessage = document.getElementById('loadingMessage');
+        const carouselContainer = document.getElementById('carouselContainer');
+        
+        // Skip if elements don't exist
+        if (!previewContainer || !carouselPreview || !carouselWrapper || 
+            !carouselIndicator || !welcomeMessage || !loadingMessage || !carouselContainer) {
+          console.error('Required DOM elements not found');
+          return;
+        }
+        
+        // Hide welcome and loading messages, show carousel
+        welcomeMessage.style.display = 'none';
+        loadingMessage.style.display = 'none';
+        carouselContainer.style.display = 'block';
+        
+        // Reset current slide
+        currentSlide = 0;
+        slideCount = message.frameCount;
+        
+        // Update resolution info and set aspect ratio
+        if (message.resolution) {
+          const previewResolution = document.getElementById('previewResolution');
+          if (previewResolution) {
+            previewResolution.textContent = message.resolution.name;
+          }
+          
+          carouselPreview.className = 'carousel-preview';
+          
+          const resKey = `${message.resolution.width}x${message.resolution.height}`;
+          carouselPreview.classList.add(`ratio-${resKey}`);
+          
+          const previewWidth = Math.min(320, previewContainer.offsetWidth - 2);
+          let previewHeight;
+          
+          if (resKey === '1080x1080') {
+            previewHeight = previewWidth;
+          } else if (resKey === '1080x1920') {
+            previewHeight = (previewWidth * 1920) / 1080;
+          } else if (resKey === '1080x1350') {
+            previewHeight = (previewWidth * 1350) / 1080;
+          } else if (resKey === '1080x608') {
+            previewHeight = (previewWidth * 608) / 1080;
+          } else {
+            const aspectRatio = message.resolution.height / message.resolution.width;
+            previewHeight = previewWidth * aspectRatio;
+          }
+          
+          carouselPreview.style.width = `${previewWidth}px`;
+          carouselPreview.style.height = `${previewHeight}px`;
+        }
+        
+        // Update caption
+        const previewCaption = document.getElementById('previewCaption');
+        if (previewCaption) {
+          previewCaption.textContent = 
+            `${message.frameName || 'Instagram Carousel'} with ${message.frameCount} slides`;
+        }
+        
+        // Clear previous preview
+        carouselWrapper.innerHTML = '';
+        carouselIndicator.innerHTML = '';
+        
+        // Create placeholder frames and indicators
+        for (let i = 0; i < message.frameCount; i++) {
+          const frame = document.createElement('div');
+          frame.className = 'carousel-item';
+          frame.id = `carousel-item-${i}`;
+          frame.style.backgroundColor = 'var(--dark-bg-primary)';
+          
+          // Add loading placeholder
+          const loadingPlaceholder = document.createElement('div');
+          loadingPlaceholder.className = 'loading-spinner';
+          frame.appendChild(loadingPlaceholder);
+          
+          const slideNumber = document.createElement('div');
+          slideNumber.className = 'slide-number';
+          slideNumber.textContent = `${i + 1}/${message.frameCount}`;
+          frame.appendChild(slideNumber);
+          
+          carouselWrapper.appendChild(frame);
+          
+          // Add indicator dot
+          const dot = document.createElement('div');
+          dot.className = i === 0 ? 'indicator-dot active' : 'indicator-dot';
+          dot.addEventListener('click', () => {
+            currentSlide = i;
+            updateCarouselPosition();
+          });
+          carouselIndicator.appendChild(dot);
+        }
+        
+        // Initialize slider
+        const slider = document.getElementById('carouselSlider');
+        if (slider) {
+          slider.max = slideCount - 1;
+          slider.value = currentSlide;
+          slider.step = "0.01"; // Allow fine-grained control
+          
+          // Add slider event listener
+          slider.addEventListener('input', (e) => {
+            const exactPosition = parseFloat(e.target.value);
+            updateCarouselPosition(false, exactPosition);
+          });
+          
+          // When slider is released, snap to the nearest slide
+          slider.addEventListener('change', (e) => {
+            const exactPosition = parseFloat(e.target.value);
+            currentSlide = Math.round(exactPosition);
+            updateCarouselPosition(true);
+          });
+        }
+        
+        // Update carousel position
+        updateCarouselPosition();
+      }
+      else if (message.type === 'preview-batch') {
+        // Update carousel items with batch of images
+        message.imageDataUrls.forEach((dataUrl, idx) => {
+          const slideIndex = message.indices[idx];
+          const frame = document.getElementById(`carousel-item-${slideIndex}`);
+          
+          if (frame) {
+            // Remove loading spinner if it exists
+            const spinner = frame.querySelector('.loading-spinner');
+            if (spinner) {
+              spinner.remove();
+            }
+            
+            if (dataUrl) {
+              // Remove any existing image
+              const existingImg = frame.querySelector('img');
+              if (existingImg) {
+                existingImg.remove();
+              }
+              
+              const img = document.createElement('img');
+              img.src = dataUrl;
+              img.style.width = '100%';
+              img.style.height = '100%';
+              img.style.objectFit = 'contain';
+              img.style.display = 'block';
+              img.style.margin = '0';
+              img.style.padding = '0';
+              img.style.border = 'none';
+              frame.appendChild(img);
+            } else {
+              frame.textContent = `Slide ${slideIndex + 1}`;
+            }
+          }
+        });
+      }
+      else if (message.type === 'preview-complete') {
+        // Preview is complete, ensure loading message is hidden
+        const loadingMessage = document.getElementById('loadingMessage');
+        if (loadingMessage) {
+          loadingMessage.style.display = 'none';
+        }
+      }
+      else if (message.type === 'preview-update') {
+        // Handle regular frame preview (non-carousel)
+        const previewContainer = document.getElementById('previewContainer');
+        const carouselPreview = document.getElementById('carouselPreview');
+        const carouselWrapper = document.getElementById('carouselWrapper');
+        const carouselIndicator = document.getElementById('carouselIndicator');
+        const welcomeMessage = document.getElementById('welcomeMessage');
+        const loadingMessage = document.getElementById('loadingMessage');
+        const carouselContainer = document.getElementById('carouselContainer');
+        const convertPrompt = document.getElementById('convertPrompt');
+        const quickConvertBtn = document.getElementById('quickConvert');
+        const exportBtn = document.getElementById('export');
+        
+        // Skip if elements don't exist
+        if (!previewContainer || !carouselPreview || !carouselWrapper || 
+            !carouselIndicator || !welcomeMessage || !loadingMessage || !carouselContainer) {
+          console.error('Required DOM elements not found');
+          return;
+        }
+        
+        // Hide welcome and loading messages, show carousel
+        welcomeMessage.style.display = 'none';
+        loadingMessage.style.display = 'none';
+        carouselContainer.style.display = 'block';
+        
+        // Reset current slide
+        currentSlide = 0;
+        slideCount = message.frameCount;
+        
+        // Handle regular frame vs carousel frame
+        if (message.isRegularFrame) {
+          if (convertPrompt) {
+            convertPrompt.style.display = 'block';
+            
+            if (quickConvertBtn && message.bestMatchResolution) {
+              quickConvertBtn.setAttribute('data-resolution', message.bestMatchResolution);
+              
+              const promptText = convertPrompt.querySelector('p');
+              if (promptText && message.possibleSlideCount > 1) {
+                promptText.textContent = `This frame could make a ${message.possibleSlideCount}-slide carousel. Convert it to add guides and enable multi-slide export.`;
+              }
+            }
+          }
+          
+          if (exportBtn) {
+            exportBtn.disabled = true;
+            exportBtn.style.opacity = '0.5';
+          }
+        } else {
+          if (convertPrompt) {
+            convertPrompt.style.display = 'none';
+          }
+          
+          if (exportBtn) {
+            exportBtn.disabled = false;
+            exportBtn.style.opacity = '1';
+          }
+        }
+        
+        // Update resolution info and set aspect ratio
+        if (message.resolution) {
+          const previewResolution = document.getElementById('previewResolution');
+          if (previewResolution) {
+            previewResolution.textContent = message.resolution.name;
+          }
+          
+          carouselPreview.className = 'carousel-preview';
+          
+          const resKey = `${message.resolution.width}x${message.resolution.height}`;
+          carouselPreview.classList.add(`ratio-${resKey}`);
+          
+          const previewWidth = Math.min(320, previewContainer.offsetWidth - 2);
+          let previewHeight;
+          
+          if (resKey === '1080x1080') {
+            previewHeight = previewWidth;
+          } else if (resKey === '1080x1920') {
+            previewHeight = (previewWidth * 1920) / 1080;
+          } else if (resKey === '1080x1350') {
+            previewHeight = (previewWidth * 1350) / 1080;
+          } else if (resKey === '1080x608') {
+            previewHeight = (previewWidth * 608) / 1080;
+          } else {
+            const aspectRatio = message.resolution.height / message.resolution.width;
+            previewHeight = previewWidth * aspectRatio;
+          }
+          
+          carouselPreview.style.width = `${previewWidth}px`;
+          carouselPreview.style.height = `${previewHeight}px`;
+        }
+        
+        // Update caption
+        const previewCaption = document.getElementById('previewCaption');
+        if (previewCaption) {
+          previewCaption.textContent = 
+            `${message.frameName || 'Instagram Carousel'} with ${message.frameCount} slides`;
+        }
+        
+        // Clear previous preview
+        carouselWrapper.innerHTML = '';
+        carouselIndicator.innerHTML = '';
+        
+        // Add preview frames
+        for (let i = 0; i < message.frameCount; i++) {
+          const frame = document.createElement('div');
+          frame.className = 'carousel-item';
+          frame.style.backgroundColor = 'var(--dark-bg-primary)';
+          frame.style.margin = '0';
+          frame.style.padding = '0';
+          frame.style.border = 'none';
+          
+          const slideNumber = document.createElement('div');
+          slideNumber.className = 'slide-number';
+          slideNumber.textContent = `${i + 1}/${message.frameCount}`;
+          frame.appendChild(slideNumber);
+          
+          if (message.imageDataUrls && message.imageDataUrls[i]) {
+            const img = document.createElement('img');
+            img.src = message.imageDataUrls[i];
+            img.style.width = '100%';
+            img.style.height = '100%';
+            img.style.objectFit = 'contain';
+            img.style.display = 'block';
+            img.style.margin = '0';
+            img.style.padding = '0';
+            img.style.border = 'none';
+            frame.appendChild(img);
+          } else {
+            frame.textContent = `Slide ${i + 1}`;
+          }
+          
+          carouselWrapper.appendChild(frame);
+          
+          const dot = document.createElement('div');
+          dot.className = i === 0 ? 'indicator-dot active' : 'indicator-dot';
+          dot.addEventListener('click', () => {
+            currentSlide = i;
+            updateCarouselPosition();
+          });
+          carouselIndicator.appendChild(dot);
+        }
+        
+        // Initialize slider
+        const slider = document.getElementById('carouselSlider');
+        if (slider) {
+          slider.max = slideCount - 1;
+          slider.value = currentSlide;
+          slider.step = "0.01"; // Allow fine-grained control
+          
+          // Add slider event listener
+          slider.addEventListener('input', (e) => {
+            const exactPosition = parseFloat(e.target.value);
+            updateCarouselPosition(false, exactPosition);
+          });
+          
+          // When slider is released, snap to the nearest slide
+          slider.addEventListener('change', (e) => {
+            const exactPosition = parseFloat(e.target.value);
+            currentSlide = Math.round(exactPosition);
+            updateCarouselPosition(true);
+          });
+        }
+        
+        // Update carousel position
+        updateCarouselPosition();
+      } else if (message.type === 'compatibility-result') {
+        alert(message.message);
+      } else if (message.type === 'no-carousel-selected') {
+        // Show welcome message when no carousel is selected
+        console.log('No carousel selected, showing welcome message');
+        const welcomeMessage = document.getElementById('welcomeMessage');
+        const carouselContainer = document.getElementById('carouselContainer');
+        const convertPrompt = document.getElementById('convertPrompt');
+        
+        // Show welcome message, hide carousel and convert prompt
+        if (welcomeMessage) welcomeMessage.style.display = 'block';
+        if (carouselContainer) carouselContainer.style.display = 'none';
+        if (convertPrompt) convertPrompt.style.display = 'none';
+      } else if (message.type === 'confirm-resize') {
+        // Show a confirmation dialog for resizing frame height
+        const shouldResize = confirm(message.message);
+        
+        // Send response back to the plugin
+        parent.postMessage({
+          pluginMessage: {
+            type: 'resize-response',
+            shouldResize: shouldResize
+          }
+        }, '*');
+      } else if (message.type === 'handle-partial-slide') {
+        // Create a custom dialog for handling partial slides
+        const dialog = document.createElement('div');
+        dialog.style.position = 'fixed';
+        dialog.style.top = '0';
+        dialog.style.left = '0';
+        dialog.style.right = '0';
+        dialog.style.bottom = '0';
+        dialog.style.backgroundColor = 'rgba(0,0,0,0.5)';
+        dialog.style.zIndex = '999';
+        dialog.style.display = 'flex';
+        dialog.style.alignItems = 'center';
+        dialog.style.justifyContent = 'center';
+        
+        const dialogContent = document.createElement('div');
+        dialogContent.style.backgroundColor = 'white';
+        dialogContent.style.borderRadius = '8px';
+        dialogContent.style.padding = '20px';
+        dialogContent.style.maxWidth = '320px';
+        dialogContent.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+        
+        const title = document.createElement('h3');
+        title.textContent = 'Partial Slide Detected';
+        title.style.margin = '0 0 12px 0';
+        
+        const messageText = document.createElement('p');
+        messageText.textContent = message.message;
+        messageText.style.margin = '0 0 16px 0';
+        messageText.style.lineHeight = '1.4';
+        
+        const buttonContainer = document.createElement('div');
+        buttonContainer.style.display = 'flex';
+        buttonContainer.style.flexDirection = 'column';
+        buttonContainer.style.gap = '8px';
+        
+        const expandButton = document.createElement('button');
+        expandButton.textContent = 'Expand to full slide';
+        expandButton.style.padding = '8px';
+        expandButton.style.backgroundColor = '#0095F6';
+        expandButton.style.color = 'white';
+        expandButton.style.border = 'none';
+        expandButton.style.borderRadius = '4px';
+        expandButton.style.cursor = 'pointer';
+        expandButton.style.fontWeight = '600';
+        
+        const trimButton = document.createElement('button');
+        trimButton.textContent = 'Trim partial slide';
+        trimButton.style.padding = '8px';
+        trimButton.style.backgroundColor = '#EFEFEF';
+        trimButton.style.color = '#262626';
+        trimButton.style.border = 'none';
+        trimButton.style.borderRadius = '4px';
+        trimButton.style.cursor = 'pointer';
+        trimButton.style.fontWeight = '600';
+        
+        const keepButton = document.createElement('button');
+        keepButton.textContent = 'Keep as is (content will be cut off)';
+        keepButton.style.padding = '8px';
+        keepButton.style.backgroundColor = '#EFEFEF';
+        keepButton.style.color = '#262626';
+        keepButton.style.border = 'none';
+        keepButton.style.borderRadius = '4px';
+        keepButton.style.cursor = 'pointer';
+        keepButton.style.fontWeight = '600';
+        
+        expandButton.onclick = () => {
+          document.body.removeChild(dialog);
+          parent.postMessage({
+            pluginMessage: {
+              type: 'partial-slide-response',
+              action: 'expand'
+            }
+          }, '*');
+        };
+        
+        trimButton.onclick = () => {
+          document.body.removeChild(dialog);
+          parent.postMessage({
+            pluginMessage: {
+              type: 'partial-slide-response',
+              action: 'trim'
+            }
+          }, '*');
+        };
+        
+        keepButton.onclick = () => {
+          document.body.removeChild(dialog);
+          parent.postMessage({
+            pluginMessage: {
+              type: 'partial-slide-response',
+              action: 'keep'
+            }
+          }, '*');
+        };
+        
+        buttonContainer.appendChild(expandButton);
+        buttonContainer.appendChild(trimButton);
+        buttonContainer.appendChild(keepButton);
+        
+        dialogContent.appendChild(title);
+        dialogContent.appendChild(messageText);
+        dialogContent.appendChild(buttonContainer);
+        dialog.appendChild(dialogContent);
+        
+        document.body.appendChild(dialog);
+      }
+    };
+    
+    // Initialize UI and try to preview carousel when page loads
+    window.onload = () => {
+      // Set default state - welcome message visible, carousel hidden
+      const welcomeMessage = document.getElementById('welcomeMessage');
+      const carouselContainer = document.getElementById('carouselContainer');
+      const loadingMessage = document.getElementById('loadingMessage');
+      const convertPrompt = document.getElementById('convertPrompt');
+      
+      if (welcomeMessage) welcomeMessage.style.display = 'block';
+      if (carouselContainer) carouselContainer.style.display = 'none';
+      if (loadingMessage) loadingMessage.style.display = 'none';
+      if (convertPrompt) convertPrompt.style.display = 'none';
+      
+      console.log('UI initialized, attempting to preview carousel');
+      
+      // Try to preview carousel if one is selected
+      parent.postMessage({ pluginMessage: { type: 'preview-carousel' } }, '*');
+    }
+</script>
+</body>
+</html>
+
