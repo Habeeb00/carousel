@@ -15,13 +15,12 @@
         --instagram-orange: #f77737;
 
         /* Light mode colors */
-        --light-bg-primary: #ffffff;
-        --light-bg-secondary: #fafafa;
-        --light-bg-elevated: #f0f0f0;
+        --light-bg-primary: #dee2e6;
+        --light-bg-elevated: #e2e9f0;
         --light-text-primary: #262626;
-        --light-text-secondary: #737373;
-        --light-border: #dbdbdb;
-        --light-separator: #efefef;
+        --light-text-secondary: #6c757d;
+        --light-border: #e7edf1;
+        --light-separator: #dee2e6;
 
         /* Dark mode colors */
         --dark-bg-primary: #121212;
@@ -190,7 +189,21 @@
         overflow-y: auto;
         position: relative;
         box-sizing: border-box;
-        box-shadow: var(--shadow-sm);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+      }
+
+      /* Enhanced styling for light mode sections */
+      [data-theme="light"] .section {
+        background-color: #ffffff !important;
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.06);
+      }
+
+      /* Keep original styling for dark mode sections */
+      [data-theme="dark"] .section {
+        background-color: var(--bg-secondary);
+        border: 1px solid var(--border);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.1);
       }
 
       .section-title {
@@ -232,7 +245,11 @@
       }
 
       button {
-        background: linear-gradient(135deg, var(--instagram-blue), #0077c2) !important;
+        background: linear-gradient(
+          135deg,
+          var(--instagram-blue),
+          #0077c2
+        ) !important;
         color: white !important;
         border: 1px solid rgba(0, 149, 246, 0.2) !important;
         border-radius: var(--border-radius-sm);
@@ -264,7 +281,11 @@
       }
 
       button:hover {
-        background: linear-gradient(135deg, #0077c2, var(--instagram-blue)) !important;
+        background: linear-gradient(
+          135deg,
+          #0077c2,
+          var(--instagram-blue)
+        ) !important;
         transform: translateY(-1px);
         box-shadow: 0 4px 16px 0 rgba(0, 149, 246, 0.25) !important;
         color: white !important;
@@ -296,12 +317,28 @@
         border: none;
         border-radius: var(--border-radius-md);
         overflow: hidden;
-        background-color: var(--bg-secondary);
+        background-color: #ffffff;
         margin-right: 0 !important;
         padding-right: 0 !important;
         box-sizing: border-box;
-        box-shadow: var(--shadow-md);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
         position: relative;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+      }
+
+      /* Pure white with strong shadow for light mode */
+      [data-theme="light"] .preview-container {
+        background-color: #ffffff !important;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15),
+          0 6px 12px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(0, 0, 0, 0.12);
+      }
+
+      /* Keep darker theme styling for dark mode */
+      [data-theme="dark"] .preview-container {
+        background-color: var(--bg-secondary);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
+        border: 1px solid var(--border);
       }
 
       .preview-container::before {
@@ -619,6 +656,21 @@
         overflow: hidden;
         border-radius: var(--border-radius-sm) var(--border-radius-sm) 0 0;
         background: var(--bg-secondary);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+      }
+
+      /* Enhanced styling for light mode tab container */
+      [data-theme="light"] .tab-container {
+        background: #ffffff !important;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Keep original styling for dark mode */
+      [data-theme="dark"] .tab-container {
+        background: var(--bg-secondary);
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
       }
 
       .tab-container::after {
@@ -1094,9 +1146,9 @@
 
       /* Add theme toggle button styles */
       .theme-toggle {
-        position: absolute;
+        position: fixed;
         right: var(--space-sm);
-        top: var(--space-sm);
+        bottom: var(--space-sm);
         background-color: var(--bg-elevated);
         border: 1px solid var(--border);
         padding: var(--space-xs);
@@ -1107,9 +1159,38 @@
         align-items: center;
         justify-content: center;
         transition: all 0.2s ease;
+        box-shadow: var(--shadow-md);
+        z-index: 100;
       }
 
       .theme-toggle:hover {
+        background-color: var(--bg-primary);
+      }
+
+      /* Light mode specific styling for theme toggle */
+      [data-theme="light"] .theme-toggle {
+        background-color: #ffffff !important;
+        border: 1px solid rgba(0, 0, 0, 0.15) !important;
+        color: #666666 !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+      }
+
+      [data-theme="light"] .theme-toggle:hover {
+        background-color: #f8f9fa !important;
+        color: #333333 !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15),
+          0 2px 4px rgba(0, 0, 0, 0.08) !important;
+      }
+
+      /* Dark mode specific styling for theme toggle */
+      [data-theme="dark"] .theme-toggle {
+        background-color: var(--bg-elevated);
+        border: 1px solid var(--border);
+        color: var(--text-secondary);
+        box-shadow: var(--shadow-md);
+      }
+
+      [data-theme="dark"] .theme-toggle:hover {
         background-color: var(--bg-primary);
       }
 
@@ -1158,33 +1239,97 @@
       }
 
       .action-button {
-        background: none;
-        border: none;
+        background: transparent !important;
+        border: none !important;
         padding: 0;
         cursor: pointer;
-        color: var(--text-primary);
+        color: var(--text-primary) !important;
         display: flex;
         align-items: center;
-        transition: all 0.2s ease;
+        transition: transform 0.2s ease !important;
+        box-shadow: none !important;
+        outline: none !important;
       }
 
       .action-button:hover {
         transform: scale(1.1);
+        background: transparent !important;
+        box-shadow: none !important;
+        border: none !important;
+      }
+
+      .action-button:focus,
+      .action-button:active {
+        background: transparent !important;
+        box-shadow: none !important;
+        border: none !important;
+        outline: none !important;
+      }
+
+      /* Light mode specific overrides */
+      [data-theme="light"] .action-button {
+        color: var(--light-text-primary) !important;
+        background: transparent !important;
+      }
+
+      [data-theme="light"] .action-button:hover,
+      [data-theme="light"] .action-button:focus,
+      [data-theme="light"] .action-button:active {
+        color: var(--light-text-primary) !important;
+        background: transparent !important;
+        box-shadow: none !important;
+      }
+
+      /* Dark mode specific overrides */
+      [data-theme="dark"] .action-button {
+        color: var(--dark-text-primary) !important;
+        background: transparent !important;
+      }
+
+      [data-theme="dark"] .action-button:hover,
+      [data-theme="dark"] .action-button:focus,
+      [data-theme="dark"] .action-button:active {
+        color: var(--dark-text-primary) !important;
+        background: transparent !important;
+        box-shadow: none !important;
       }
 
       .action-button.liked {
-        color: #ed4956;
+        color: #ed4956 !important;
+      }
+
+      [data-theme="light"] .action-button.liked,
+      [data-theme="dark"] .action-button.liked {
+        color: #ed4956 !important;
       }
 
       .action-button.saved {
-        color: var(--text-primary);
+        color: var(--text-primary) !important;
+      }
+
+      [data-theme="light"] .action-button.saved {
+        color: var(--light-text-primary) !important;
+      }
+
+      [data-theme="dark"] .action-button.saved {
+        color: var(--dark-text-primary) !important;
       }
 
       .like-count {
         font-size: var(--font-size-sm);
         font-weight: var(--font-weight-semibold);
-        color: var(--text-primary);
+        color: var(--text-primary) !important;
         margin-left: var(--space-xxs);
+      }
+
+      /* Light mode specific override for like count */
+      [data-theme="light"] .like-count {
+        color: var(--light-text-primary) !important;
+      }
+
+      /* Dark mode specific override for like count */
+      [data-theme="dark"] .like-count {
+        color: var(--dark-text-primary) !important;
       }
 
       .post-content {
@@ -1312,7 +1457,11 @@
 
       /* Instagram-style button for all main actions */
       .insta-btn {
-        background: linear-gradient(135deg, var(--instagram-blue), #0077c2) !important;
+        background: linear-gradient(
+          135deg,
+          var(--instagram-blue),
+          #0077c2
+        ) !important;
         color: #fff !important;
         border: 1.5px solid rgba(0, 149, 246, 0.2) !important;
         border-radius: var(--border-radius-sm);
@@ -1328,7 +1477,11 @@
       }
       .insta-btn:hover,
       .insta-btn:focus {
-        background: linear-gradient(135deg, #0077c2, var(--instagram-blue)) !important;
+        background: linear-gradient(
+          135deg,
+          #0077c2,
+          var(--instagram-blue)
+        ) !important;
         color: #fff !important;
         box-shadow: 0 4px 16px 0 rgba(0, 149, 246, 0.25) !important;
         border: 1.5px solid rgba(0, 149, 246, 0.3) !important;
@@ -1373,44 +1526,6 @@
       <div class="tab active" data-tab="preview">Preview</div>
       <div class="tab" data-tab="create">Create</div>
       <div class="tab" data-tab="convert">Convert</div>
-      <button id="themeToggle" class="theme-toggle">
-        <svg
-          class="sun-icon"
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <circle cx="12" cy="12" r="5"></circle>
-          <line x1="12" y1="1" x2="12" y2="3"></line>
-          <line x1="12" y1="21" x2="12" y2="23"></line>
-          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-          <line x1="1" y1="12" x2="3" y2="12"></line>
-          <line x1="21" y1="12" x2="23" y2="12"></line>
-          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-        </svg>
-        <svg
-          class="moon-icon"
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-        </svg>
-      </button>
     </div>
 
     <div class="version-info">v1.0.1</div>
@@ -1682,6 +1797,46 @@
         </div>
       </div>
     </div>
+
+    <!-- Theme toggle button moved to bottom -->
+    <button id="themeToggle" class="theme-toggle">
+      <svg
+        class="sun-icon"
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+      <svg
+        class="moon-icon"
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+    </button>
 
     <script>
       // Tab switching
