@@ -60,6 +60,30 @@ To modify or build from source:
 4. Run `npm run build` to compile the TypeScript code
 5. Load the plugin in Figma by selecting "Import plugin from manifest..."
 
+### Building for Production
+
+When you're ready to publish your plugin to the Figma Plugin Store:
+
+1. Update the version number in `package.json` and `manifest.json`
+2. Run the production build script:
+   - On macOS/Linux: `./build.sh`
+   - On Windows: `build.bat`
+3. The production-ready files will be available in the `dist` folder
+
+## Contributing
+
+Contributions are welcome! Here's how you can contribute:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Run tests and linting (`npm run lint`)
+5. Commit your changes (`git commit -m 'Add some amazing feature'`)
+6. Push to the branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
+
+Please make sure your code follows the existing style and includes appropriate tests.
+
 ## License
 
 MIT License

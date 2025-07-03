@@ -28,7 +28,7 @@ const RESOLUTION_PRESETS: { [key: string]: ResolutionPreset } = {
 };
 
 // Show UI
-figma.showUI(__html__, { width: 360, height: 580 });
+figma.showUI(__html__, { width: 360, height: 800 });
 
 // Listen for selection changes to update preview
 figma.on('selectionchange', () => {

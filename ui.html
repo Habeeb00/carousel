@@ -1,1820 +1,2689 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <style>
-    :root {
-      /* Color variables */
-      --instagram-blue: #0095F6;
-      --instagram-gradient-start: #405DE6;
-      --instagram-gradient-mid: #5851DB;
-      --instagram-gradient-mid2: #833AB4;
-      --instagram-gradient-mid3: #C13584;
-      --instagram-gradient-mid4: #E1306C;
-      --instagram-gradient-end: #FD1D1D;
-      --instagram-yellow: #FCAF45;
-      --instagram-orange: #F77737;
-      
-      /* Dark mode colors */
-      --dark-bg-primary: #121212;
-      --dark-bg-secondary: #1f1f1f;
-      --dark-bg-elevated: #2a2a2a;
-      --dark-text-primary: #f5f5f5;
-      --dark-text-secondary: #a8a8a8;
-      --dark-border: #373737;
-      --dark-separator: #262626;
-      
-      /* Typography system */
-      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      --font-size-xs: 11px;
-      --font-size-sm: 12px;
-      --font-size-md: 14px;
-      --font-size-lg: 16px;
-      --font-size-xl: 18px;
-      --font-size-xxl: 22px;
-      
-      --font-weight-regular: 400;
-      --font-weight-medium: 500;
-      --font-weight-semibold: 600;
-      --font-weight-bold: 700;
-      
-      --line-height-tight: 1.2;
-      --line-height-normal: 1.4;
-      --line-height-relaxed: 1.6;
-      
-      /* Spacing system */
-      --space-xxs: 4px;
-      --space-xs: 8px;
-      --space-sm: 12px;
-      --space-md: 16px;
-      --space-lg: 24px;
-      --space-xl: 32px;
-      
-      /* Borders and shadows */
-      --border-radius-sm: 4px;
-      --border-radius-md: 8px;
-      --border-radius-lg: 12px;
-      --border-radius-full: 9999px;
-      
-      --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
-      --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
-      --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
-    }
-    
-    /* Reset all scrollbar styling */
-    * {
-      scrollbar-width: none; /* Hide Firefox scrollbar */
-      -ms-overflow-style: none; /* Hide IE/Edge scrollbar */
-    }
-    
-    /* Hide WebKit scrollbar but keep functionality */
-    ::-webkit-scrollbar {
-      display: none;
-      width: 0;
-      height: 0;
-    }
-    
-    /* Custom scrollbar implementation using pseudo-elements */
-    .section, .tab-content.active {
-      position: relative;
-      overflow-y: auto;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-    }
-    
-    .section::after, .tab-content.active::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 4px;
-      height: 100%;
-      background: transparent;
-      pointer-events: none;
-    }
-    
-    .section:hover::after, .tab-content.active:hover::after {
-      background: rgba(255, 255, 255, 0.2);
-    }
-    
-    html {
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
-    }
-    
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    
-    body {
-      font-family: var(--font-family);
-      margin: 0;
-      padding: var(--space-sm);
-      padding-right: var(--space-sm) !important;
-      padding-bottom: var(--space-xs) !important;
-      color: var(--dark-text-primary);
-      background-color: var(--dark-bg-primary);
-      overflow-x: hidden;
-      height: 100vh;
-      box-sizing: border-box;
-      font-size: var(--font-size-md);
-      line-height: var(--line-height-normal);
-      letter-spacing: 0.01em;
-    }
-    
-    h1, h2, h3, h4, h5, h6 {
-      margin: 0;
-      line-height: var(--line-height-tight);
-      font-weight: var(--font-weight-semibold);
-    }
-    
-    h1 {
-      font-size: var(--font-size-xxl);
-      margin-bottom: var(--space-md);
-    }
-    
-    h2 {
-      font-size: var(--font-size-xl);
-      margin-bottom: var(--space-sm);
-    }
-    
-    h3 {
-      font-size: var(--font-size-lg);
-      margin-bottom: var(--space-xs);
-    }
-    
-    p {
-      margin: 0 0 var(--space-sm) 0;
-    }
-    
-    .section {
-      background-color: var(--dark-bg-secondary);
-      border: 1px solid var(--dark-border);
-      border-radius: var(--border-radius-md);
-      padding: var(--space-md);
-      padding-right: var(--space-md) !important;
-      margin-bottom: var(--space-md);
-      max-height: 400px;
-      overflow-y: auto;
-      position: relative;
-      box-sizing: border-box;
-      box-shadow: var(--shadow-sm);
-    }
-    
-    .section-title {
-      font-size: var(--font-size-md);
-      font-weight: var(--font-weight-semibold);
-      margin-bottom: var(--space-sm);
-      color: var(--dark-text-primary);
-      letter-spacing: 0.02em;
-    }
-    
-    label {
-      display: block;
-      margin-bottom: var(--space-xs);
-      font-size: var(--font-size-sm);
-      font-weight: var(--font-weight-medium);
-      color: var(--dark-text-secondary);
-      letter-spacing: 0.03em;
-    }
-    
-    select, input {
-      width: 100%;
-      padding: var(--space-sm);
-      border-radius: var(--border-radius-sm);
-      border: 1px solid var(--dark-border);
-      background-color: var(--dark-bg-elevated);
-      color: var(--dark-text-primary);
-      margin-bottom: var(--space-sm);
-      font-size: var(--font-size-sm);
-      transition: all 0.2s ease;
-      backdrop-filter: blur(5px);
-    }
-    
-    select:focus, input:focus {
-      border-color: var(--instagram-blue);
-      outline: none;
-      box-shadow: 0 0 0 2px rgba(0, 149, 246, 0.2);
-    }
-    
-    button {
-      background: linear-gradient(135deg, var(--instagram-blue), #0077c2);
-      color: white;
-      border: none;
-      border-radius: var(--border-radius-sm);
-      padding: var(--space-sm) var(--space-md);
-      cursor: pointer;
-      font-size: var(--font-size-md);
-      font-weight: var(--font-weight-semibold);
-      transition: all 0.2s ease;
-      position: relative;
-      overflow: hidden;
-      letter-spacing: 0.02em;
-    }
-    
-    button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: all 0.6s ease;
-    }
-    
-    button:hover {
-      background: linear-gradient(135deg, #0077c2, var(--instagram-blue));
-      transform: translateY(-1px);
-      box-shadow: var(--shadow-md);
-    }
-    
-    button:hover::before {
-      left: 100%;
-    }
-    
-    button.secondary {
-      background: transparent;
-      color: var(--instagram-blue);
-      border: 1px solid var(--dark-border);
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-    }
-    
-    button.secondary:hover {
-      background-color: rgba(0, 149, 246, 0.1);
-      border-color: var(--instagram-blue);
-    }
-    
-    .actions {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-xxs);
-      margin-bottom: 0;
-    }
-    
-    .preview-container {
-      margin-bottom: var(--space-md);
-      border: 1px solid var(--dark-border);
-      border-radius: var(--border-radius-md);
-      overflow: hidden;
-      background-color: var(--dark-bg-secondary);
-      margin-right: 0 !important;
-      padding-right: 0 !important;
-      box-sizing: border-box;
-      box-shadow: var(--shadow-md);
-      position: relative;
-    }
-    
-    .preview-container::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    }
-    
-    .instagram-post {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      margin-right: 0 !important;
-      padding-right: 0 !important;
-      box-sizing: border-box;
-    }
-    
-    .post-header {
-      display: flex;
-      align-items: center;
-      padding: var(--space-sm);
-      border-bottom: 1px solid var(--dark-separator);
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), transparent);
-    }
-    
-    .profile-pic {
-      width: 32px;
-      height: 32px;
-      border-radius: var(--border-radius-full);
-      margin-right: var(--space-sm);
-      background: linear-gradient(45deg, var(--instagram-gradient-start), var(--instagram-gradient-end));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: var(--font-weight-bold);
-      font-size: var(--font-size-md);
-      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
-    }
-    
-    .user-info {
-      flex-grow: 1;
-    }
-    
-    .username {
-      font-weight: var(--font-weight-semibold);
-      font-size: var(--font-size-md);
-      margin-bottom: 2px;
-      color: var(--dark-text-primary);
-    }
-    
-    .location {
-      font-size: var(--font-size-sm);
-      color: var(--dark-text-secondary);
-    }
-    
-    .carousel-container {
-      position: relative;
-      width: 100%;
-      background-color: black;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      margin-right: 0 !important;
-      padding-right: 0 !important;
-      box-sizing: border-box;
-    }
-    
-    .carousel-preview {
-      position: relative;
-      width: 100%;
-      overflow: hidden;
-      background-color: black;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0;
-    }
-    
-    /* Default aspect ratio (1:1) */
-    .carousel-preview {
-      aspect-ratio: 1 / 1;
-    }
-    
-    /* Specific aspect ratios based on resolution */
-    .carousel-preview.ratio-1080x1080 {
-      aspect-ratio: 1 / 1;
-    }
-    
-    .carousel-preview.ratio-1080x1920 {
-      aspect-ratio: 9 / 16;
-    }
-    
-    .carousel-preview.ratio-1080x1350 {
-      aspect-ratio: 4 / 5;
-    }
-    
-    .carousel-preview.ratio-1080x608 {
-      aspect-ratio: 16 / 9;
-    }
-    
-    .carousel-wrapper {
-      display: flex;
-      transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-      width: 100%;
-      height: 100%;
-      background-color: var(--dark-bg-primary);
-    }
-    
-    .carousel-wrapper.smooth {
-      transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-    }
-    
-    .carousel-item {
-      min-width: 100%;
-      height: 100%;
-      background-color: var(--dark-bg-primary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      flex-shrink: 0;
-      overflow: hidden;
-      margin: 0;
-      padding: 0;
-      border: none;
-    }
-    
-    .carousel-item img {
-      max-width: 100%;
-      max-height: 100%;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
-    }
-    
-    .slide-number {
-      position: absolute;
-      top: var(--space-xs);
-      right: var(--space-xs);
-      background-color: rgba(0, 0, 0, 0.6);
-      color: white;
-      font-size: var(--font-size-xs);
-      padding: 2px 6px;
-      border-radius: var(--border-radius-full);
-      backdrop-filter: blur(4px);
-      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
-      letter-spacing: 0.03em;
-    }
-    
-    .carousel-nav {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      pointer-events: none;
-      height: 100%;
-      width: 100%;
-      z-index: 5;
-    }
-    
-    .nav-arrow {
-      width: 32px;
-      height: 32px;
-      background-color: rgba(38, 38, 38, 0.8);
-      border-radius: var(--border-radius-full);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      pointer-events: auto;
-      box-shadow: var(--shadow-md);
-      opacity: 0.9;
-      color: var(--dark-text-primary);
-      transition: all 0.2s ease;
-      backdrop-filter: blur(4px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 10;
-    }
-    
-    .nav-arrow.prev {
-      left: var(--space-xs);
-    }
-    
-    .nav-arrow.next {
-      right: var(--space-xs);
-    }
-    
-    .nav-arrow:hover {
-      opacity: 1;
-      background-color: var(--dark-bg-elevated);
-      transform: translateY(-50%) scale(1.05);
-    }
-    
-    .carousel-indicator {
-      display: flex;
-      justify-content: center;
-      gap: 4px;
-      padding: var(--space-sm) 0;
-      background-color: var(--dark-bg-secondary);
-      border-bottom: 1px solid var(--dark-separator);
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
-    }
-    
-    .indicator-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: var(--border-radius-full);
-      background-color: #555555;
-      transition: all 0.2s ease;
-    }
-    
-    .indicator-dot.active {
-      background-color: var(--instagram-blue);
-      box-shadow: 0 0 0 1px rgba(0, 149, 246, 0.3);
-    }
-    
-    .post-actions {
-      display: none; /* Hide the Instagram-like action buttons */
-    }
-    
-    .post-caption {
-      padding: var(--space-xs) var(--space-sm);
-      font-size: var(--font-size-sm);
-      line-height: var(--line-height-normal);
-      color: var(--dark-text-primary);
-    }
-    
-    .post-date {
-      display: none; /* Hide the post date */
-    }
-    
-    .caption-username {
-      font-weight: 600;
-      margin-right: 4px;
-      color: var(--dark-text-primary);
-    }
-    
-    .tab-container {
-      display: flex;
-      border-bottom: 1px solid var(--dark-separator);
-      margin-bottom: var(--space-md);
-      position: relative;
-      overflow: hidden;
-      border-radius: var(--border-radius-sm) var(--border-radius-sm) 0 0;
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), transparent);
-    }
-    
-    .tab-container::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--dark-separator), transparent);
-    }
-    
-    .tab {
-      flex: 1;
-      text-align: center;
-      padding: var(--space-sm);
-      cursor: pointer;
-      font-size: var(--font-size-md);
-      font-weight: var(--font-weight-medium);
-      color: var(--dark-text-secondary);
-      position: relative;
-      transition: all 0.2s ease;
-      letter-spacing: 0.02em;
-    }
-    
-    .tab:hover {
-      color: var(--dark-text-primary);
-      background-color: rgba(255, 255, 255, 0.03);
-    }
-    
-    .tab.active {
-      color: var(--instagram-blue);
-      border-bottom: 2px solid var(--instagram-blue);
-      font-weight: var(--font-weight-semibold);
-    }
-    
-    .tab.active::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--instagram-blue), transparent);
-      opacity: 0.8;
-    }
-    
-    .tab-content {
-      display: none;
-    }
-    
-    .tab-content.active {
-      display: block;
-      max-height: calc(100vh - 100px);
-      overflow-y: auto;
-      position: relative;
-      padding-right: 2px !important; /* Reduced padding */
-      box-sizing: border-box;
-      animation: fadeIn 0.3s ease-in-out;
-    }
-    
-    @keyframes fadeIn {
-      from { opacity: 0.8; transform: translateY(5px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    .info-message {
-      background-color: var(--dark-bg-elevated);
-      border-radius: var(--border-radius-sm);
-      padding: var(--space-xs) var(--space-sm);
-      font-size: var(--font-size-sm);
-      color: var(--dark-text-secondary);
-      margin-bottom: var(--space-sm);
-      border-left: 2px solid rgba(0, 149, 246, 0.5);
-      letter-spacing: 0.01em;
-      line-height: var(--line-height-relaxed);
-    }
+  <head>
+    <style>
+      :root {
+        /* Color variables */
+        --instagram-blue: #0095f6;
+        --instagram-gradient-start: #405de6;
+        --instagram-gradient-mid: #5851db;
+        --instagram-gradient-mid2: #833ab4;
+        --instagram-gradient-mid3: #c13584;
+        --instagram-gradient-mid4: #e1306c;
+        --instagram-gradient-end: #fd1d1d;
+        --instagram-yellow: #fcaf45;
+        --instagram-orange: #f77737;
 
-    .placeholder-text {
-      text-align: center;
-      padding: var(--space-lg);
-      color: var(--dark-text-secondary);
-      font-size: var(--font-size-lg);
-      line-height: var(--line-height-relaxed);
-      max-width: 80%;
-      margin: 0 auto;
-      letter-spacing: 0.01em;
-    }
+        /* Light mode colors */
+        --light-bg-primary: #ffffff;
+        --light-bg-secondary: #fafafa;
+        --light-bg-elevated: #f0f0f0;
+        --light-text-primary: #262626;
+        --light-text-secondary: #737373;
+        --light-border: #dbdbdb;
+        --light-separator: #efefef;
 
-    .note {
-      font-size: var(--font-size-xs);
-      color: var(--dark-text-secondary);
-      margin-top: var(--space-xxs);
-      font-style: italic;
-      letter-spacing: 0.01em;
-      line-height: var(--line-height-tight);
-    }
-    
-    .convert-prompt {
-      background: linear-gradient(135deg, rgba(0, 149, 246, 0.05), rgba(0, 149, 246, 0.1));
-      border: 1px solid rgba(0, 149, 246, 0.2);
-      border-radius: var(--border-radius-md);
-      padding: var(--space-sm);
-      margin-top: var(--space-sm);
-      text-align: center;
-      box-shadow: var(--shadow-sm);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .convert-prompt::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(0, 149, 246, 0.3), transparent);
-    }
-    
-    .convert-prompt p {
-      font-size: var(--font-size-sm);
-      margin-bottom: var(--space-sm);
-      color: var(--dark-text-primary);
-      letter-spacing: 0.01em;
-      line-height: var(--line-height-normal);
-    }
-    
-    /* Add modal styling */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(4px);
-      z-index: 999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      animation: fadeIn 0.2s ease-out;
-    }
-    
-    .modal-content {
-      background: linear-gradient(135deg, var(--dark-bg-secondary), var(--dark-bg-elevated));
-      border-radius: var(--border-radius-md);
-      padding: var(--space-md);
-      max-width: 320px;
-      width: 100%;
-      box-shadow: var(--shadow-lg), 0 0 0 1px rgba(255, 255, 255, 0.05);
-      position: relative;
-      overflow: hidden;
-      animation: scaleIn 0.3s ease-out;
-    }
-    
-    .modal-content::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-    }
-    
-    .modal-title {
-      font-size: var(--font-size-lg);
-      font-weight: var(--font-weight-semibold);
-      margin-bottom: var(--space-sm);
-      color: var(--dark-text-primary);
-      text-align: center;
-      letter-spacing: 0.02em;
-    }
-    
-    .modal-message {
-      font-size: var(--font-size-md);
-      line-height: var(--line-height-relaxed);
-      margin-bottom: var(--space-md);
-      color: var(--dark-text-secondary);
-      text-align: center;
-    }
-    
-    .modal-actions {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-xs);
-    }
-    
-    @keyframes scaleIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
-    }
-    
-    /* Add slider styles */
-    .carousel-slider {
-      padding: var(--space-sm) var(--space-md);
-      background-color: var(--dark-bg-secondary);
-      border-bottom: none;
-      position: relative;
-    }
-    
-    .carousel-slider input[type="range"] {
-      width: 100%;
-      height: 20px;
-      -webkit-appearance: none;
-      background: transparent;
-      position: relative;
-      margin: 0;
-      padding: 0;
-    }
-    
-    .carousel-slider input[type="range"]::-webkit-slider-runnable-track {
-      width: 100%;
-      height: 2px;
-      background: linear-gradient(90deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
-      border: none;
-      border-radius: var(--border-radius-full);
-    }
-    
-    .carousel-slider input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      height: 14px;
-      width: 14px;
-      border-radius: var(--border-radius-full);
-      background: linear-gradient(135deg, #fff, #e0e0e0);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      cursor: pointer;
-      margin-top: -6px;
-      box-shadow: var(--shadow-sm);
-      transition: all 0.2s ease;
-    }
-    
-    .carousel-slider input[type="range"]::-webkit-slider-thumb:hover {
-      transform: scale(1.1);
-      box-shadow: var(--shadow-md);
-    }
-    
-    .carousel-slider input[type="range"]::-moz-range-track {
-      width: 100%;
-      height: 2px;
-      background: linear-gradient(90deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
-      border: none;
-      border-radius: var(--border-radius-full);
-    }
-    
-    .carousel-slider input[type="range"]::-moz-range-thumb {
-      height: 14px;
-      width: 14px;
-      border-radius: var(--border-radius-full);
-      background: linear-gradient(135deg, #fff, #e0e0e0);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      cursor: pointer;
-      box-shadow: var(--shadow-sm);
-      transition: all 0.2s ease;
-    }
-    
-    .carousel-slider input[type="range"]:focus {
-      outline: none;
-    }
-    
-    /* Remove the before element and progress bar styles as we want just a simple line */
-    .carousel-slider::before {
-      display: none;
-    }
-    
-    .carousel-slider input[type="range"] {
-      background: none;
-    }
+        /* Dark mode colors */
+        --dark-bg-primary: #121212;
+        --dark-bg-secondary: #1f1f1f;
+        --dark-bg-elevated: #2a2a2a;
+        --dark-text-primary: #f5f5f5;
+        --dark-text-secondary: #a8a8a8;
+        --dark-border: #373737;
+        --dark-separator: #262626;
 
-    /* Add loading spinner styles */
-    .loading-spinner {
-      width: 40px;
-      height: 40px;
-      border: 3px solid rgba(255, 255, 255, 0.05);
-      border-radius: var(--border-radius-full);
-      border-top-color: var(--instagram-blue);
-      animation: spin 1s ease-in-out infinite;
-      box-shadow: 0 0 10px rgba(0, 149, 246, 0.2);
-    }
-    
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-    
-    /* Mobile device styles */
-    @media (max-width: 480px) {
-      body {
-        padding: var(--space-sm);
-        padding-right: var(--space-sm) !important;
-        font-size: var(--font-size-sm);
+        /* Default theme (system preference) */
+        --bg-primary: var(--dark-bg-primary);
+        --bg-secondary: var(--dark-bg-secondary);
+        --bg-elevated: var(--dark-bg-elevated);
+        --text-primary: var(--dark-text-primary);
+        --text-secondary: var(--dark-text-secondary);
+        --border: var(--dark-border);
+        --separator: var(--dark-separator);
+
+        /* Typography system */
+        --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif;
+        --font-size-xs: 11px;
+        --font-size-sm: 12px;
+        --font-size-md: 14px;
+        --font-size-lg: 16px;
+        --font-size-xl: 18px;
+        --font-size-xxl: 22px;
+
+        --font-weight-regular: 400;
+        --font-weight-medium: 500;
+        --font-weight-semibold: 600;
+        --font-weight-bold: 700;
+
+        --line-height-tight: 1.2;
+        --line-height-normal: 1.4;
+        --line-height-relaxed: 1.6;
+
+        /* Spacing system */
+        --space-xxs: 4px;
+        --space-xs: 8px;
+        --space-sm: 12px;
+        --space-md: 16px;
+        --space-lg: 24px;
+        --space-xl: 32px;
+
+        /* Borders and shadows */
+        --border-radius-sm: 4px;
+        --border-radius-md: 8px;
+        --border-radius-lg: 12px;
+        --border-radius-full: 9999px;
+
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+        /* Add RGB variables for Instagram blue */
+        --instagram-blue-rgb: 0, 149, 246;
       }
-      
-      .section {
+
+      /* Reset all scrollbar styling */
+      * {
+        scrollbar-width: none; /* Hide Firefox scrollbar */
+        -ms-overflow-style: none; /* Hide IE/Edge scrollbar */
+      }
+
+      /* Hide WebKit scrollbar but keep functionality */
+      ::-webkit-scrollbar {
+        display: none;
+        width: 0;
+        height: 0;
+      }
+
+      /* Custom scrollbar implementation using pseudo-elements */
+      .section,
+      .tab-content.active {
+        position: relative;
+        overflow-y: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+
+      .section::after,
+      .tab-content.active::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 4px;
+        height: 100%;
+        background: var(--border);
+        pointer-events: none;
+      }
+
+      .section:hover::after,
+      .tab-content.active:hover::after {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      html {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: var(--font-family);
+        margin: 0;
         padding: var(--space-sm);
         padding-right: var(--space-sm) !important;
-        max-height: 350px;
+        padding-bottom: var(--space-xs) !important;
+        color: var(--text-primary);
+        background-color: var(--bg-primary);
+        overflow-x: hidden;
+        height: 100vh;
+        box-sizing: border-box;
+        font-size: var(--font-size-md);
+        line-height: var(--line-height-normal);
+        letter-spacing: 0.01em;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        margin: 0;
+        line-height: var(--line-height-tight);
+        font-weight: var(--font-weight-semibold);
+      }
+
+      h1 {
+        font-size: var(--font-size-xxl);
+        margin-bottom: var(--space-md);
+      }
+
+      h2 {
+        font-size: var(--font-size-xl);
         margin-bottom: var(--space-sm);
       }
-      
-      .section-title {
-        font-size: var(--font-size-sm);
+
+      h3 {
+        font-size: var(--font-size-lg);
         margin-bottom: var(--space-xs);
       }
-      
+
+      p {
+        margin: 0 0 var(--space-sm) 0;
+      }
+
+      .section {
+        background-color: var(--bg-secondary);
+        border: 1px solid var(--border);
+        border-radius: var(--border-radius-md);
+        padding: var(--space-md);
+        padding-right: var(--space-md) !important;
+        margin-bottom: var(--space-md);
+        max-height: 400px;
+        overflow-y: auto;
+        position: relative;
+        box-sizing: border-box;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .section-title {
+        font-size: var(--font-size-md);
+        font-weight: var(--font-weight-semibold);
+        margin-bottom: var(--space-sm);
+        color: var(--text-primary);
+        letter-spacing: 0.02em;
+      }
+
+      label {
+        display: block;
+        margin-bottom: var(--space-xs);
+        font-size: var(--font-size-sm);
+        font-weight: var(--font-weight-medium);
+        color: var(--text-secondary);
+        letter-spacing: 0.03em;
+      }
+
+      select,
+      input {
+        width: 100%;
+        padding: var(--space-sm);
+        border-radius: var(--border-radius-sm);
+        border: 1px solid var(--border);
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+        margin-bottom: var(--space-sm);
+        font-size: var(--font-size-sm);
+        transition: all 0.2s ease;
+        backdrop-filter: blur(5px);
+      }
+
+      select:focus,
+      input:focus {
+        border-color: var(--instagram-blue);
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(0, 149, 246, 0.2);
+      }
+
       button {
+        background: linear-gradient(135deg, var(--instagram-blue), #0077c2) !important;
+        color: white !important;
+        border: 1px solid rgba(0, 149, 246, 0.2) !important;
+        border-radius: var(--border-radius-sm);
+        padding: var(--space-sm) var(--space-md);
+        cursor: pointer;
+        font-size: var(--font-size-md);
+        font-weight: var(--font-weight-semibold);
+        transition: all 0.2s ease;
+        position: relative;
+        overflow: hidden;
+        letter-spacing: 0.02em;
+        box-shadow: 0 2px 8px 0 rgba(0, 149, 246, 0.15) !important;
+      }
+
+      button::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: all 0.6s ease;
+      }
+
+      button:hover {
+        background: linear-gradient(135deg, #0077c2, var(--instagram-blue)) !important;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 16px 0 rgba(0, 149, 246, 0.25) !important;
+        color: white !important;
+      }
+
+      button:hover::before {
+        left: 100%;
+      }
+
+      button.secondary {
+        background-color: var(--bg-elevated);
+        color: var(--text-primary);
+        border: 1px solid var(--border);
+      }
+
+      button.secondary:hover {
+        background-color: var(--bg-primary);
+      }
+
+      .actions {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xxs);
+        margin-bottom: 0;
+      }
+
+      .preview-container {
+        margin-bottom: var(--space-md);
+        border: none;
+        border-radius: var(--border-radius-md);
+        overflow: hidden;
+        background-color: var(--bg-secondary);
+        margin-right: 0 !important;
+        padding-right: 0 !important;
+        box-sizing: border-box;
+        box-shadow: var(--shadow-md);
+        position: relative;
+      }
+
+      .preview-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+      }
+
+      .instagram-post {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        margin-right: 0 !important;
+        padding-right: 0 !important;
+        box-sizing: border-box;
+      }
+
+      .post-header {
+        display: flex;
+        align-items: center;
+        padding: var(--space-sm);
+        border-bottom: 1px solid var(--border);
+        background: var(--bg-secondary);
+      }
+
+      .profile-pic {
+        width: 32px;
+        height: 32px;
+        border-radius: var(--border-radius-full);
+        margin-right: var(--space-sm);
+        background: linear-gradient(
+          45deg,
+          var(--instagram-gradient-start),
+          var(--instagram-gradient-end)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: var(--font-weight-bold);
+        font-size: var(--font-size-md);
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+      }
+
+      .user-info {
+        flex-grow: 1;
+      }
+
+      .username {
+        font-weight: var(--font-weight-semibold);
+        font-size: var(--font-size-md);
+        margin-bottom: 2px;
+        color: var(--text-primary);
+      }
+
+      .location {
+        font-size: var(--font-size-sm);
+        color: var(--text-secondary);
+      }
+
+      .export-badge {
+        background-color: var(--instagram-blue);
+        color: white;
+        font-size: var(--font-size-xs);
+        padding: 3px 8px;
+        border-radius: var(--border-radius-full);
+        font-weight: var(--font-weight-medium);
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        letter-spacing: 0.02em;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .export-badge::before {
+        content: "";
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: #4ade80; /* Green color for production-ready indicator */
+        margin-right: 4px;
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          opacity: 0.6;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0.6;
+        }
+      }
+
+      .version-info {
+        position: absolute;
+        bottom: 4px;
+        right: 4px;
+        font-size: 9px;
+        color: var(--text-secondary);
+        opacity: 0.5;
+        pointer-events: none;
+        z-index: 10;
+      }
+
+      .carousel-container {
+        position: relative;
+        width: 100%;
+        background-color: var(--bg-primary);
+        border: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-right: 0 !important;
+        padding-right: 0 !important;
+        box-sizing: border-box;
+      }
+
+      .carousel-preview {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        background-color: var(--bg-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0;
+      }
+
+      /* Default aspect ratio (1:1) */
+      .carousel-preview {
+        aspect-ratio: 1 / 1;
+      }
+
+      /* Specific aspect ratios based on resolution */
+      .carousel-preview.ratio-1080x1080 {
+        aspect-ratio: 1 / 1;
+      }
+
+      .carousel-preview.ratio-1080x1920 {
+        aspect-ratio: 9 / 16;
+      }
+
+      .carousel-preview.ratio-1080x1350 {
+        aspect-ratio: 4 / 5;
+      }
+
+      .carousel-preview.ratio-1080x608 {
+        aspect-ratio: 16 / 9;
+      }
+
+      .carousel-wrapper {
+        display: flex;
+        transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        width: 100%;
+        height: 100%;
+        background-color: var(--bg-primary);
+      }
+
+      .carousel-wrapper.smooth {
+        transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+      }
+
+      .carousel-item {
+        min-width: 100%;
+        height: 100%;
+        background-color: var(--bg-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        flex-shrink: 0;
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+        border: none;
+      }
+
+      .carousel-item img {
+        max-width: 100%;
+        max-height: 100%;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+      }
+
+      .slide-number {
+        position: absolute;
+        top: var(--space-xs);
+        right: var(--space-xs);
+        background-color: var(--bg-elevated);
+        color: var(--text-primary);
+        font-size: var(--font-size-xs);
+        padding: 2px 6px;
+        border-radius: var(--border-radius-full);
+        backdrop-filter: blur(4px);
+        box-shadow: 0 0 0 1px var(--border);
+        letter-spacing: 0.03em;
+      }
+
+      .carousel-nav {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        pointer-events: none;
+        height: 100%;
+        width: 100%;
+        z-index: 5;
+      }
+
+      .nav-arrow {
+        width: 32px;
+        height: 32px;
+        background-color: var(--bg-elevated);
+        border-radius: var(--border-radius-full);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        pointer-events: auto;
+        box-shadow: var(--shadow-md);
+        opacity: 0.9;
+        color: var(--text-primary);
+        transition: all 0.2s ease;
+        backdrop-filter: blur(4px);
+        border: 1px solid var(--border);
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+      }
+
+      .nav-arrow.prev {
+        left: var(--space-xs);
+      }
+
+      .nav-arrow.next {
+        right: var(--space-xs);
+      }
+
+      .nav-arrow:hover {
+        opacity: 1;
+        background-color: var(--bg-primary);
+        transform: translateY(-50%) scale(1.05);
+      }
+
+      .carousel-indicator {
+        display: flex;
+        justify-content: center;
+        gap: 4px;
+        padding: var(--space-sm) 0;
+        background-color: var(--bg-secondary);
+        border-bottom: none;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.02),
+          transparent
+        );
+      }
+
+      .indicator-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: var(--border-radius-full);
+        background-color: var(--text-secondary);
+        opacity: 0.3;
+        transition: all 0.2s ease;
+      }
+
+      .indicator-dot.active {
+        background-color: var(--instagram-blue);
+        opacity: 1;
+      }
+
+      .post-actions {
+        display: flex !important;
+      }
+
+      .post-caption {
+        display: block !important;
+      }
+
+      .post-date {
+        display: block !important;
+      }
+
+      .caption-username {
+        display: inline !important;
+      }
+
+      .tab-container {
+        display: flex;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: var(--space-md);
+        position: relative;
+        overflow: hidden;
+        border-radius: var(--border-radius-sm) var(--border-radius-sm) 0 0;
+        background: var(--bg-secondary);
+      }
+
+      .tab-container::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.1),
+          transparent
+        );
+      }
+
+      .tab {
+        flex: 1;
+        text-align: center;
+        padding: var(--space-sm);
+        cursor: pointer;
+        font-size: var(--font-size-md);
+        font-weight: var(--font-weight-medium);
+        color: var(--text-secondary);
+        position: relative;
+        transition: all 0.2s ease;
+        letter-spacing: 0.02em;
+      }
+
+      .tab:hover {
+        color: var(--text-primary);
+        background-color: var(--bg-elevated);
+      }
+
+      .tab.active {
+        color: var(--instagram-blue);
+        border-bottom: 2px solid var(--instagram-blue);
+        font-weight: var(--font-weight-semibold);
+      }
+
+      .tab.active::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--instagram-blue),
+          transparent
+        );
+        opacity: 0.8;
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+        max-height: calc(100vh - 100px);
+        overflow-y: auto;
+        position: relative;
+        padding-right: 2px !important; /* Reduced padding */
+        box-sizing: border-box;
+        animation: fadeIn 0.3s ease-in-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0.8;
+          transform: translateY(5px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .info-message {
+        background-color: var(--bg-elevated);
+        border-radius: var(--border-radius-sm);
         padding: var(--space-xs) var(--space-sm);
         font-size: var(--font-size-sm);
+        color: var(--text-secondary);
+        margin-bottom: var(--space-sm);
+        border: 1px solid var(--border);
+        letter-spacing: 0.01em;
+        line-height: var(--line-height-relaxed);
       }
-      
-      .modal-content {
-        max-width: 280px;
-        padding: var(--space-sm);
-      }
-      
-      .modal-title {
-        font-size: var(--font-size-md);
-      }
-      
-      .modal-message {
-        font-size: var(--font-size-sm);
-      }
-      
-      /* Custom scrollbar adjustments for mobile */
-      .custom-scrollbar-indicator {
-        width: 3px !important;
-        right: 0 !important;
-        opacity: 0.5 !important;
-      }
-      
-      /* Force scrollbar to be flush with edge */
-      .tab-content.active,
-      .section,
-      .preview-container {
-        margin-right: 0 !important;
-        padding-right: 8px !important;
-      }
-    }
-  </style>
-  
-</head>
-<body>
-  <div class="tab-container">
-    <div class="tab active" data-tab="preview">Preview</div>
-    <div class="tab" data-tab="create">Create</div>
-    <div class="tab" data-tab="convert">Convert</div>
-  </div>
-  
-  <div class="tab-content active" id="preview-tab">
-    <div class="preview-container" id="previewContainer">
-      <div class="instagram-post">
-        <div class="post-header">
-          <div class="profile-pic">F</div>
-          <div class="user-info">
-            <div class="username">figmadesign</div>
-            <div class="location" id="previewResolution">Instagram Carousel</div>
-          </div>
-        </div>
-        
-        <div id="welcomeMessage" style="display: block; padding: 20px; text-align: center; background-color: var(--dark-bg-secondary); min-height: 300px; display: flex; align-items: center; justify-content: center;">
-          <div class="placeholder-text">
-            Select a carousel frame in your design to see a preview here.
-          </div>
-        </div>
-        
-        <div id="loadingMessage" style="display: none; padding: 20px; text-align: center; background-color: var(--dark-bg-secondary); min-height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-          <div class="loading-spinner"></div>
-          <div class="placeholder-text" style="margin-top: 16px;">
-            Generating preview...
-          </div>
-        </div>
-        
-        <div class="carousel-container" id="carouselContainer" style="display: none;">
-          <div class="carousel-preview" id="carouselPreview">
-            <div class="carousel-wrapper" id="carouselWrapper">
-              <!-- Preview frames will be inserted here -->
-            </div>
-          </div>
-          
-          <div class="carousel-nav" id="carouselNav">
-            <div class="nav-arrow prev" id="prevSlide">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="15 18 9 12 15 6"></polyline>
-              </svg>
-            </div>
-            <div class="nav-arrow next" id="nextSlide">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="9 18 15 12 9 6"></polyline>
-              </svg>
-            </div>
-          </div>
-          
-          <!-- Add slider control -->
-          <div class="carousel-slider">
-            <input type="range" id="carouselSlider" min="0" step="0.01" value="0">
-          </div>
-          
-          <div class="carousel-indicator" id="carouselIndicator">
-            <!-- Indicator dots will be inserted here -->
-          </div>
-        </div>
-        
-        <div class="post-caption">
-          <span class="caption-username">figmadesign</span>
-          <span id="previewCaption">Check out this Instagram carousel created with the Carousel Creator plugin!</span>
-        </div>
-        
-        <div id="convertPrompt" class="convert-prompt" style="display: none;">
-          <p>This is a regular frame. Convert it to an Instagram carousel to add guides and enable multi-slide export.</p>
-          <button id="quickConvert" class="secondary">Convert to Carousel</button>
-        </div>
-      </div>
-    </div>
-    
-    <div class="actions">
-      <button id="export" style="background-color: var(--instagram-blue); font-size: var(--font-size-md); padding: var(--space-xs) var(--space-sm); width: 100%;">Export Slides</button>
-      <p class="note">Note: Visual indicators and guide lines are only visible in Figma. They will be automatically removed during export.</p>
-    </div>
-  </div>
-  
-  <div class="tab-content" id="create-tab">
-    <div class="section">
-      <div class="section-title">Create New Carousel</div>
-      
-      <label for="resolution">Resolution Preset</label>
-      <select id="resolution">
-        <option value="1080x1080">Instagram Post (1080×1080)</option>
-        <option value="1080x1920">Instagram Story (1080×1920)</option>
-        <option value="1080x1350">Instagram Portrait (1080×1350)</option>
-        <option value="1080x608">Instagram Landscape (1080×608)</option>
-      </select>
-      
-      <label for="frames">Number of Frames</label>
-      <input type="number" id="frames" min="1" max="10" value="3">
-      
-      <div class="actions">
-        <button id="create">Create Carousel</button>
-      </div>
-    </div>
-  </div>
-  
-  <div class="tab-content" id="convert-tab">
-    <div class="section">
-      <div class="section-title">Convert Existing Frame</div>
-      
-      <div class="info-message">
-        Select a frame in your design, then click "Convert to Carousel" to add slide guides.
-      </div>
-      
-      <label for="convert-resolution">Resolution Preset</label>
-      <select id="convert-resolution">
-        <option value="1080x1080">Instagram Post (1080×1080)</option>
-        <option value="1080x1920">Instagram Story (1080×1920)</option>
-        <option value="1080x1350">Instagram Portrait (1080×1350)</option>
-        <option value="1080x608">Instagram Landscape (1080×608)</option>
-      </select>
-      
-      <div class="actions">
-        <button id="convert">Convert to Carousel</button>
-        <button id="check-compatibility" class="secondary">Check Compatibility</button>
-      </div>
-    </div>
-  </div>
 
-<script>
-    // Tab switching
-    document.addEventListener('DOMContentLoaded', function() {
-      // Tab switching
-      document.querySelectorAll('.tab').forEach(tab => {
-        tab.addEventListener('click', () => {
-          document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-          document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-          
-          tab.classList.add('active');
-          document.getElementById(tab.dataset.tab + '-tab').classList.add('active');
-          
-          // Initialize custom scrollbars after tab switch
-          initCustomScrollbars();
-        });
-      });
-      
-      // Initialize custom scrollbar indicators
-      initCustomScrollbars();
-      
-      // Create carousel
-      const createBtn = document.getElementById('create');
-      if (createBtn) {
-        createBtn.onclick = () => {
-          const resolution = document.getElementById('resolution').value;
-          const frameCount = parseInt(document.getElementById('frames').value, 10);
-          
-          parent.postMessage({ 
-            pluginMessage: { 
-              type: 'create-carousel', 
-              resolution: resolution,
-              frameCount: frameCount
-            }
-          }, '*');
-          
-          // Switch to preview tab after creating
-          setTimeout(() => {
-            const previewTab = document.querySelector('[data-tab="preview"]');
-            if (previewTab) previewTab.click();
-          }, 500);
+      .placeholder-text {
+        text-align: center;
+        padding: var(--space-lg);
+        color: var(--text-secondary);
+        font-size: var(--font-size-lg);
+        line-height: var(--line-height-relaxed);
+        max-width: 80%;
+        margin: 0 auto;
+        letter-spacing: 0.01em;
+      }
+
+      .note {
+        font-size: var(--font-size-xs);
+        color: var(--text-secondary);
+        margin-top: var(--space-xxs);
+        font-style: italic;
+        letter-spacing: 0.01em;
+        line-height: var(--line-height-tight);
+      }
+
+      .convert-prompt {
+        background: linear-gradient(
+          135deg,
+          rgba(var(--instagram-blue-rgb), 0.05),
+          rgba(var(--instagram-blue-rgb), 0.1)
+        );
+        border: 1px solid var(--border);
+        border-radius: var(--border-radius-md);
+        padding: var(--space-sm);
+        margin-top: var(--space-sm);
+        text-align: center;
+        box-shadow: var(--shadow-sm);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .convert-prompt::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(0, 149, 246, 0.3),
+          transparent
+        );
+      }
+
+      .convert-prompt p {
+        font-size: var(--font-size-sm);
+        margin-bottom: var(--space-sm);
+        color: var(--text-primary);
+        letter-spacing: 0.01em;
+        line-height: var(--line-height-normal);
+      }
+
+      /* Add modal styling */
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        z-index: 999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: fadeIn 0.2s ease-out;
+      }
+
+      .modal-content {
+        background: linear-gradient(
+          135deg,
+          var(--bg-secondary),
+          var(--bg-elevated)
+        );
+        border-radius: var(--border-radius-md);
+        padding: var(--space-md);
+        max-width: 320px;
+        width: 100%;
+        box-shadow: var(--shadow-lg), 0 0 0 1px rgba(255, 255, 255, 0.05);
+        position: relative;
+        overflow: hidden;
+        animation: scaleIn 0.3s ease-out;
+      }
+
+      .modal-content::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.1),
+          transparent
+        );
+      }
+
+      .modal-title {
+        font-size: var(--font-size-lg);
+        font-weight: var(--font-weight-semibold);
+        margin-bottom: var(--space-sm);
+        color: var(--text-primary);
+        text-align: center;
+        letter-spacing: 0.02em;
+      }
+
+      .modal-message {
+        font-size: var(--font-size-md);
+        line-height: var(--line-height-relaxed);
+        margin-bottom: var(--space-md);
+        color: var(--text-secondary);
+        text-align: center;
+      }
+
+      .modal-actions {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+      }
+
+      @keyframes scaleIn {
+        from {
+          opacity: 0;
+          transform: scale(0.95);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
         }
       }
-      
-      // Function to initialize custom scrollbars
-      function initCustomScrollbars() {
-        // Find all scrollable elements
-        const scrollableElements = document.querySelectorAll('.section, .tab-content.active');
-        
-        scrollableElements.forEach(element => {
-          // Create custom scrollbar indicator if it doesn't exist
-          if (!element.querySelector('.custom-scrollbar-indicator')) {
-            const scrollIndicator = document.createElement('div');
-            scrollIndicator.className = 'custom-scrollbar-indicator';
-            scrollIndicator.style.position = 'absolute';
-            scrollIndicator.style.top = '0';
-            scrollIndicator.style.right = '0';
-            scrollIndicator.style.width = '4px';
-            scrollIndicator.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
-            scrollIndicator.style.opacity = '0';
-            scrollIndicator.style.transition = 'opacity 0.3s';
-            scrollIndicator.style.zIndex = '100';
-            scrollIndicator.style.borderRadius = '2px';
-            element.appendChild(scrollIndicator);
-            
-            // Update scrollbar on scroll
-            element.addEventListener('scroll', updateScrollIndicator);
-            
-            // Show scrollbar on hover
-            element.addEventListener('mouseenter', () => {
-              const indicator = element.querySelector('.custom-scrollbar-indicator');
-              if (indicator) indicator.style.opacity = '1';
-            });
-            
-            // Hide scrollbar when not hovering
-            element.addEventListener('mouseleave', () => {
-              const indicator = element.querySelector('.custom-scrollbar-indicator');
-              if (indicator && !element.classList.contains('scrolling')) {
-                indicator.style.opacity = '0';
+
+      /* Add slider styles */
+      .carousel-slider {
+        padding: var(--space-sm) var(--space-md);
+        background-color: var(--bg-secondary);
+        border-bottom: none;
+        position: relative;
+      }
+
+      .carousel-slider input[type="range"] {
+        width: 100%;
+        height: 20px;
+        -webkit-appearance: none;
+        background: var(--border);
+        position: relative;
+        margin: 0;
+        padding: 0;
+        outline: none !important;
+        border: none !important;
+      }
+
+      .carousel-slider input[type="range"]::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 2px;
+        background: var(--border);
+        border: none;
+        border-radius: var(--border-radius-full);
+      }
+
+      .carousel-slider input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        height: 14px;
+        width: 14px;
+        border-radius: var(--border-radius-full);
+        background: var(--text-primary);
+        border: 2px solid var(--bg-primary);
+        cursor: pointer;
+        margin-top: -6px;
+        box-shadow: 0 0 0 1px var(--border);
+        transition: all 0.2s ease;
+      }
+
+      .carousel-slider input[type="range"]::-webkit-slider-thumb:hover {
+        transform: scale(1.1);
+        box-shadow: var(--shadow-md);
+      }
+
+      .carousel-slider input[type="range"]::-moz-range-track {
+        width: 100%;
+        height: 2px;
+        background: var(--border);
+        border: none;
+        border-radius: var(--border-radius-full);
+      }
+
+      .carousel-slider input[type="range"]::-moz-range-thumb {
+        height: 14px;
+        width: 14px;
+        border-radius: var(--border-radius-full);
+        background: var(--text-primary);
+        border: 2px solid var(--bg-primary);
+        cursor: pointer;
+        box-shadow: var(--shadow-sm);
+        transition: all 0.2s ease;
+      }
+
+      .carousel-slider input[type="range"]:focus {
+        outline: none !important;
+        border: none !important;
+        box-shadow: none !important;
+      }
+
+      /* Remove the before element and progress bar styles as we want just a simple line */
+      .carousel-slider::before {
+        display: none;
+      }
+
+      .carousel-slider input[type="range"] {
+        background: none;
+      }
+
+      /* Add loading spinner styles */
+      .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid var(--border);
+        border-radius: var(--border-radius-full);
+        border-top-color: var(--instagram-blue);
+        animation: spin 1s ease-in-out infinite;
+        box-shadow: 0 0 10px rgba(0, 149, 246, 0.2);
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Mobile device styles */
+      @media (max-width: 480px) {
+        body {
+          padding: var(--space-sm);
+          padding-right: var(--space-sm) !important;
+          font-size: var(--font-size-sm);
+        }
+
+        .section {
+          padding: var(--space-sm);
+          padding-right: var(--space-sm) !important;
+          max-height: 350px;
+          margin-bottom: var(--space-sm);
+          border: none;
+        }
+
+        .section-title {
+          font-size: var(--font-size-sm);
+          margin-bottom: var(--space-xs);
+        }
+
+        button {
+          padding: var(--space-xs) var(--space-sm);
+          font-size: var(--font-size-sm);
+          border: none;
+        }
+
+        .modal-content {
+          max-width: 280px;
+          padding: var(--space-sm);
+          border: none;
+        }
+
+        /* Custom scrollbar adjustments for mobile */
+        .custom-scrollbar-indicator {
+          width: 3px !important;
+          right: 0 !important;
+          opacity: 0.5 !important;
+          border: none !important;
+        }
+
+        /* Force scrollbar to be flush with edge */
+        .tab-content.active,
+        .section,
+        .preview-container {
+          margin-right: 0 !important;
+          padding-right: 8px !important;
+          border: none !important;
+        }
+      }
+
+      /* Custom scrollbar styling */
+      .custom-scrollbar-indicator {
+        background: var(--text-secondary) !important;
+        opacity: 0.2 !important;
+      }
+
+      [data-theme="light"] .custom-scrollbar-indicator {
+        opacity: 0.15 !important;
+      }
+
+      /* Global style to remove all outlines */
+      * {
+        outline: none !important;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      *:focus,
+      *:active,
+      *:focus-visible,
+      *:focus-within,
+      *:hover,
+      *:target,
+      *:-moz-focusring,
+      *::-moz-focus-inner {
+        outline: none !important;
+        border-color: transparent !important;
+        box-shadow: none !important;
+      }
+
+      /* Remove outline from body and html */
+      html,
+      body {
+        outline: none !important;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      /* Reset only for specific form elements that need focus styles for accessibility */
+      select:focus,
+      input[type="text"]:focus,
+      input[type="number"]:focus,
+      button:focus {
+        box-shadow: 0 0 0 2px rgba(0, 149, 246, 0.2) !important;
+        outline: none !important;
+        border: none !important;
+      }
+
+      /* Specific fix for scrollbar and carousel elements */
+      .carousel-slider input[type="range"],
+      .carousel-slider input[type="range"]:focus,
+      .carousel-slider input[type="range"]:active,
+      .carousel-slider input[type="range"]::-webkit-slider-runnable-track,
+      .carousel-slider input[type="range"]::-webkit-slider-thumb,
+      .carousel-slider input[type="range"]::-moz-range-track,
+      .carousel-slider input[type="range"]::-moz-range-thumb,
+      .custom-scrollbar-indicator,
+      .carousel-preview,
+      .carousel-wrapper,
+      .carousel-item,
+      .carousel-container,
+      .carousel-nav,
+      .nav-arrow,
+      .carousel-indicator,
+      .indicator-dot {
+        outline: none !important;
+        border: none !important;
+        box-shadow: none !important;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      /* Light mode */
+      [data-theme="light"] {
+        --bg-primary: var(--light-bg-primary);
+        --bg-secondary: var(--light-bg-secondary);
+        --bg-elevated: var(--light-bg-elevated);
+        --text-primary: var(--light-text-primary);
+        --text-secondary: var(--light-text-secondary);
+        --border: var(--light-border);
+        --separator: var(--light-separator);
+      }
+
+      /* Dark mode */
+      [data-theme="dark"] {
+        --bg-primary: var(--dark-bg-primary);
+        --bg-secondary: var(--dark-bg-secondary);
+        --bg-elevated: var(--dark-bg-elevated);
+        --text-primary: var(--dark-text-primary);
+        --text-secondary: var(--dark-text-secondary);
+        --border: var(--dark-border);
+        --separator: var(--dark-separator);
+      }
+
+      /* Add theme toggle button styles */
+      .theme-toggle {
+        position: absolute;
+        right: var(--space-sm);
+        top: var(--space-sm);
+        background-color: var(--bg-elevated);
+        border: 1px solid var(--border);
+        padding: var(--space-xs);
+        cursor: pointer;
+        color: var(--text-secondary);
+        border-radius: var(--border-radius-full);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+      }
+
+      .theme-toggle:hover {
+        background-color: var(--bg-primary);
+      }
+
+      .theme-toggle .sun-icon,
+      .theme-toggle .moon-icon {
+        width: 16px;
+        height: 16px;
+      }
+
+      [data-theme="light"] .theme-toggle .sun-icon {
+        display: none;
+      }
+
+      [data-theme="light"] .theme-toggle .moon-icon {
+        display: block;
+      }
+
+      [data-theme="dark"] .theme-toggle .sun-icon {
+        display: block;
+      }
+
+      [data-theme="dark"] .theme-toggle .moon-icon {
+        display: none;
+      }
+
+      /* Add styles for social interactions */
+      .post-actions {
+        display: flex;
+        align-items: center;
+        padding: var(--space-sm);
+        border-top: 1px solid var(--border);
+        background: var(--bg-secondary);
+      }
+
+      .action-buttons {
+        display: flex;
+        align-items: center;
+        gap: var(--space-md);
+        margin-right: auto;
+      }
+
+      .action-group {
+        display: flex;
+        align-items: center;
+        gap: var(--space-xs);
+      }
+
+      .action-button {
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        color: var(--text-primary);
+        display: flex;
+        align-items: center;
+        transition: all 0.2s ease;
+      }
+
+      .action-button:hover {
+        transform: scale(1.1);
+      }
+
+      .action-button.liked {
+        color: #ed4956;
+      }
+
+      .action-button.saved {
+        color: var(--text-primary);
+      }
+
+      .like-count {
+        font-size: var(--font-size-sm);
+        font-weight: var(--font-weight-semibold);
+        color: var(--text-primary);
+        margin-left: var(--space-xxs);
+      }
+
+      .post-content {
+        padding: var(--space-sm);
+        background: var(--bg-secondary);
+        border-top: 1px solid var(--border);
+      }
+
+      /* Remove the old post-stats section */
+      .post-stats {
+        display: none;
+      }
+
+      .post-caption {
+        font-size: var(--font-size-sm);
+        color: var(--text-primary);
+        line-height: 1.4;
+        margin-bottom: var(--space-xs);
+      }
+
+      .caption-username {
+        font-weight: var(--font-weight-semibold);
+        color: var(--text-primary);
+        text-decoration: none;
+      }
+
+      .post-date {
+        font-size: var(--font-size-xs);
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        margin-top: var(--space-xs);
+      }
+
+      .hashtag {
+        color: var(--instagram-blue);
+        text-decoration: none;
+      }
+
+      .mention {
+        color: var(--instagram-blue);
+        text-decoration: none;
+      }
+
+      /* Remove blue rectangle/focus ring/tap highlight from all interactive elements */
+      button,
+      .action-icon,
+      .action-button,
+      .save-button,
+      .action-icon svg,
+      .action-button svg,
+      .save-button svg {
+        background: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+        border: none !important;
+        -webkit-tap-highlight-color: transparent !important;
+      }
+
+      button:focus,
+      .action-icon:focus,
+      .action-button:focus,
+      .save-button:focus,
+      button:active,
+      .action-icon:active,
+      .action-button:active,
+      .save-button:active {
+        background: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+        border: none !important;
+      }
+
+      *:focus {
+        outline: none !important;
+        box-shadow: none !important;
+        border: none !important;
+      }
+
+      svg:focus,
+      svg:active {
+        outline: none !important;
+        box-shadow: none !important;
+        border: none !important;
+        background: none !important;
+      }
+
+      button::-moz-focus-inner,
+      .action-icon::-moz-focus-inner,
+      .action-button::-moz-focus-inner,
+      .save-button::-moz-focus-inner {
+        border: 0 !important;
+      }
+
+      #export {
+        background: linear-gradient(
+          135deg,
+          var(--instagram-gradient-start),
+          var(--instagram-gradient-mid),
+          var(--instagram-gradient-mid2),
+          var(--instagram-gradient-mid3),
+          var(--instagram-gradient-mid4),
+          var(--instagram-gradient-end),
+          var(--instagram-yellow),
+          var(--instagram-orange)
+        ) !important;
+        background-size: 200% 200% !important;
+        color: #fff !important;
+        border: none !important;
+        font-weight: var(--font-weight-bold) !important;
+        border-radius: var(--border-radius-sm) !important;
+        padding: var(--space-xs) var(--space-sm) !important;
+        font-size: var(--font-size-md) !important;
+        width: 100% !important;
+        transition: background-position 0.4s, box-shadow 0.2s !important;
+        box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1) !important;
+        cursor: pointer !important;
+        outline: none !important;
+      }
+      #export:hover,
+      #export:focus {
+        background-position: right center !important;
+        box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.13) !important;
+        color: #fff !important;
+      }
+
+      /* Instagram-style button for all main actions */
+      .insta-btn {
+        background: linear-gradient(135deg, var(--instagram-blue), #0077c2) !important;
+        color: #fff !important;
+        border: 1.5px solid rgba(0, 149, 246, 0.2) !important;
+        border-radius: var(--border-radius-sm);
+        font-weight: var(--font-weight-bold);
+        font-size: var(--font-size-md);
+        padding: var(--space-xs) var(--space-md);
+        cursor: pointer;
+        transition: background 0.3s, box-shadow 0.2s, color 0.2s, border 0.2s,
+          transform 0.2s;
+        box-shadow: 0 2px 8px 0 rgba(0, 149, 246, 0.15) !important;
+        outline: none;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      }
+      .insta-btn:hover,
+      .insta-btn:focus {
+        background: linear-gradient(135deg, #0077c2, var(--instagram-blue)) !important;
+        color: #fff !important;
+        box-shadow: 0 4px 16px 0 rgba(0, 149, 246, 0.25) !important;
+        border: 1.5px solid rgba(0, 149, 246, 0.3) !important;
+        transform: translateY(-1px);
+      }
+
+      .insta-btn.secondary,
+      button.secondary {
+        background: none;
+        color: var(--instagram-blue);
+        border: 2px solid var(--instagram-blue);
+        box-shadow: none;
+        transition: background 0.2s, color 0.2s, border 0.2s;
+      }
+      .insta-btn.secondary:hover,
+      button.secondary:hover {
+        background: rgba(0, 149, 246, 0.08);
+        color: var(--instagram-blue);
+        border-color: var(--instagram-blue);
+      }
+
+      [data-theme="light"] .insta-btn.secondary,
+      [data-theme="light"] button.secondary {
+        background: #f4f8fb;
+        color: var(--instagram-blue);
+        border: 2px solid var(--instagram-blue);
+      }
+      [data-theme="light"] .insta-btn.secondary:hover,
+      [data-theme="light"] button.secondary:hover {
+        background: #eaf4fb;
+        color: var(--instagram-blue);
+      }
+
+      button,
+      .insta-btn {
+        font-family: var(--font-family);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="tab-container">
+      <div class="tab active" data-tab="preview">Preview</div>
+      <div class="tab" data-tab="create">Create</div>
+      <div class="tab" data-tab="convert">Convert</div>
+      <button id="themeToggle" class="theme-toggle">
+        <svg
+          class="sun-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <svg
+          class="moon-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div class="version-info">v1.0.1</div>
+
+    <div class="tab-content active" id="preview-tab">
+      <div class="preview-container" id="previewContainer">
+        <div class="instagram-post">
+          <div class="post-header">
+            <div class="profile-pic">F</div>
+            <div class="user-info">
+              <div class="username">figmadesign</div>
+              <div class="location" id="previewResolution">
+                Instagram Carousel
+              </div>
+            </div>
+            <div class="export-badge">Ready for export</div>
+          </div>
+
+          <div
+            id="welcomeMessage"
+            style="
+              display: block;
+              padding: 20px;
+              text-align: center;
+              background-color: var(--bg-secondary);
+              min-height: 300px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            "
+          >
+            <div class="placeholder-text">
+              Select a carousel frame in your design to see a preview here.
+            </div>
+          </div>
+
+          <div
+            id="loadingMessage"
+            style="
+              display: none;
+              padding: 20px;
+              text-align: center;
+              background-color: var(--bg-secondary);
+              min-height: 300px;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+            "
+          >
+            <div class="loading-spinner"></div>
+            <div class="placeholder-text" style="margin-top: 16px">
+              Generating preview...
+            </div>
+          </div>
+
+          <div
+            class="carousel-container"
+            id="carouselContainer"
+            style="display: none"
+          >
+            <div class="carousel-preview" id="carouselPreview">
+              <div class="carousel-wrapper" id="carouselWrapper">
+                <!-- Preview frames will be inserted here -->
+              </div>
+            </div>
+
+            <div class="carousel-nav" id="carouselNav">
+              <div class="nav-arrow prev" id="prevSlide">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </div>
+              <div class="nav-arrow next" id="nextSlide">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Add slider control -->
+            <div class="carousel-slider">
+              <input
+                type="range"
+                id="carouselSlider"
+                min="0"
+                step="0.01"
+                value="0"
+              />
+            </div>
+
+            <div class="carousel-indicator" id="carouselIndicator">
+              <!-- Indicator dots will be inserted here -->
+            </div>
+          </div>
+
+          <div class="post-actions">
+            <div class="action-buttons">
+              <div class="action-group">
+                <button class="action-button" id="likeButton">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path
+                      d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                    ></path>
+                  </svg>
+                </button>
+                <span class="like-count" id="likeCount">1,234</span>
+              </div>
+              <button class="action-button">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"
+                  ></path>
+                </svg>
+              </button>
+              <button class="action-button">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <line x1="22" y1="2" x2="11" y2="13"></line>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+              </button>
+            </div>
+            <button class="action-button" id="saveButton">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"
+                ></path>
+              </svg>
+            </button>
+          </div>
+
+          <div class="post-content">
+            <div class="post-caption">
+              <a href="#" class="caption-username">figmadesign</a>
+              Introducing our latest design system components 🎨 Perfect for
+              creating beautiful, consistent interfaces.
+              <a href="#" class="hashtag">#design</a>
+              <a href="#" class="hashtag">#figma</a>
+              <a href="#" class="hashtag">#ux</a>
+              <a href="#" class="mention">@designteam</a>
+            </div>
+            <div class="post-date">2 HOURS AGO</div>
+          </div>
+
+          <div id="convertPrompt" class="convert-prompt" style="display: none">
+            <p>
+              This is a regular frame. Convert it to an Instagram carousel to
+              add guides and enable multi-slide export.
+            </p>
+            <button id="quickConvert" class="secondary">
+              Convert to Carousel
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="export" class="insta-btn">Export Slides</button>
+        <p class="note">
+          Note: Visual indicators and guide lines are only visible in Figma.
+          They will be automatically removed during export.
+        </p>
+      </div>
+    </div>
+
+    <div class="tab-content" id="create-tab">
+      <div class="section">
+        <div class="section-title">Create New Carousel</div>
+
+        <label for="resolution">Resolution Preset</label>
+        <select id="resolution">
+          <option value="1080x1080">Instagram Post (1080×1080)</option>
+          <option value="1080x1920">Instagram Story (1080×1920)</option>
+          <option value="1080x1350">Instagram Portrait (1080×1350)</option>
+          <option value="1080x608">Instagram Landscape (1080×608)</option>
+        </select>
+
+        <label for="frames">Number of Frames</label>
+        <input type="number" id="frames" min="1" max="10" value="3" />
+
+        <div class="actions">
+          <button id="create" class="insta-btn">Create Carousel</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="convert-tab">
+      <div class="section">
+        <div class="section-title">Convert Existing Frame</div>
+
+        <div class="info-message">
+          Select a frame in your design, then click "Convert to Carousel" to add
+          slide guides.
+        </div>
+
+        <label for="convert-resolution">Resolution Preset</label>
+        <select id="convert-resolution">
+          <option value="1080x1080">Instagram Post (1080×1080)</option>
+          <option value="1080x1920">Instagram Story (1080×1920)</option>
+          <option value="1080x1350">Instagram Portrait (1080×1350)</option>
+          <option value="1080x608">Instagram Landscape (1080×608)</option>
+        </select>
+
+        <div class="actions">
+          <button id="convert" class="insta-btn">Convert to Carousel</button>
+          <button id="check-compatibility" class="insta-btn secondary">
+            Check Compatibility
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Tab switching
+      document.addEventListener("DOMContentLoaded", function () {
+        // Tab switching
+        document.querySelectorAll(".tab").forEach((tab) => {
+          tab.addEventListener("click", () => {
+            document
+              .querySelectorAll(".tab")
+              .forEach((t) => t.classList.remove("active"));
+            document
+              .querySelectorAll(".tab-content")
+              .forEach((c) => c.classList.remove("active"));
+
+            tab.classList.add("active");
+            document
+              .getElementById(tab.dataset.tab + "-tab")
+              .classList.add("active");
+
+            // Initialize custom scrollbars after tab switch
+            initCustomScrollbars();
+          });
+        });
+
+        // Initialize custom scrollbar indicators
+        initCustomScrollbars();
+
+        // Create carousel
+        const createBtn = document.getElementById("create");
+        if (createBtn) {
+          createBtn.onclick = () => {
+            const resolution = document.getElementById("resolution").value;
+            const frameCount = parseInt(
+              document.getElementById("frames").value,
+              10
+            );
+
+            parent.postMessage(
+              {
+                pluginMessage: {
+                  type: "create-carousel",
+                  resolution: resolution,
+                  frameCount: frameCount,
+                },
+              },
+              "*"
+            );
+
+            // Switch to preview tab after creating
+            setTimeout(() => {
+              const previewTab = document.querySelector('[data-tab="preview"]');
+              if (previewTab) previewTab.click();
+            }, 500);
+          };
+        }
+
+        // Function to initialize custom scrollbars
+        function initCustomScrollbars() {
+          // Find all scrollable elements
+          const scrollableElements = document.querySelectorAll(
+            ".section, .tab-content.active"
+          );
+
+          scrollableElements.forEach((element) => {
+            // Create custom scrollbar indicator if it doesn't exist
+            if (!element.querySelector(".custom-scrollbar-indicator")) {
+              const scrollIndicator = document.createElement("div");
+              scrollIndicator.className = "custom-scrollbar-indicator";
+              scrollIndicator.style.position = "absolute";
+              scrollIndicator.style.top = "0";
+              scrollIndicator.style.right = "0";
+              scrollIndicator.style.width = "4px";
+              scrollIndicator.style.backgroundColor = "var(--text-secondary)";
+              scrollIndicator.style.opacity = "0";
+              scrollIndicator.style.transition = "opacity 0.3s";
+              scrollIndicator.style.zIndex = "100";
+              scrollIndicator.style.borderRadius = "2px";
+              scrollIndicator.style.border = "none";
+              element.appendChild(scrollIndicator);
+
+              // Update scrollbar on scroll
+              element.addEventListener("scroll", updateScrollIndicator);
+
+              // Show scrollbar on hover
+              element.addEventListener("mouseenter", () => {
+                const indicator = element.querySelector(
+                  ".custom-scrollbar-indicator"
+                );
+                if (indicator) indicator.style.opacity = "1";
+              });
+
+              // Hide scrollbar when not hovering
+              element.addEventListener("mouseleave", () => {
+                const indicator = element.querySelector(
+                  ".custom-scrollbar-indicator"
+                );
+                if (indicator && !element.classList.contains("scrolling")) {
+                  indicator.style.opacity = "0";
+                }
+              });
+
+              // Initial update
+              updateScrollIndicator.call(element);
+            }
+          });
+        }
+
+        // Function to update custom scrollbar indicator
+        function updateScrollIndicator() {
+          const element = this;
+          const indicator = element.querySelector(
+            ".custom-scrollbar-indicator"
+          );
+
+          if (indicator) {
+            // Calculate scrollbar height and position
+            const scrollHeight = element.scrollHeight;
+            const clientHeight = element.clientHeight;
+
+            if (scrollHeight <= clientHeight) {
+              // No need for scrollbar
+              indicator.style.display = "none";
+              return;
+            }
+
+            indicator.style.display = "block";
+
+            // Calculate the height of the scrollbar thumb
+            const thumbHeight = Math.max(
+              30,
+              (clientHeight / scrollHeight) * clientHeight
+            );
+            indicator.style.height = thumbHeight + "px";
+
+            // Calculate the position of the scrollbar thumb
+            const scrollRatio =
+              element.scrollTop / (scrollHeight - clientHeight);
+            const thumbPosition = scrollRatio * (clientHeight - thumbHeight);
+            indicator.style.transform = `translateY(${thumbPosition}px)`;
+
+            // Show scrollbar while scrolling
+            indicator.style.opacity = "1";
+
+            // Mark as scrolling
+            element.classList.add("scrolling");
+
+            // Hide after a delay if not hovering
+            clearTimeout(element.scrollTimer);
+            element.scrollTimer = setTimeout(() => {
+              if (!element.matches(":hover")) {
+                indicator.style.opacity = "0";
               }
-            });
-            
-            // Initial update
-            updateScrollIndicator.call(element);
+              element.classList.remove("scrolling");
+            }, 1000);
+          }
+        }
+
+        // Convert existing frame
+        const convertBtn = document.getElementById("convert");
+        if (convertBtn) {
+          convertBtn.onclick = () => {
+            const resolution =
+              document.getElementById("convert-resolution").value;
+
+            parent.postMessage(
+              {
+                pluginMessage: {
+                  type: "convert-to-carousel",
+                  resolution: resolution,
+                },
+              },
+              "*"
+            );
+
+            // Switch to preview tab after converting
+            setTimeout(() => {
+              const previewTab = document.querySelector('[data-tab="preview"]');
+              if (previewTab) previewTab.click();
+            }, 500);
+          };
+        }
+
+        // Quick convert button in preview
+        const quickConvertBtn = document.getElementById("quickConvert");
+        if (quickConvertBtn) {
+          quickConvertBtn.onclick = () => {
+            // Get the best match resolution stored in the button's data attribute
+            const bestMatchResolution =
+              quickConvertBtn.getAttribute("data-resolution") || "1080x1080";
+
+            parent.postMessage(
+              {
+                pluginMessage: {
+                  type: "convert-to-carousel",
+                  resolution: bestMatchResolution,
+                },
+              },
+              "*"
+            );
+          };
+        }
+
+        // Check compatibility
+        const checkBtn = document.getElementById("check-compatibility");
+        if (checkBtn) {
+          checkBtn.onclick = () => {
+            parent.postMessage(
+              {
+                pluginMessage: {
+                  type: "check-compatibility",
+                },
+              },
+              "*"
+            );
+          };
+        }
+
+        // Export carousel
+        const exportBtn = document.getElementById("export");
+        if (exportBtn) {
+          exportBtn.onclick = () => {
+            parent.postMessage(
+              { pluginMessage: { type: "export-carousel" } },
+              "*"
+            );
+          };
+        }
+
+        // Add event listeners for navigation arrows
+        const nextSlideBtn = document.getElementById("nextSlide");
+        const prevSlideBtn = document.getElementById("prevSlide");
+
+        if (nextSlideBtn) {
+          nextSlideBtn.addEventListener("click", nextSlide);
+        }
+
+        if (prevSlideBtn) {
+          prevSlideBtn.addEventListener("click", prevSlide);
+        }
+
+        // Re-initialize custom scrollbars when window resizes
+        window.addEventListener("resize", initCustomScrollbars);
+      });
+
+      // Carousel preview functionality
+      let currentSlide = 0;
+      let slideCount = 0;
+
+      function updateCarouselPosition(animate = true, exactPosition = null) {
+        const wrapper = document.getElementById("carouselWrapper");
+        const slider = document.getElementById("carouselSlider");
+        if (!wrapper) return;
+
+        const slideWidth = wrapper.offsetWidth;
+
+        // Allow for exact fractional positioning when provided
+        let newPosition;
+        if (exactPosition !== null) {
+          // Ensure pixel-perfect positioning to avoid subpixel rendering issues
+          newPosition = -Math.round(exactPosition * slideWidth);
+        } else {
+          newPosition = -Math.round(currentSlide * slideWidth);
+        }
+
+        if (animate) {
+          wrapper.classList.add("smooth");
+        } else {
+          wrapper.classList.remove("smooth");
+        }
+
+        // Use translateX with integer values to avoid subpixel rendering
+        wrapper.style.transform = `translateX(${newPosition}px)`;
+
+        // Update slider position if we're not in the middle of a slider drag
+        if (exactPosition === null && slider) {
+          slider.value = currentSlide;
+        }
+
+        // Update indicator dots - highlight the closest one
+        const closestSlide =
+          exactPosition !== null ? Math.round(exactPosition) : currentSlide;
+        document.querySelectorAll(".indicator-dot").forEach((dot, index) => {
+          if (index === closestSlide) {
+            dot.classList.add("active");
+          } else {
+            dot.classList.remove("active");
           }
         });
+
+        // Update navigation arrows visibility
+        const prevArrow = document.getElementById("prevSlide");
+        const nextArrow = document.getElementById("nextSlide");
+
+        if (prevArrow) {
+          // Always hide prev arrow on first slide
+          if (exactPosition !== null) {
+            prevArrow.style.display = exactPosition <= 0.1 ? "none" : "flex";
+          } else {
+            prevArrow.style.display = currentSlide === 0 ? "none" : "flex";
+          }
+        }
+
+        if (nextArrow) {
+          // Always hide next arrow on last slide
+          if (exactPosition !== null) {
+            nextArrow.style.display =
+              exactPosition >= slideCount - 0.9 ? "none" : "flex";
+          } else {
+            nextArrow.style.display =
+              currentSlide === slideCount - 1 ? "none" : "flex";
+          }
+        }
       }
-      
-      // Function to update custom scrollbar indicator
-      function updateScrollIndicator() {
-        const element = this;
-        const indicator = element.querySelector('.custom-scrollbar-indicator');
-        
-        if (indicator) {
-          // Calculate scrollbar height and position
-          const scrollHeight = element.scrollHeight;
-          const clientHeight = element.clientHeight;
-          
-          if (scrollHeight <= clientHeight) {
-            // No need for scrollbar
-            indicator.style.display = 'none';
+
+      function nextSlide() {
+        if (currentSlide < slideCount - 1) {
+          currentSlide++;
+          updateCarouselPosition();
+        }
+      }
+
+      function prevSlide() {
+        if (currentSlide > 0) {
+          currentSlide--;
+          updateCarouselPosition();
+        }
+      }
+
+      // Listen for messages from the plugin code
+      window.onmessage = (event) => {
+        const message = event.data.pluginMessage;
+
+        if (message.type === "request-current-slide") {
+          // Send the current slide index back to the plugin
+          parent.postMessage(
+            {
+              pluginMessage: {
+                type: "current-slide-response",
+                currentSlide: currentSlide,
+              },
+            },
+            "*"
+          );
+        } else if (message.type === "preview-loading") {
+          // Show loading state
+          const welcomeMessage = document.getElementById("welcomeMessage");
+          const loadingMessage = document.getElementById("loadingMessage");
+          const carouselContainer =
+            document.getElementById("carouselContainer");
+
+          if (welcomeMessage) welcomeMessage.style.display = "none";
+          if (loadingMessage) loadingMessage.style.display = "flex";
+          if (carouselContainer) carouselContainer.style.display = "none";
+        } else if (message.type === "preview-metadata") {
+          // Initialize carousel structure based on metadata
+          const previewContainer = document.getElementById("previewContainer");
+          const carouselPreview = document.getElementById("carouselPreview");
+          const carouselWrapper = document.getElementById("carouselWrapper");
+          const carouselIndicator =
+            document.getElementById("carouselIndicator");
+          const welcomeMessage = document.getElementById("welcomeMessage");
+          const loadingMessage = document.getElementById("loadingMessage");
+          const carouselContainer =
+            document.getElementById("carouselContainer");
+
+          // Skip if elements don't exist
+          if (
+            !previewContainer ||
+            !carouselPreview ||
+            !carouselWrapper ||
+            !carouselIndicator ||
+            !welcomeMessage ||
+            !loadingMessage ||
+            !carouselContainer
+          ) {
+            console.error("Required DOM elements not found");
             return;
           }
-          
-          indicator.style.display = 'block';
-          
-          // Calculate the height of the scrollbar thumb
-          const thumbHeight = Math.max(30, (clientHeight / scrollHeight) * clientHeight);
-          indicator.style.height = thumbHeight + 'px';
-          
-          // Calculate the position of the scrollbar thumb
-          const scrollRatio = element.scrollTop / (scrollHeight - clientHeight);
-          const thumbPosition = scrollRatio * (clientHeight - thumbHeight);
-          indicator.style.transform = `translateY(${thumbPosition}px)`;
-          
-          // Show scrollbar while scrolling
-          indicator.style.opacity = '1';
-          
-          // Mark as scrolling
-          element.classList.add('scrolling');
-          
-          // Hide after a delay if not hovering
-          clearTimeout(element.scrollTimer);
-          element.scrollTimer = setTimeout(() => {
-            if (!element.matches(':hover')) {
-              indicator.style.opacity = '0';
-            }
-            element.classList.remove('scrolling');
-          }, 1000);
-        }
-      }
-      
-      // Convert existing frame
-      const convertBtn = document.getElementById('convert');
-      if (convertBtn) {
-        convertBtn.onclick = () => {
-          const resolution = document.getElementById('convert-resolution').value;
-          
-          parent.postMessage({ 
-            pluginMessage: { 
-              type: 'convert-to-carousel',
-              resolution: resolution
-            }
-          }, '*');
-          
-          // Switch to preview tab after converting
-          setTimeout(() => {
-            const previewTab = document.querySelector('[data-tab="preview"]');
-            if (previewTab) previewTab.click();
-          }, 500);
-        }
-      }
-      
-      // Quick convert button in preview
-      const quickConvertBtn = document.getElementById('quickConvert');
-      if (quickConvertBtn) {
-        quickConvertBtn.onclick = () => {
-          // Get the best match resolution stored in the button's data attribute
-          const bestMatchResolution = quickConvertBtn.getAttribute('data-resolution') || '1080x1080';
-          
-          parent.postMessage({ 
-            pluginMessage: { 
-              type: 'convert-to-carousel',
-              resolution: bestMatchResolution
-            }
-          }, '*');
-        }
-      }
-      
-      // Check compatibility
-      const checkBtn = document.getElementById('check-compatibility');
-      if (checkBtn) {
-        checkBtn.onclick = () => {
-          parent.postMessage({ 
-            pluginMessage: { 
-              type: 'check-compatibility'
-            }
-          }, '*');
-        }
-      }
 
-      // Export carousel
-      const exportBtn = document.getElementById('export');
-      if (exportBtn) {
-        exportBtn.onclick = () => {
-          parent.postMessage({ pluginMessage: { type: 'export-carousel' } }, '*');
-        }
-      }
-      
-      // Add event listeners for navigation arrows
-      const nextSlideBtn = document.getElementById('nextSlide');
-      const prevSlideBtn = document.getElementById('prevSlide');
-      
-      if (nextSlideBtn) {
-        nextSlideBtn.addEventListener('click', nextSlide);
-      }
-      
-      if (prevSlideBtn) {
-        prevSlideBtn.addEventListener('click', prevSlide);
-      }
-      
-      // Re-initialize custom scrollbars when window resizes
-      window.addEventListener('resize', initCustomScrollbars);
-    });
-    
-    // Carousel preview functionality
-    let currentSlide = 0;
-    let slideCount = 0;
-    
-    function updateCarouselPosition(animate = true, exactPosition = null) {
-      const wrapper = document.getElementById('carouselWrapper');
-      const slider = document.getElementById('carouselSlider');
-      if (!wrapper) return;
-      
-      const slideWidth = wrapper.offsetWidth;
-      
-      // Allow for exact fractional positioning when provided
-      let newPosition;
-      if (exactPosition !== null) {
-        // Ensure pixel-perfect positioning to avoid subpixel rendering issues
-        newPosition = -Math.round(exactPosition * slideWidth);
-      } else {
-        newPosition = -Math.round(currentSlide * slideWidth);
-      }
-      
-      if (animate) {
-        wrapper.classList.add('smooth');
-      } else {
-        wrapper.classList.remove('smooth');
-      }
-      
-      // Use translateX with integer values to avoid subpixel rendering
-      wrapper.style.transform = `translateX(${newPosition}px)`;
-      
-      // Update slider position if we're not in the middle of a slider drag
-      if (exactPosition === null && slider) {
-        slider.value = currentSlide;
-      }
-      
-      // Update indicator dots - highlight the closest one
-      const closestSlide = exactPosition !== null ? Math.round(exactPosition) : currentSlide;
-      document.querySelectorAll('.indicator-dot').forEach((dot, index) => {
-        if (index === closestSlide) {
-          dot.classList.add('active');
-        } else {
-          dot.classList.remove('active');
-        }
-      });
-      
-      // Update navigation arrows visibility
-      const prevArrow = document.getElementById('prevSlide');
-      const nextArrow = document.getElementById('nextSlide');
-      
-      if (prevArrow) {
-        // Always hide prev arrow on first slide
-        if (exactPosition !== null) {
-          prevArrow.style.display = exactPosition <= 0.1 ? 'none' : 'flex';
-        } else {
-          prevArrow.style.display = currentSlide === 0 ? 'none' : 'flex';
-        }
-      }
-      
-      if (nextArrow) {
-        // Always hide next arrow on last slide
-        if (exactPosition !== null) {
-          nextArrow.style.display = exactPosition >= slideCount - 0.9 ? 'none' : 'flex';
-        } else {
-          nextArrow.style.display = currentSlide === slideCount - 1 ? 'none' : 'flex';
-        }
-      }
-    }
-    
-    function nextSlide() {
-      if (currentSlide < slideCount - 1) {
-        currentSlide++;
-        updateCarouselPosition();
-      }
-    }
-    
-    function prevSlide() {
-      if (currentSlide > 0) {
-        currentSlide--;
-        updateCarouselPosition();
-      }
-    }
+          // Hide welcome and loading messages, show carousel
+          welcomeMessage.style.display = "none";
+          loadingMessage.style.display = "none";
+          carouselContainer.style.display = "block";
 
-    // Listen for messages from the plugin code
-    window.onmessage = (event) => {
-      const message = event.data.pluginMessage;
-      console.log('Received message:', message);
-      
-      if (message.type === 'request-current-slide') {
-        // Send the current slide index back to the plugin
-        parent.postMessage({
-          pluginMessage: {
-            type: 'current-slide-response',
-            currentSlide: currentSlide
-          }
-        }, '*');
-      }
-      else if (message.type === 'preview-loading') {
-        // Show loading state
-        const welcomeMessage = document.getElementById('welcomeMessage');
-        const loadingMessage = document.getElementById('loadingMessage');
-        const carouselContainer = document.getElementById('carouselContainer');
-        
-        if (welcomeMessage) welcomeMessage.style.display = 'none';
-        if (loadingMessage) loadingMessage.style.display = 'flex';
-        if (carouselContainer) carouselContainer.style.display = 'none';
-      }
-      else if (message.type === 'preview-metadata') {
-        // Initialize carousel structure based on metadata
-        const previewContainer = document.getElementById('previewContainer');
-        const carouselPreview = document.getElementById('carouselPreview');
-        const carouselWrapper = document.getElementById('carouselWrapper');
-        const carouselIndicator = document.getElementById('carouselIndicator');
-        const welcomeMessage = document.getElementById('welcomeMessage');
-        const loadingMessage = document.getElementById('loadingMessage');
-        const carouselContainer = document.getElementById('carouselContainer');
-        
-        // Skip if elements don't exist
-        if (!previewContainer || !carouselPreview || !carouselWrapper || 
-            !carouselIndicator || !welcomeMessage || !loadingMessage || !carouselContainer) {
-          console.error('Required DOM elements not found');
-          return;
-        }
-        
-        // Hide welcome and loading messages, show carousel
-        welcomeMessage.style.display = 'none';
-        loadingMessage.style.display = 'none';
-        carouselContainer.style.display = 'block';
-        
-        // Reset current slide
-        currentSlide = 0;
-        slideCount = message.frameCount;
-        
-        // Update resolution info and set aspect ratio
-        if (message.resolution) {
-          const previewResolution = document.getElementById('previewResolution');
-          if (previewResolution) {
-            previewResolution.textContent = message.resolution.name;
-          }
-          
-          carouselPreview.className = 'carousel-preview';
-          
-          const resKey = `${message.resolution.width}x${message.resolution.height}`;
-          carouselPreview.classList.add(`ratio-${resKey}`);
-          
-          const previewWidth = Math.min(320, previewContainer.offsetWidth - 2);
-          let previewHeight;
-          
-          if (resKey === '1080x1080') {
-            previewHeight = previewWidth;
-          } else if (resKey === '1080x1920') {
-            previewHeight = (previewWidth * 1920) / 1080;
-          } else if (resKey === '1080x1350') {
-            previewHeight = (previewWidth * 1350) / 1080;
-          } else if (resKey === '1080x608') {
-            previewHeight = (previewWidth * 608) / 1080;
-          } else {
-            const aspectRatio = message.resolution.height / message.resolution.width;
-            previewHeight = previewWidth * aspectRatio;
-          }
-          
-          carouselPreview.style.width = `${previewWidth}px`;
-          carouselPreview.style.height = `${previewHeight}px`;
-        }
-        
-        // Update caption
-        const previewCaption = document.getElementById('previewCaption');
-        if (previewCaption) {
-          previewCaption.textContent = 
-            `${message.frameName || 'Instagram Carousel'} with ${message.frameCount} slides`;
-        }
-        
-        // Clear previous preview
-        carouselWrapper.innerHTML = '';
-        carouselIndicator.innerHTML = '';
-        
-        // Create placeholder frames and indicators
-        for (let i = 0; i < message.frameCount; i++) {
-          const frame = document.createElement('div');
-          frame.className = 'carousel-item';
-          frame.id = `carousel-item-${i}`;
-          frame.style.backgroundColor = 'var(--dark-bg-primary)';
-          
-          // Add loading placeholder
-          const loadingPlaceholder = document.createElement('div');
-          loadingPlaceholder.className = 'loading-spinner';
-          frame.appendChild(loadingPlaceholder);
-          
-          const slideNumber = document.createElement('div');
-          slideNumber.className = 'slide-number';
-          slideNumber.textContent = `${i + 1}/${message.frameCount}`;
-          frame.appendChild(slideNumber);
-          
-          carouselWrapper.appendChild(frame);
-          
-          // Add indicator dot
-          const dot = document.createElement('div');
-          dot.className = i === 0 ? 'indicator-dot active' : 'indicator-dot';
-          dot.addEventListener('click', () => {
-            currentSlide = i;
-            updateCarouselPosition();
-          });
-          carouselIndicator.appendChild(dot);
-        }
-        
-        // Initialize slider
-        const slider = document.getElementById('carouselSlider');
-        if (slider) {
-          slider.max = slideCount - 1;
-          slider.value = currentSlide;
-          slider.step = "0.01"; // Allow fine-grained control
-          
-          // Add slider event listener
-          slider.addEventListener('input', (e) => {
-            const exactPosition = parseFloat(e.target.value);
-            updateCarouselPosition(false, exactPosition);
-          });
-          
-          // When slider is released, snap to the nearest slide
-          slider.addEventListener('change', (e) => {
-            const exactPosition = parseFloat(e.target.value);
-            currentSlide = Math.round(exactPosition);
-            updateCarouselPosition(true);
-          });
-        }
-        
-        // Set up navigation arrows
-        const prevArrow = document.getElementById('prevSlide');
-        const nextArrow = document.getElementById('nextSlide');
-        
-        if (prevArrow) {
-          // Initially hide prev arrow on first slide
-          prevArrow.style.display = currentSlide === 0 ? 'none' : 'flex';
-        }
-        
-        if (nextArrow) {
-          // Initially hide next arrow on last slide
-          nextArrow.style.display = slideCount <= 1 ? 'none' : 'flex';
-        }
-        
-        // Update carousel position
-        updateCarouselPosition();
-      }
-      else if (message.type === 'preview-batch') {
-        // Update carousel items with batch of images
-        message.imageDataUrls.forEach((dataUrl, idx) => {
-          const slideIndex = message.indices[idx];
-          const frame = document.getElementById(`carousel-item-${slideIndex}`);
-          
-          if (frame) {
-            // Remove loading spinner if it exists
-            const spinner = frame.querySelector('.loading-spinner');
-            if (spinner) {
-              spinner.remove();
+          // Reset current slide
+          currentSlide = 0;
+          slideCount = message.frameCount;
+
+          // Update resolution info and set aspect ratio
+          if (message.resolution) {
+            const previewResolution =
+              document.getElementById("previewResolution");
+            if (previewResolution) {
+              previewResolution.textContent = message.resolution.name;
             }
-            
-            if (dataUrl) {
-              // Remove any existing image
-              const existingImg = frame.querySelector('img');
-              if (existingImg) {
-                existingImg.remove();
+
+            carouselPreview.className = "carousel-preview";
+
+            const resKey = `${message.resolution.width}x${message.resolution.height}`;
+            carouselPreview.classList.add(`ratio-${resKey}`);
+
+            const previewWidth = Math.min(
+              320,
+              previewContainer.offsetWidth - 2
+            );
+            let previewHeight;
+
+            if (resKey === "1080x1080") {
+              previewHeight = previewWidth;
+            } else if (resKey === "1080x1920") {
+              previewHeight = (previewWidth * 1920) / 1080;
+            } else if (resKey === "1080x1350") {
+              previewHeight = (previewWidth * 1350) / 1080;
+            } else if (resKey === "1080x608") {
+              previewHeight = (previewWidth * 608) / 1080;
+            } else {
+              const aspectRatio =
+                message.resolution.height / message.resolution.width;
+              previewHeight = previewWidth * aspectRatio;
+            }
+
+            carouselPreview.style.width = `${previewWidth}px`;
+            carouselPreview.style.height = `${previewHeight}px`;
+          }
+
+          // Clear previous preview
+          carouselWrapper.innerHTML = "";
+          carouselIndicator.innerHTML = "";
+
+          // Create placeholder frames and indicators
+          for (let i = 0; i < message.frameCount; i++) {
+            const frame = document.createElement("div");
+            frame.className = "carousel-item";
+            frame.id = `carousel-item-${i}`;
+            frame.style.backgroundColor = "var(--bg-primary)";
+
+            // Add loading placeholder
+            const loadingPlaceholder = document.createElement("div");
+            loadingPlaceholder.className = "loading-spinner";
+            frame.appendChild(loadingPlaceholder);
+
+            const slideNumber = document.createElement("div");
+            slideNumber.className = "slide-number";
+            slideNumber.textContent = `${i + 1}/${message.frameCount}`;
+            frame.appendChild(slideNumber);
+
+            carouselWrapper.appendChild(frame);
+
+            // Add indicator dot
+            const dot = document.createElement("div");
+            dot.className = i === 0 ? "indicator-dot active" : "indicator-dot";
+            dot.addEventListener("click", () => {
+              currentSlide = i;
+              updateCarouselPosition();
+            });
+            carouselIndicator.appendChild(dot);
+          }
+
+          // Initialize slider
+          const slider = document.getElementById("carouselSlider");
+          if (slider) {
+            slider.max = slideCount - 1;
+            slider.value = currentSlide;
+            slider.step = "0.01"; // Allow fine-grained control
+
+            // Add slider event listener
+            slider.addEventListener("input", (e) => {
+              const exactPosition = parseFloat(e.target.value);
+              updateCarouselPosition(false, exactPosition);
+            });
+
+            // When slider is released, snap to the nearest slide
+            slider.addEventListener("change", (e) => {
+              const exactPosition = parseFloat(e.target.value);
+              currentSlide = Math.round(exactPosition);
+              updateCarouselPosition(true);
+            });
+          }
+
+          // Set up navigation arrows
+          const prevArrow = document.getElementById("prevSlide");
+          const nextArrow = document.getElementById("nextSlide");
+
+          if (prevArrow) {
+            // Initially hide prev arrow on first slide
+            prevArrow.style.display = currentSlide === 0 ? "none" : "flex";
+          }
+
+          if (nextArrow) {
+            // Initially hide next arrow on last slide
+            nextArrow.style.display = slideCount <= 1 ? "none" : "flex";
+          }
+
+          // Update carousel position
+          updateCarouselPosition();
+        } else if (message.type === "preview-batch") {
+          // Update carousel items with batch of images
+          message.imageDataUrls.forEach((dataUrl, idx) => {
+            const slideIndex = message.indices[idx];
+            const frame = document.getElementById(
+              `carousel-item-${slideIndex}`
+            );
+
+            if (frame) {
+              // Remove loading spinner if it exists
+              const spinner = frame.querySelector(".loading-spinner");
+              if (spinner) {
+                spinner.remove();
               }
-              
-              const img = document.createElement('img');
-              img.src = dataUrl;
-              img.style.width = '100%';
-              img.style.height = '100%';
-              img.style.objectFit = 'contain';
-              img.style.display = 'block';
-              img.style.margin = '0';
-              img.style.padding = '0';
-              img.style.border = 'none';
+
+              if (dataUrl) {
+                // Remove any existing image
+                const existingImg = frame.querySelector("img");
+                if (existingImg) {
+                  existingImg.remove();
+                }
+
+                const img = document.createElement("img");
+                img.src = dataUrl;
+                img.style.width = "100%";
+                img.style.height = "100%";
+                img.style.objectFit = "contain";
+                img.style.display = "block";
+                img.style.margin = "0";
+                img.style.padding = "0";
+                img.style.border = "none";
+                frame.appendChild(img);
+              } else {
+                frame.textContent = `Slide ${slideIndex + 1}`;
+              }
+            }
+          });
+        } else if (message.type === "preview-complete") {
+          // Preview is complete, ensure loading message is hidden
+          const loadingMessage = document.getElementById("loadingMessage");
+          if (loadingMessage) {
+            loadingMessage.style.display = "none";
+          }
+        } else if (message.type === "preview-update") {
+          // Handle regular frame preview (non-carousel)
+          const previewContainer = document.getElementById("previewContainer");
+          const carouselPreview = document.getElementById("carouselPreview");
+          const carouselWrapper = document.getElementById("carouselWrapper");
+          const carouselIndicator =
+            document.getElementById("carouselIndicator");
+          const welcomeMessage = document.getElementById("welcomeMessage");
+          const loadingMessage = document.getElementById("loadingMessage");
+          const carouselContainer =
+            document.getElementById("carouselContainer");
+          const convertPrompt = document.getElementById("convertPrompt");
+          const quickConvertBtn = document.getElementById("quickConvert");
+          const exportBtn = document.getElementById("export");
+
+          // Skip if elements don't exist
+          if (
+            !previewContainer ||
+            !carouselPreview ||
+            !carouselWrapper ||
+            !carouselIndicator ||
+            !welcomeMessage ||
+            !loadingMessage ||
+            !carouselContainer
+          ) {
+            console.error("Required DOM elements not found");
+            return;
+          }
+
+          // Hide welcome and loading messages, show carousel
+          welcomeMessage.style.display = "none";
+          loadingMessage.style.display = "none";
+          carouselContainer.style.display = "block";
+
+          // Reset current slide
+          currentSlide = 0;
+          slideCount = message.frameCount;
+
+          // Handle regular frame vs carousel frame
+          if (message.isRegularFrame) {
+            if (convertPrompt) {
+              convertPrompt.style.display = "block";
+
+              if (quickConvertBtn && message.bestMatchResolution) {
+                quickConvertBtn.setAttribute(
+                  "data-resolution",
+                  message.bestMatchResolution
+                );
+
+                const promptText = convertPrompt.querySelector("p");
+                if (promptText && message.possibleSlideCount > 1) {
+                  promptText.textContent = `This frame could make a ${message.possibleSlideCount}-slide carousel. Convert it to add guides and enable multi-slide export.`;
+                }
+              }
+            }
+
+            if (exportBtn) {
+              exportBtn.disabled = true;
+              exportBtn.style.opacity = "0.5";
+            }
+          } else {
+            if (convertPrompt) {
+              convertPrompt.style.display = "none";
+            }
+
+            if (exportBtn) {
+              exportBtn.disabled = false;
+              exportBtn.style.opacity = "1";
+            }
+          }
+
+          // Update resolution info and set aspect ratio
+          if (message.resolution) {
+            const previewResolution =
+              document.getElementById("previewResolution");
+            if (previewResolution) {
+              previewResolution.textContent = message.resolution.name;
+            }
+
+            carouselPreview.className = "carousel-preview";
+
+            const resKey = `${message.resolution.width}x${message.resolution.height}`;
+            carouselPreview.classList.add(`ratio-${resKey}`);
+
+            const previewWidth = Math.min(
+              320,
+              previewContainer.offsetWidth - 2
+            );
+            let previewHeight;
+
+            if (resKey === "1080x1080") {
+              previewHeight = previewWidth;
+            } else if (resKey === "1080x1920") {
+              previewHeight = (previewWidth * 1920) / 1080;
+            } else if (resKey === "1080x1350") {
+              previewHeight = (previewWidth * 1350) / 1080;
+            } else if (resKey === "1080x608") {
+              previewHeight = (previewWidth * 608) / 1080;
+            } else {
+              const aspectRatio =
+                message.resolution.height / message.resolution.width;
+              previewHeight = previewWidth * aspectRatio;
+            }
+
+            carouselPreview.style.width = `${previewWidth}px`;
+            carouselPreview.style.height = `${previewHeight}px`;
+          }
+
+          // Clear previous preview
+          carouselWrapper.innerHTML = "";
+          carouselIndicator.innerHTML = "";
+
+          // Add preview frames
+          for (let i = 0; i < message.frameCount; i++) {
+            const frame = document.createElement("div");
+            frame.className = "carousel-item";
+            frame.style.backgroundColor = "var(--bg-primary)";
+            frame.style.margin = "0";
+            frame.style.padding = "0";
+            frame.style.border = "none";
+
+            const slideNumber = document.createElement("div");
+            slideNumber.className = "slide-number";
+            slideNumber.textContent = `${i + 1}/${message.frameCount}`;
+            frame.appendChild(slideNumber);
+
+            if (message.imageDataUrls && message.imageDataUrls[i]) {
+              const img = document.createElement("img");
+              img.src = message.imageDataUrls[i];
+              img.style.width = "100%";
+              img.style.height = "100%";
+              img.style.objectFit = "contain";
+              img.style.display = "block";
+              img.style.margin = "0";
+              img.style.padding = "0";
+              img.style.border = "none";
               frame.appendChild(img);
             } else {
-              frame.textContent = `Slide ${slideIndex + 1}`;
+              frame.textContent = `Slide ${i + 1}`;
             }
+
+            carouselWrapper.appendChild(frame);
+
+            const dot = document.createElement("div");
+            dot.className = i === 0 ? "indicator-dot active" : "indicator-dot";
+            dot.addEventListener("click", () => {
+              currentSlide = i;
+              updateCarouselPosition();
+            });
+            carouselIndicator.appendChild(dot);
           }
+
+          // Initialize slider
+          const slider = document.getElementById("carouselSlider");
+          if (slider) {
+            slider.max = slideCount - 1;
+            slider.value = currentSlide;
+            slider.step = "0.01"; // Allow fine-grained control
+
+            // Add slider event listener
+            slider.addEventListener("input", (e) => {
+              const exactPosition = parseFloat(e.target.value);
+              updateCarouselPosition(false, exactPosition);
+            });
+
+            // When slider is released, snap to the nearest slide
+            slider.addEventListener("change", (e) => {
+              const exactPosition = parseFloat(e.target.value);
+              currentSlide = Math.round(exactPosition);
+              updateCarouselPosition(true);
+            });
+          }
+
+          // Set up navigation arrows
+          const prevArrow = document.getElementById("prevSlide");
+          const nextArrow = document.getElementById("nextSlide");
+
+          if (prevArrow) {
+            // Initially hide prev arrow on first slide
+            prevArrow.style.display = currentSlide === 0 ? "none" : "flex";
+          }
+
+          if (nextArrow) {
+            // Initially hide next arrow on last slide
+            nextArrow.style.display = slideCount <= 1 ? "none" : "flex";
+          }
+
+          // Update carousel position
+          updateCarouselPosition();
+        } else if (message.type === "compatibility-result") {
+          alert(message.message);
+        } else if (message.type === "no-carousel-selected") {
+          // Show welcome message when no carousel is selected
+          const welcomeMessage = document.getElementById("welcomeMessage");
+          const carouselContainer =
+            document.getElementById("carouselContainer");
+          const convertPrompt = document.getElementById("convertPrompt");
+
+          // Show welcome message, hide carousel and convert prompt
+          if (welcomeMessage) welcomeMessage.style.display = "block";
+          if (carouselContainer) carouselContainer.style.display = "none";
+          if (convertPrompt) convertPrompt.style.display = "none";
+        } else if (message.type === "confirm-resize") {
+          // Show a confirmation dialog for resizing frame height using our custom modal
+          const dialog = document.createElement("div");
+          dialog.className = "modal-overlay";
+
+          const dialogContent = document.createElement("div");
+          dialogContent.className = "modal-content";
+
+          const title = document.createElement("h3");
+          title.className = "modal-title";
+          title.textContent = "Adjust Frame Height?";
+
+          const messageText = document.createElement("p");
+          messageText.className = "modal-message";
+          messageText.textContent = message.message;
+
+          const buttonContainer = document.createElement("div");
+          buttonContainer.className = "modal-actions";
+
+          const confirmButton = document.createElement("button");
+          confirmButton.textContent = "Adjust Height";
+
+          const cancelButton = document.createElement("button");
+          cancelButton.textContent = "Keep Current Height";
+          cancelButton.className = "secondary";
+
+          confirmButton.onclick = () => {
+            document.body.removeChild(dialog);
+            parent.postMessage(
+              {
+                pluginMessage: {
+                  type: "resize-response",
+                  shouldResize: true,
+                },
+              },
+              "*"
+            );
+          };
+
+          cancelButton.onclick = () => {
+            document.body.removeChild(dialog);
+            parent.postMessage(
+              {
+                pluginMessage: {
+                  type: "resize-response",
+                  shouldResize: false,
+                },
+              },
+              "*"
+            );
+          };
+
+          buttonContainer.appendChild(confirmButton);
+          buttonContainer.appendChild(cancelButton);
+
+          dialogContent.appendChild(title);
+          dialogContent.appendChild(messageText);
+          dialogContent.appendChild(buttonContainer);
+          dialog.appendChild(dialogContent);
+
+          document.body.appendChild(dialog);
+        } else if (message.type === "handle-partial-slide") {
+          // Create a custom dialog for handling partial slides
+          const dialog = document.createElement("div");
+          dialog.className = "modal-overlay";
+
+          const dialogContent = document.createElement("div");
+          dialogContent.className = "modal-content";
+
+          const title = document.createElement("h3");
+          title.className = "modal-title";
+          title.textContent = "Partial Slide Detected";
+
+          const messageText = document.createElement("p");
+          messageText.className = "modal-message";
+          messageText.textContent = message.message;
+
+          const buttonContainer = document.createElement("div");
+          buttonContainer.className = "modal-actions";
+
+          const expandButton = document.createElement("button");
+          expandButton.textContent = "Expand to full slide";
+
+          const trimButton = document.createElement("button");
+          trimButton.textContent = "Trim partial slide";
+          trimButton.className = "secondary";
+
+          const keepButton = document.createElement("button");
+          keepButton.textContent = "Keep as is";
+          keepButton.className = "secondary";
+
+          expandButton.onclick = () => {
+            document.body.removeChild(dialog);
+            parent.postMessage(
+              {
+                pluginMessage: {
+                  type: "partial-slide-response",
+                  action: "expand",
+                },
+              },
+              "*"
+            );
+          };
+
+          trimButton.onclick = () => {
+            document.body.removeChild(dialog);
+            parent.postMessage(
+              {
+                pluginMessage: {
+                  type: "partial-slide-response",
+                  action: "trim",
+                },
+              },
+              "*"
+            );
+          };
+
+          keepButton.onclick = () => {
+            document.body.removeChild(dialog);
+            parent.postMessage(
+              {
+                pluginMessage: {
+                  type: "partial-slide-response",
+                  action: "keep",
+                },
+              },
+              "*"
+            );
+          };
+
+          buttonContainer.appendChild(expandButton);
+          buttonContainer.appendChild(trimButton);
+          buttonContainer.appendChild(keepButton);
+
+          dialogContent.appendChild(title);
+          dialogContent.appendChild(messageText);
+          dialogContent.appendChild(buttonContainer);
+          dialog.appendChild(dialogContent);
+
+          document.body.appendChild(dialog);
+        } else if (message.type === "load-theme") {
+          setTheme(message.theme);
+        }
+      };
+
+      // Initialize UI and try to preview carousel when page loads
+      window.onload = () => {
+        // Set default state - welcome message visible, carousel hidden
+        const welcomeMessage = document.getElementById("welcomeMessage");
+        const carouselContainer = document.getElementById("carouselContainer");
+        const loadingMessage = document.getElementById("loadingMessage");
+        const convertPrompt = document.getElementById("convertPrompt");
+
+        if (welcomeMessage) welcomeMessage.style.display = "block";
+        if (carouselContainer) carouselContainer.style.display = "none";
+        if (loadingMessage) loadingMessage.style.display = "none";
+        if (convertPrompt) convertPrompt.style.display = "none";
+
+        // Try to preview carousel if one is selected
+        parent.postMessage(
+          { pluginMessage: { type: "preview-carousel" } },
+          "*"
+        );
+      };
+
+      // Theme handling
+      function setTheme(theme) {
+        document.documentElement.setAttribute("data-theme", theme);
+        try {
+          // Try to persist theme preference via plugin
+          parent.postMessage(
+            {
+              pluginMessage: {
+                type: "save-theme",
+                theme: theme,
+              },
+            },
+            "*"
+          );
+        } catch (e) {
+          console.warn("Could not save theme preference");
+        }
+      }
+
+      function initTheme() {
+        // Default to dark theme
+        setTheme("dark");
+
+        // Check system preference
+        if (
+          window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: light)").matches
+        ) {
+          setTheme("light");
+        }
+
+        // Request saved theme from plugin
+        try {
+          parent.postMessage(
+            {
+              pluginMessage: {
+                type: "get-theme",
+              },
+            },
+            "*"
+          );
+        } catch (e) {
+          console.warn("Could not request saved theme");
+        }
+      }
+
+      // Initialize theme
+      initTheme();
+
+      // Theme toggle button
+      const themeToggle = document.getElementById("themeToggle");
+      if (themeToggle) {
+        themeToggle.addEventListener("click", () => {
+          const currentTheme =
+            document.documentElement.getAttribute("data-theme") || "dark";
+          setTheme(currentTheme === "light" ? "dark" : "light");
         });
       }
-      else if (message.type === 'preview-complete') {
-        // Preview is complete, ensure loading message is hidden
-        const loadingMessage = document.getElementById('loadingMessage');
-        if (loadingMessage) {
-          loadingMessage.style.display = 'none';
-        }
-      }
-      else if (message.type === 'preview-update') {
-        // Handle regular frame preview (non-carousel)
-        const previewContainer = document.getElementById('previewContainer');
-        const carouselPreview = document.getElementById('carouselPreview');
-        const carouselWrapper = document.getElementById('carouselWrapper');
-        const carouselIndicator = document.getElementById('carouselIndicator');
-        const welcomeMessage = document.getElementById('welcomeMessage');
-        const loadingMessage = document.getElementById('loadingMessage');
-        const carouselContainer = document.getElementById('carouselContainer');
-        const convertPrompt = document.getElementById('convertPrompt');
-        const quickConvertBtn = document.getElementById('quickConvert');
-        const exportBtn = document.getElementById('export');
-        
-        // Skip if elements don't exist
-        if (!previewContainer || !carouselPreview || !carouselWrapper || 
-            !carouselIndicator || !welcomeMessage || !loadingMessage || !carouselContainer) {
-          console.error('Required DOM elements not found');
-          return;
-        }
-        
-        // Hide welcome and loading messages, show carousel
-        welcomeMessage.style.display = 'none';
-        loadingMessage.style.display = 'none';
-        carouselContainer.style.display = 'block';
-        
-        // Reset current slide
-        currentSlide = 0;
-        slideCount = message.frameCount;
-        
-        // Handle regular frame vs carousel frame
-        if (message.isRegularFrame) {
-          if (convertPrompt) {
-            convertPrompt.style.display = 'block';
-            
-            if (quickConvertBtn && message.bestMatchResolution) {
-              quickConvertBtn.setAttribute('data-resolution', message.bestMatchResolution);
-              
-              const promptText = convertPrompt.querySelector('p');
-              if (promptText && message.possibleSlideCount > 1) {
-                promptText.textContent = `This frame could make a ${message.possibleSlideCount}-slide carousel. Convert it to add guides and enable multi-slide export.`;
-              }
-            }
-          }
-          
-          if (exportBtn) {
-            exportBtn.disabled = true;
-            exportBtn.style.opacity = '0.5';
-          }
-        } else {
-          if (convertPrompt) {
-            convertPrompt.style.display = 'none';
-          }
-          
-          if (exportBtn) {
-            exportBtn.disabled = false;
-            exportBtn.style.opacity = '1';
-          }
-        }
-        
-        // Update resolution info and set aspect ratio
-        if (message.resolution) {
-          const previewResolution = document.getElementById('previewResolution');
-          if (previewResolution) {
-            previewResolution.textContent = message.resolution.name;
-          }
-          
-          carouselPreview.className = 'carousel-preview';
-          
-          const resKey = `${message.resolution.width}x${message.resolution.height}`;
-          carouselPreview.classList.add(`ratio-${resKey}`);
-          
-          const previewWidth = Math.min(320, previewContainer.offsetWidth - 2);
-          let previewHeight;
-          
-          if (resKey === '1080x1080') {
-            previewHeight = previewWidth;
-          } else if (resKey === '1080x1920') {
-            previewHeight = (previewWidth * 1920) / 1080;
-          } else if (resKey === '1080x1350') {
-            previewHeight = (previewWidth * 1350) / 1080;
-          } else if (resKey === '1080x608') {
-            previewHeight = (previewWidth * 608) / 1080;
-          } else {
-            const aspectRatio = message.resolution.height / message.resolution.width;
-            previewHeight = previewWidth * aspectRatio;
-          }
-          
-          carouselPreview.style.width = `${previewWidth}px`;
-          carouselPreview.style.height = `${previewHeight}px`;
-        }
-        
-        // Update caption
-        const previewCaption = document.getElementById('previewCaption');
-        if (previewCaption) {
-          previewCaption.textContent = 
-            `${message.frameName || 'Instagram Carousel'} with ${message.frameCount} slides`;
-        }
-        
-        // Clear previous preview
-        carouselWrapper.innerHTML = '';
-        carouselIndicator.innerHTML = '';
-        
-        // Add preview frames
-        for (let i = 0; i < message.frameCount; i++) {
-          const frame = document.createElement('div');
-          frame.className = 'carousel-item';
-          frame.style.backgroundColor = 'var(--dark-bg-primary)';
-          frame.style.margin = '0';
-          frame.style.padding = '0';
-          frame.style.border = 'none';
-          
-          const slideNumber = document.createElement('div');
-          slideNumber.className = 'slide-number';
-          slideNumber.textContent = `${i + 1}/${message.frameCount}`;
-          frame.appendChild(slideNumber);
-          
-          if (message.imageDataUrls && message.imageDataUrls[i]) {
-            const img = document.createElement('img');
-            img.src = message.imageDataUrls[i];
-            img.style.width = '100%';
-            img.style.height = '100%';
-            img.style.objectFit = 'contain';
-            img.style.display = 'block';
-            img.style.margin = '0';
-            img.style.padding = '0';
-            img.style.border = 'none';
-            frame.appendChild(img);
-          } else {
-            frame.textContent = `Slide ${i + 1}`;
-          }
-          
-          carouselWrapper.appendChild(frame);
-          
-          const dot = document.createElement('div');
-          dot.className = i === 0 ? 'indicator-dot active' : 'indicator-dot';
-          dot.addEventListener('click', () => {
-            currentSlide = i;
-            updateCarouselPosition();
-          });
-          carouselIndicator.appendChild(dot);
-        }
-        
-        // Initialize slider
-        const slider = document.getElementById('carouselSlider');
-        if (slider) {
-          slider.max = slideCount - 1;
-          slider.value = currentSlide;
-          slider.step = "0.01"; // Allow fine-grained control
-          
-          // Add slider event listener
-          slider.addEventListener('input', (e) => {
-            const exactPosition = parseFloat(e.target.value);
-            updateCarouselPosition(false, exactPosition);
-          });
-          
-          // When slider is released, snap to the nearest slide
-          slider.addEventListener('change', (e) => {
-            const exactPosition = parseFloat(e.target.value);
-            currentSlide = Math.round(exactPosition);
-            updateCarouselPosition(true);
-          });
-        }
-        
-        // Set up navigation arrows
-        const prevArrow = document.getElementById('prevSlide');
-        const nextArrow = document.getElementById('nextSlide');
-        
-        if (prevArrow) {
-          // Initially hide prev arrow on first slide
-          prevArrow.style.display = currentSlide === 0 ? 'none' : 'flex';
-        }
-        
-        if (nextArrow) {
-          // Initially hide next arrow on last slide
-          nextArrow.style.display = slideCount <= 1 ? 'none' : 'flex';
-        }
-        
-        // Update carousel position
-        updateCarouselPosition();
-      } else if (message.type === 'compatibility-result') {
-        alert(message.message);
-      } else if (message.type === 'no-carousel-selected') {
-        // Show welcome message when no carousel is selected
-        console.log('No carousel selected, showing welcome message');
-        const welcomeMessage = document.getElementById('welcomeMessage');
-        const carouselContainer = document.getElementById('carouselContainer');
-        const convertPrompt = document.getElementById('convertPrompt');
-        
-        // Show welcome message, hide carousel and convert prompt
-        if (welcomeMessage) welcomeMessage.style.display = 'block';
-        if (carouselContainer) carouselContainer.style.display = 'none';
-        if (convertPrompt) convertPrompt.style.display = 'none';
-      } else if (message.type === 'confirm-resize') {
-        // Show a confirmation dialog for resizing frame height using our custom modal
-        const dialog = document.createElement('div');
-        dialog.className = 'modal-overlay';
-        
-        const dialogContent = document.createElement('div');
-        dialogContent.className = 'modal-content';
-        
-        const title = document.createElement('h3');
-        title.className = 'modal-title';
-        title.textContent = 'Adjust Frame Height?';
-        
-        const messageText = document.createElement('p');
-        messageText.className = 'modal-message';
-        messageText.textContent = message.message;
-        
-        const buttonContainer = document.createElement('div');
-        buttonContainer.className = 'modal-actions';
-        
-        const confirmButton = document.createElement('button');
-        confirmButton.textContent = 'Adjust Height';
-        
-        const cancelButton = document.createElement('button');
-        cancelButton.textContent = 'Keep Current Height';
-        cancelButton.className = 'secondary';
-        
-        confirmButton.onclick = () => {
-          document.body.removeChild(dialog);
-          parent.postMessage({
-            pluginMessage: {
-              type: 'resize-response',
-              shouldResize: true
-            }
-          }, '*');
-        };
-        
-        cancelButton.onclick = () => {
-          document.body.removeChild(dialog);
-          parent.postMessage({
-            pluginMessage: {
-              type: 'resize-response',
-              shouldResize: false
-            }
-          }, '*');
-        };
-        
-        buttonContainer.appendChild(confirmButton);
-        buttonContainer.appendChild(cancelButton);
-        
-        dialogContent.appendChild(title);
-        dialogContent.appendChild(messageText);
-        dialogContent.appendChild(buttonContainer);
-        dialog.appendChild(dialogContent);
-        
-        document.body.appendChild(dialog);
-      } else if (message.type === 'handle-partial-slide') {
-        // Create a custom dialog for handling partial slides
-        const dialog = document.createElement('div');
-        dialog.className = 'modal-overlay';
-        
-        const dialogContent = document.createElement('div');
-        dialogContent.className = 'modal-content';
-        
-        const title = document.createElement('h3');
-        title.className = 'modal-title';
-        title.textContent = 'Partial Slide Detected';
-        
-        const messageText = document.createElement('p');
-        messageText.className = 'modal-message';
-        messageText.textContent = message.message;
-        
-        const buttonContainer = document.createElement('div');
-        buttonContainer.className = 'modal-actions';
-        
-        const expandButton = document.createElement('button');
-        expandButton.textContent = 'Expand to full slide';
-        
-        const trimButton = document.createElement('button');
-        trimButton.textContent = 'Trim partial slide';
-        trimButton.className = 'secondary';
-        
-        const keepButton = document.createElement('button');
-        keepButton.textContent = 'Keep as is';
-        keepButton.className = 'secondary';
-        
-        expandButton.onclick = () => {
-          document.body.removeChild(dialog);
-          parent.postMessage({
-            pluginMessage: {
-              type: 'partial-slide-response',
-              action: 'expand'
-            }
-          }, '*');
-        };
-        
-        trimButton.onclick = () => {
-          document.body.removeChild(dialog);
-          parent.postMessage({
-            pluginMessage: {
-              type: 'partial-slide-response',
-              action: 'trim'
-            }
-          }, '*');
-        };
-        
-        keepButton.onclick = () => {
-          document.body.removeChild(dialog);
-          parent.postMessage({
-            pluginMessage: {
-              type: 'partial-slide-response',
-              action: 'keep'
-            }
-          }, '*');
-        };
-        
-        buttonContainer.appendChild(expandButton);
-        buttonContainer.appendChild(trimButton);
-        buttonContainer.appendChild(keepButton);
-        
-        dialogContent.appendChild(title);
-        dialogContent.appendChild(messageText);
-        dialogContent.appendChild(buttonContainer);
-        dialog.appendChild(dialogContent);
-        
-        document.body.appendChild(dialog);
-      }
-    };
-    
-    // Initialize UI and try to preview carousel when page loads
-    window.onload = () => {
-      // Set default state - welcome message visible, carousel hidden
-      const welcomeMessage = document.getElementById('welcomeMessage');
-      const carouselContainer = document.getElementById('carouselContainer');
-      const loadingMessage = document.getElementById('loadingMessage');
-      const convertPrompt = document.getElementById('convertPrompt');
-      
-      if (welcomeMessage) welcomeMessage.style.display = 'block';
-      if (carouselContainer) carouselContainer.style.display = 'none';
-      if (loadingMessage) loadingMessage.style.display = 'none';
-      if (convertPrompt) convertPrompt.style.display = 'none';
-      
-      console.log('UI initialized, attempting to preview carousel');
-      
-      // Try to preview carousel if one is selected
-      parent.postMessage({ pluginMessage: { type: 'preview-carousel' } }, '*');
-    }
-</script>
-</body>
-</html>
 
+      // Listen for system theme changes
+      if (window.matchMedia) {
+        window
+          .matchMedia("(prefers-color-scheme: light)")
+          .addEventListener("change", (e) => {
+            setTheme(e.matches ? "light" : "dark");
+          });
+      }
+
+      // Add social interaction functionality
+      const likeButton = document.getElementById("likeButton");
+      const saveButton = document.getElementById("saveButton");
+      const likeCount = document.getElementById("likeCount");
+      let isLiked = false;
+      let isSaved = false;
+      let likes = 1234;
+
+      if (likeButton) {
+        likeButton.addEventListener("click", () => {
+          isLiked = !isLiked;
+          likes += isLiked ? 1 : -1;
+          likeButton.classList.toggle("liked");
+          likeButton
+            .querySelector("svg")
+            .setAttribute("fill", isLiked ? "#ed4956" : "none");
+          likeCount.textContent = likes.toLocaleString() + " likes";
+        });
+      }
+
+      if (saveButton) {
+        saveButton.addEventListener("click", () => {
+          isSaved = !isSaved;
+          saveButton.classList.toggle("saved");
+          saveButton
+            .querySelector("svg")
+            .setAttribute("fill", isSaved ? "currentColor" : "none");
+        });
+      }
+    </script>
+  </body>
+</html>

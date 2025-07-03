@@ -23,7 +23,7 @@ This plugin aims to provide a seamless design and preview experience for creatin
 
 ### 📦 Tech Stack
 - UI: HTML + CSS + TypeScript (Figma Plugin UI)
-- Figma API: createFrame, exportAsync, clientStorage
+- Figma API
 - Preview Carousel: HTML scroll container
 
 ---
@@ -68,3 +68,5 @@ Add monetizable or team-collaboration features.
 ### Week 3+:
 - Smart previews (cutoff checker, viewport simulation)
 - Add overlay/grid system
+
+

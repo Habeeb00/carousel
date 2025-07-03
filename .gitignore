@@ -3,6 +3,17 @@
 *.log.*
 node_modules
 
+# Build artifacts
 out/
 dist/
 code.js
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db

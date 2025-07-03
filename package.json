@@ -1,15 +1,17 @@
 {
   "name": "instagram-carousel-creator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Instagram Carousel Creator & Previewer for Figma",
   "main": "code.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "build:production": "tsc -p tsconfig.json && npm run lint",
     "lint": "eslint --ext .ts,.tsx --ignore-pattern node_modules .",
     "lint:fix": "eslint --ext .ts,.tsx --ignore-pattern node_modules --fix .",
-    "watch": "npm run build -- --watch"
+    "watch": "npm run build -- --watch",
+    "prepare": "npm run build:production"
   },
-  "author": "",
+  "author": "Your Name",
   "license": "MIT",
   "devDependencies": {
     "@figma/eslint-plugin-figma-plugins": "*",
@@ -38,7 +40,8 @@
           "varsIgnorePattern": "^_",
           "caughtErrorsIgnorePattern": "^_"
         }
-      ]
+      ],
+      "no-console": ["warn", { "allow": ["error"] }]
     }
   }
 }
