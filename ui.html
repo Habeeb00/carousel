@@ -11,8 +11,8 @@
         --instagram-gradient-mid3: #c13584;
         --instagram-gradient-mid4: #e1306c;
         --instagram-gradient-end: #fd1d1d;
-        --instagram-yellow: #fcaf45;
-        --instagram-orange: #f77737;
+        --instagram-yellow: #f56040;
+        --instagram-orange: #fccc63;
 
         /* Light mode colors */
         --light-bg-primary: #dee2e6;
@@ -185,7 +185,7 @@
         padding: var(--space-md);
         padding-right: var(--space-md) !important;
         margin-bottom: var(--space-md);
-        max-height: 400px;
+        max-height: 600px; /* Increased from 400px to allow more content */
         overflow-y: auto;
         position: relative;
         box-sizing: border-box;
@@ -245,13 +245,9 @@
       }
 
       button {
-        background: linear-gradient(
-          135deg,
-          var(--instagram-blue),
-          #0077c2
-        ) !important;
+        background: linear-gradient(135deg, #4a5568, #2d3748) !important;
         color: white !important;
-        border: 1px solid rgba(0, 149, 246, 0.2) !important;
+        border: 1px solid rgba(74, 85, 104, 0.2) !important;
         border-radius: var(--border-radius-sm);
         padding: var(--space-sm) var(--space-md);
         cursor: pointer;
@@ -261,7 +257,7 @@
         position: relative;
         overflow: hidden;
         letter-spacing: 0.02em;
-        box-shadow: 0 2px 8px 0 rgba(0, 149, 246, 0.15) !important;
+        box-shadow: 0 2px 8px 0 rgba(74, 85, 104, 0.1) !important;
       }
 
       button::before {
@@ -281,13 +277,9 @@
       }
 
       button:hover {
-        background: linear-gradient(
-          135deg,
-          #0077c2,
-          var(--instagram-blue)
-        ) !important;
+        background: linear-gradient(135deg, #2d3748, #1a202c) !important;
         transform: translateY(-1px);
-        box-shadow: 0 4px 16px 0 rgba(0, 149, 246, 0.25) !important;
+        box-shadow: 0 4px 16px 0 rgba(45, 55, 72, 0.25) !important;
         color: white !important;
       }
 
@@ -381,8 +373,16 @@
         background: linear-gradient(
           45deg,
           var(--instagram-gradient-start),
-          var(--instagram-gradient-end)
+          var(--instagram-gradient-mid),
+          var(--instagram-gradient-mid2),
+          var(--instagram-gradient-mid3),
+          var(--instagram-gradient-mid4),
+          var(--instagram-gradient-end),
+          var(--instagram-yellow),
+          var(--instagram-orange)
         );
+        background-size: 200% 200%;
+        animation: gradientShift 4s ease-in-out infinite;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -390,6 +390,18 @@
         font-weight: var(--font-weight-bold);
         font-size: var(--font-size-md);
         box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+      }
+
+      @keyframes gradientShift {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
       }
 
       .user-info {
@@ -707,8 +719,30 @@
       }
 
       .tab.active {
-        color: var(--instagram-blue);
-        border-bottom: 2px solid var(--instagram-blue);
+        background: linear-gradient(
+          135deg,
+          var(--instagram-gradient-start),
+          var(--instagram-gradient-mid2),
+          var(--instagram-gradient-mid4),
+          var(--instagram-gradient-end)
+        );
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+        border-bottom: 2px solid transparent;
+        border-image: linear-gradient(
+            90deg,
+            var(--instagram-gradient-start),
+            var(--instagram-gradient-mid),
+            var(--instagram-gradient-mid2),
+            var(--instagram-gradient-mid3),
+            var(--instagram-gradient-mid4),
+            var(--instagram-gradient-end),
+            var(--instagram-yellow),
+            var(--instagram-orange)
+          )
+          1;
         font-weight: var(--font-weight-semibold);
       }
 
@@ -722,10 +756,17 @@
         background: linear-gradient(
           90deg,
           transparent,
-          var(--instagram-blue),
+          var(--instagram-gradient-start),
+          var(--instagram-gradient-mid),
+          var(--instagram-gradient-mid2),
+          var(--instagram-gradient-mid3),
+          var(--instagram-gradient-mid4),
+          var(--instagram-gradient-end),
+          var(--instagram-yellow),
+          var(--instagram-orange),
           transparent
         );
-        opacity: 0.8;
+        opacity: 0.9;
       }
 
       .tab-content {
@@ -1457,13 +1498,9 @@
 
       /* Instagram-style button for all main actions */
       .insta-btn {
-        background: linear-gradient(
-          135deg,
-          var(--instagram-blue),
-          #0077c2
-        ) !important;
+        background: linear-gradient(135deg, #4a5568, #2d3748) !important;
         color: #fff !important;
-        border: 1.5px solid rgba(0, 149, 246, 0.2) !important;
+        border: 1.5px solid rgba(74, 85, 104, 0.2) !important;
         border-radius: var(--border-radius-sm);
         font-weight: var(--font-weight-bold);
         font-size: var(--font-size-md);
@@ -1471,48 +1508,44 @@
         cursor: pointer;
         transition: background 0.3s, box-shadow 0.2s, color 0.2s, border 0.2s,
           transform 0.2s;
-        box-shadow: 0 2px 8px 0 rgba(0, 149, 246, 0.15) !important;
+        box-shadow: 0 2px 8px 0 rgba(74, 85, 104, 0.15) !important;
         outline: none;
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
       }
       .insta-btn:hover,
       .insta-btn:focus {
-        background: linear-gradient(
-          135deg,
-          #0077c2,
-          var(--instagram-blue)
-        ) !important;
+        background: linear-gradient(135deg, #2d3748, #1a202c) !important;
         color: #fff !important;
-        box-shadow: 0 4px 16px 0 rgba(0, 149, 246, 0.25) !important;
-        border: 1.5px solid rgba(0, 149, 246, 0.3) !important;
+        box-shadow: 0 4px 16px 0 rgba(45, 55, 72, 0.25) !important;
+        border: 1.5px solid rgba(45, 55, 72, 0.3) !important;
         transform: translateY(-1px);
       }
 
       .insta-btn.secondary,
       button.secondary {
         background: none;
-        color: var(--instagram-blue);
-        border: 2px solid var(--instagram-blue);
+        color: #4a5568;
+        border: 2px solid #4a5568;
         box-shadow: none;
         transition: background 0.2s, color 0.2s, border 0.2s;
       }
       .insta-btn.secondary:hover,
       button.secondary:hover {
-        background: rgba(0, 149, 246, 0.08);
-        color: var(--instagram-blue);
-        border-color: var(--instagram-blue);
+        background: rgba(74, 85, 104, 0.08);
+        color: #2d3748;
+        border-color: #2d3748;
       }
 
       [data-theme="light"] .insta-btn.secondary,
       [data-theme="light"] button.secondary {
-        background: #f4f8fb;
-        color: var(--instagram-blue);
-        border: 2px solid var(--instagram-blue);
+        background: #f8f9fa;
+        color: #4a5568;
+        border: 2px solid #4a5568;
       }
       [data-theme="light"] .insta-btn.secondary:hover,
       [data-theme="light"] button.secondary:hover {
-        background: #eaf4fb;
-        color: var(--instagram-blue);
+        background: #e9ecef;
+        color: #2d3748;
       }
 
       button,
@@ -1545,8 +1578,246 @@
 
       /* Enhanced info message styling for help content */
       .info-message strong {
-        color: var(--instagram-blue);
-        font-weight: var(--font-weight-semibold);
+        color: var(--text-primary);
+      }
+
+      /* Add support and works grid styles for help page */
+      .support-options {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin: 16px 0;
+      }
+
+      .support-options .insta-btn {
+        width: 100%;
+      }
+
+      .works-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin: 16px 0;
+      }
+
+      .work-item {
+        padding: 16px;
+        background: var(--bg-elevated);
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        transition: all 0.2s ease;
+      }
+
+      .work-item:hover {
+        border-color: var(--instagram-blue);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .work-item h3 {
+        margin: 0 0 8px 0;
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+
+      .work-item p {
+        margin: 0 0 12px 0;
+        font-size: 14px;
+        color: var(--text-secondary);
+        line-height: 1.4;
+      }
+
+      .work-item .insta-btn {
+        width: 100%;
+      }
+
+      .social-links {
+        display: flex;
+        gap: 8px;
+        margin-top: 20px;
+        flex-wrap: wrap;
+      }
+
+      .social-links .insta-btn {
+        flex: 1;
+        min-width: 0;
+      }
+
+      /* Mobile Responsiveness for Help page content */
+      @media (max-width: 480px) {
+        .support-options {
+          gap: 10px;
+        }
+
+        .works-grid {
+          gap: 12px;
+        }
+
+        .work-item {
+          padding: 12px;
+        }
+
+        .social-links {
+          flex-direction: column;
+        }
+
+        .social-links .insta-btn {
+          flex: none;
+        }
+      }
+
+      /* Bottom Navigation Bar */
+      .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: var(--bg-secondary);
+        border-top: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 16px;
+        z-index: 200;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.1);
+      }
+
+      [data-theme="light"] .bottom-nav {
+        background: rgba(255, 255, 255, 0.95);
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      [data-theme="dark"] .bottom-nav {
+        background: rgba(31, 31, 31, 0.95);
+        border-top: 1px solid var(--border);
+      }
+
+      .bottom-nav-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        color: var(--text-secondary);
+        font-size: 14px;
+        font-weight: 500;
+        text-decoration: none;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        transform: none !important;
+        position: static !important;
+        overflow: visible !important;
+        letter-spacing: normal !important;
+      }
+
+      .bottom-nav-item::before {
+        display: none !important;
+      }
+
+      .bottom-nav-item:hover {
+        background: var(--bg-elevated) !important;
+        color: var(--text-primary) !important;
+        transform: none !important;
+        box-shadow: none !important;
+      }
+
+      .bottom-nav-item.active {
+        background: var(--instagram-blue) !important;
+        color: white !important;
+        transform: none !important;
+        box-shadow: none !important;
+      }
+
+      .bottom-nav-item svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      /* Light mode specific styling for bottom nav items */
+      [data-theme="light"] .bottom-nav-item {
+        color: #666666 !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        transform: none !important;
+      }
+
+      [data-theme="light"] .bottom-nav-item:hover {
+        background: rgba(0, 0, 0, 0.05) !important;
+        color: #333333 !important;
+        transform: none !important;
+        box-shadow: none !important;
+      }
+
+      [data-theme="light"] .bottom-nav-item.active {
+        background: var(--instagram-blue) !important;
+        color: white !important;
+        transform: none !important;
+        box-shadow: none !important;
+      }
+
+      /* Dark mode specific styling for bottom nav items */
+      [data-theme="dark"] .bottom-nav-item {
+        color: var(--text-secondary) !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        transform: none !important;
+      }
+
+      [data-theme="dark"] .bottom-nav-item:hover {
+        background: var(--bg-elevated) !important;
+        color: var(--text-primary) !important;
+        transform: none !important;
+        box-shadow: none !important;
+      }
+
+      [data-theme="dark"] .bottom-nav-item.active {
+        background: var(--instagram-blue) !important;
+        color: white !important;
+        transform: none !important;
+        box-shadow: none !important;
+      }
+
+      /* Hide the old theme toggle */
+      .theme-toggle {
+        display: none;
+      }
+
+      /* Add padding to body to account for bottom nav */
+      body {
+        padding-bottom: 70px;
+      }
+
+      /* Mobile responsive adjustments */
+      @media (max-width: 480px) {
+        .bottom-nav {
+          padding: 10px 12px;
+        }
+
+        .bottom-nav-item {
+          padding: 6px 10px;
+          font-size: 12px;
+        }
+
+        .bottom-nav-item svg {
+          width: 16px;
+          height: 16px;
+        }
+
+        #buyMeCoffeeBtn {
+          padding: 6px 12px;
+          font-size: 12px;
+        }
+
+        body {
+          padding-bottom: 60px;
+        }
       }
     </style>
   </head>
@@ -1827,82 +2098,369 @@
 
     <div class="tab-content" id="help-tab">
       <div class="section">
-        <div class="section-title">📖 How to Use</div>
-
-        <h3>Creating Carousels</h3>
-        <p>
-          1. <strong>Create New:</strong> Choose a resolution and number of
-          frames, then click "Create Carousel" to generate a new carousel frame
-          with visual guides.
-        </p>
-
-        <p>
-          2. <strong>Convert Existing:</strong> Select any frame in your design
-          and click "Convert to Carousel" to add slide guides to it.
-        </p>
-
-        <h3>Working with Guides</h3>
-        <p>• Blue vertical lines mark slide boundaries</p>
-        <p>• Slide numbers help you organize content</p>
-        <p>• Guides are automatically hidden during export</p>
-        <p>• Guidance layers are locked to prevent accidental edits</p>
-
-        <h3>Exporting</h3>
-        <p>
-          Use the "Export Slides" button to create individual image slices for
-          each slide. Then use Figma's File > Export to save them.
-        </p>
-      </div>
-
-      <div class="section">
-        <div class="section-title">📏 Instagram Formats</div>
-
-        <div class="info-message">
-          <strong>Square (1080×1080):</strong> Classic Instagram post format,
-          works great for most content types.
+        <div class="section-title collapsible" data-target="how-to-use-content">
+          📖 How to Use <span class="toggle-icon">▼</span>
         </div>
 
-        <div class="info-message">
-          <strong>Portrait (1080×1350):</strong> Taller format that takes up
-          more space in the feed, great for detailed content.
-        </div>
+        <div
+          class="collapsible-content"
+          id="how-to-use-content"
+          style="display: none"
+        >
+          <h3>Creating Carousels</h3>
+          <p>
+            1. <strong>Create New:</strong> Choose a resolution and number of
+            frames, then click "Create Carousel" to generate a new carousel
+            frame with visual guides.
+          </p>
 
-        <div class="info-message">
-          <strong>Story (1080×1920):</strong> Full-screen vertical format for
-          Instagram Stories.
-        </div>
+          <p>
+            2. <strong>Convert Existing:</strong> Select any frame in your
+            design and click "Convert to Carousel" to add slide guides to it.
+          </p>
 
-        <div class="info-message">
-          <strong>Landscape (1080×608):</strong> Wide format, good for panoramic
-          content or when you need more horizontal space.
+          <h3>Working with Guides</h3>
+          <p>• Blue vertical lines mark slide boundaries</p>
+          <p>• Slide numbers help you organize content</p>
+          <p>• Guides are automatically hidden during export</p>
+          <p>• Guidance layers are locked to prevent accidental edits</p>
+
+          <h3>Exporting</h3>
+          <p>
+            Use the "Export Slides" button to create individual image slices for
+            each slide. Then use Figma's File > Export to save them.
+          </p>
         </div>
       </div>
 
       <div class="section">
-        <div class="section-title">ℹ️ About</div>
+        <div class="section-title collapsible" data-target="about-content">
+          ℹ️ About <span class="toggle-icon">▼</span>
+        </div>
 
-        <p><strong>Instagram Carousel Creator v1.0.1</strong></p>
-        <p>
-          A Figma plugin designed to help you create perfect Instagram carousel
-          posts with proper dimensions and visual guides.
-        </p>
+        <div
+          class="collapsible-content"
+          id="about-content"
+          style="display: none"
+        >
+          <p><strong>Instagram Carousel Creator v1.0.1</strong></p>
+          <p>
+            A Figma plugin designed to help you create perfect Instagram
+            carousel posts with proper dimensions and visual guides.
+          </p>
 
-        <h3>Features</h3>
-        <p>• Multiple Instagram format presets</p>
-        <p>• Visual slide guides and boundaries</p>
-        <p>• Real-time preview with navigation</p>
-        <p>• Smart frame conversion</p>
-        <p>• Export-ready slide generation</p>
-        <p>• Light and dark theme support</p>
+          <h3>Features</h3>
+          <p>• Multiple Instagram format presets</p>
+          <p>• Visual slide guides and boundaries</p>
+          <p>• Real-time preview with navigation</p>
+          <p>• Smart frame conversion</p>
+          <p>• Export-ready slide generation</p>
+          <p>• Light and dark theme support</p>
 
-        <h3>Tips</h3>
-        <p>• Keep important content away from slide edges</p>
-        <p>• Use consistent spacing between slides</p>
-        <p>• Test your carousel flow in the preview</p>
-        <p>• Consider the swipe direction when designing</p>
+          <h3>Tips</h3>
+          <p>• Keep important content away from slide edges</p>
+          <p>• Use consistent spacing between slides</p>
+          <p>• Test your carousel flow in the preview</p>
+          <p>• Consider the swipe direction when designing</p>
 
-        <div class="info-message">
-          Made with ❤️ for designers who create amazing carousel content.
+          <div class="info-message">
+            Made with ❤️ for designers who create amazing carousel content.
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title collapsible" data-target="settings-content">
+          ⚙️ Settings & Support <span class="toggle-icon">▼</span>
+        </div>
+
+        <div
+          class="collapsible-content"
+          id="settings-content"
+          style="display: none"
+        >
+          <h3>Theme</h3>
+          <p>Choose your preferred theme for the plugin interface:</p>
+
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              gap: 12px;
+              margin-bottom: 16px;
+            "
+          >
+            <button id="inlineThemeToggle" class="theme-toggle-inline">
+              <svg
+                class="sun-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+              </svg>
+              <svg
+                class="moon-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+                ></path>
+              </svg>
+            </button>
+            <span id="currentTheme">Dark Mode</span>
+          </div>
+
+          <h3>Support the Creator</h3>
+          <p>
+            If you find this plugin helpful, consider supporting its
+            development:
+          </p>
+
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              gap: 8px;
+              margin: 12px 0;
+            "
+          >
+            <button
+              class="insta-btn secondary"
+              onclick="window.open('https://github.com/sponsor', '_blank')"
+            >
+              ⭐ Star on GitHub
+            </button>
+            <button
+              class="insta-btn secondary"
+              onclick="window.open('https://buymeacoffee.com/creator', '_blank')"
+            >
+              ☕ Buy me a coffee
+            </button>
+            <button
+              class="insta-btn secondary"
+              onclick="window.open('https://twitter.com/creator', '_blank')"
+            >
+              🐦 Follow on Twitter
+            </button>
+          </div>
+
+          <h3>Feedback & Bug Reports</h3>
+          <p>Help improve this plugin by sharing your feedback:</p>
+
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              gap: 8px;
+              margin: 12px 0;
+            "
+          >
+            <button
+              class="insta-btn secondary"
+              onclick="window.open('https://github.com/issues', '_blank')"
+            >
+              🐛 Report a Bug
+            </button>
+            <button
+              class="insta-btn secondary"
+              onclick="window.open('https://github.com/discussions', '_blank')"
+            >
+              💬 Feature Request
+            </button>
+          </div>
+
+          <div class="info-message">
+            <strong>Version:</strong> 1.0.1 |
+            <strong>Last Updated:</strong> July 2025<br />
+            Built with passion by the design community, for the design
+            community.
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title collapsible" data-target="support-content">
+          💝 Support the Creator <span class="toggle-icon">▼</span>
+        </div>
+
+        <div
+          class="collapsible-content"
+          id="support-content"
+          style="display: none"
+        >
+          <p>
+            Love this plugin? Your support helps me create more amazing tools
+            for the design community!
+          </p>
+
+          <div class="support-options">
+            <button
+              class="insta-btn"
+              onclick="window.open('https://ko-fi.com', '_blank')"
+            >
+              ☕ Buy Me a Coffee
+            </button>
+            <button
+              class="insta-btn secondary"
+              onclick="window.open('https://github.com', '_blank')"
+            >
+              ⭐ Star on GitHub
+            </button>
+            <button
+              class="insta-btn secondary"
+              onclick="window.open('https://figma.com', '_blank')"
+            >
+              💬 Leave a Review
+            </button>
+          </div>
+
+          <div class="info-message">
+            <strong>Thank you!</strong> Your support means the world to me and
+            helps keep this plugin free and updated.
+          </div>
+
+          <h3>Ways to Support</h3>
+          <p>
+            • <strong>Coffee:</strong> Buy me a coffee to fuel late-night coding
+            sessions
+          </p>
+          <p>
+            • <strong>GitHub:</strong> Star the repository to help others
+            discover this plugin
+          </p>
+          <p>
+            • <strong>Reviews:</strong> Leave a positive review on the Figma
+            Community
+          </p>
+          <p>
+            • <strong>Share:</strong> Tell your designer friends about this
+            plugin
+          </p>
+          <p>
+            • <strong>Feedback:</strong> Report bugs and suggest new features
+          </p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title collapsible" data-target="more-works-content">
+          🚀 More Works <span class="toggle-icon">▼</span>
+        </div>
+
+        <div
+          class="collapsible-content"
+          id="more-works-content"
+          style="display: none"
+        >
+          <p>Check out my other plugins and design resources!</p>
+
+          <div class="works-grid">
+            <div class="work-item">
+              <h3>🎨 Design System Kit</h3>
+              <p>
+                Complete design system components for modern interfaces with
+                tokens, components, and documentation.
+              </p>
+              <button
+                class="insta-btn secondary"
+                onclick="window.open('https://figma.com', '_blank')"
+              >
+                View Plugin
+              </button>
+            </div>
+
+            <div class="work-item">
+              <h3>📱 Icon Generator</h3>
+              <p>
+                Generate beautiful icons with customizable styles, formats, and
+                export options for any project.
+              </p>
+              <button
+                class="insta-btn secondary"
+                onclick="window.open('https://figma.com', '_blank')"
+              >
+                View Plugin
+              </button>
+            </div>
+
+            <div class="work-item">
+              <h3>🌈 Color Palette Pro</h3>
+              <p>
+                Advanced color palette generator with harmony rules,
+                accessibility checks, and brand guidelines.
+              </p>
+              <button
+                class="insta-btn secondary"
+                onclick="window.open('https://figma.com', '_blank')"
+              >
+                View Plugin
+              </button>
+            </div>
+
+            <div class="work-item">
+              <h3>⚡ Quick Export Tools</h3>
+              <p>
+                Streamlined export workflows with batch processing, multiple
+                formats, and naming conventions.
+              </p>
+              <button
+                class="insta-btn secondary"
+                onclick="window.open('https://figma.com', '_blank')"
+              >
+                Coming Soon
+              </button>
+            </div>
+          </div>
+
+          <h3>Follow My Work</h3>
+          <div class="social-links">
+            <button
+              class="insta-btn secondary"
+              onclick="window.open('https://dribbble.com', '_blank')"
+            >
+              🎯 Dribbble
+            </button>
+            <button
+              class="insta-btn secondary"
+              onclick="window.open('https://behance.net', '_blank')"
+            >
+              🎨 Behance
+            </button>
+            <button
+              class="insta-btn secondary"
+              onclick="window.open('https://twitter.com', '_blank')"
+            >
+              🐦 Twitter
+            </button>
+          </div>
+
+          <div class="info-message">
+            <strong>Stay Updated:</strong> Follow me on social media for updates
+            on new plugins, design resources, and tutorials.
+          </div>
         </div>
       </div>
     </div>
@@ -1946,6 +2504,59 @@
         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
       </svg>
     </button>
+
+    <!-- Bottom Navigation Bar -->
+    <div class="bottom-nav">
+      <button class="bottom-nav-item" onclick="scrollToMoreWorks()">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+          <path d="M12 17h.01" />
+        </svg>
+        More Works
+      </button>
+
+      <button
+        class="bottom-nav-item"
+        onclick="window.open('https://ko-fi.com', '_blank')"
+      >
+        ☕ support creator
+      </button>
+
+      <button class="bottom-nav-item" id="themeToggleNav">
+        <svg
+          class="sun-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <circle cx="12" cy="12" r="5" />
+          <line x1="12" y1="1" x2="12" y2="3" />
+          <line x1="12" y1="21" x2="12" y2="23" />
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+          <line x1="1" y1="12" x2="3" y2="12" />
+          <line x1="21" y1="12" x2="23" y2="12" />
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+        </svg>
+        <svg
+          class="moon-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+      </button>
+    </div>
 
     <script>
       // Tab switching
@@ -2188,6 +2799,133 @@
 
         // Re-initialize custom scrollbars when window resizes
         window.addEventListener("resize", initCustomScrollbars);
+
+        // Add collapsible functionality for Help sections
+        document.querySelectorAll(".collapsible").forEach((header) => {
+          header.addEventListener("click", () => {
+            const targetId = header.getAttribute("data-target");
+            const content = document.getElementById(targetId);
+
+            if (content) {
+              const isExpanded = content.classList.contains("expanded");
+
+              // First, collapse all other sections
+              document
+                .querySelectorAll(".collapsible")
+                .forEach((otherHeader) => {
+                  if (otherHeader !== header) {
+                    const otherTargetId =
+                      otherHeader.getAttribute("data-target");
+                    const otherContent = document.getElementById(otherTargetId);
+                    if (otherContent) {
+                      otherContent.classList.remove("expanded");
+                      otherHeader.classList.remove("expanded");
+                      otherContent.style.display = "none";
+                    }
+                  }
+                });
+
+              if (isExpanded) {
+                // Collapse current section
+                content.classList.remove("expanded");
+                header.classList.remove("expanded");
+                content.style.display = "none";
+              } else {
+                // Expand current section
+                content.style.display = "block";
+                // Small delay to ensure display change is applied
+                setTimeout(() => {
+                  content.classList.add("expanded");
+                  header.classList.add("expanded");
+
+                  // Scroll the section into view after expansion
+                  setTimeout(() => {
+                    header.scrollIntoView({
+                      behavior: "smooth",
+                      block: "start",
+                    });
+                  }, 350); // Wait for expansion animation to complete
+                }, 10);
+              }
+            }
+          });
+        });
+
+        // Apply theme immediately
+        applyTheme();
+
+        // Bottom tabs functionality
+        const bottomTabs = document.querySelectorAll(".bottom-tab");
+        const bottomTabContents = document.querySelectorAll(
+          ".bottom-tab-content"
+        );
+
+        bottomTabs.forEach((tab) => {
+          tab.addEventListener("click", () => {
+            // Remove active class from all tabs and contents
+            bottomTabs.forEach((t) => t.classList.remove("active"));
+            bottomTabContents.forEach((content) =>
+              content.classList.remove("active")
+            );
+
+            // Add active class to clicked tab
+            tab.classList.add("active");
+
+            // Show corresponding content
+            const tabId = tab.getAttribute("data-tab");
+            const content = document.getElementById(`${tabId}-tab`);
+            if (content) {
+              content.classList.add("active");
+            }
+          });
+        });
+
+        // Theme toggle in theme tab
+        const themeToggleInline = document.getElementById("themeToggleInline");
+        const currentThemeSpan = document.getElementById("currentTheme");
+
+        if (themeToggleInline) {
+          themeToggleInline.addEventListener("click", () => {
+            const currentTheme = document.body.classList.contains("light")
+              ? "light"
+              : "dark";
+            const newTheme = currentTheme === "light" ? "dark" : "light";
+
+            // Update theme
+            document.body.className = newTheme;
+            localStorage.setItem("theme", newTheme);
+
+            // Update theme display
+            if (currentThemeSpan) {
+              currentThemeSpan.textContent =
+                newTheme.charAt(0).toUpperCase() + newTheme.slice(1);
+            }
+
+            // Also trigger the main theme toggle functionality
+            applyTheme();
+          });
+        }
+
+        // Update current theme display
+        function updateCurrentThemeDisplay() {
+          if (currentThemeSpan) {
+            const currentTheme = document.body.classList.contains("light")
+              ? "Light"
+              : "Dark";
+            currentThemeSpan.textContent = currentTheme;
+          }
+        }
+
+        // Update theme display on load
+        updateCurrentThemeDisplay();
+
+        // Update theme display when main theme toggle is used
+        const mainThemeToggle = document.getElementById("themeToggle");
+        if (mainThemeToggle) {
+          mainThemeToggle.addEventListener("click", () => {
+            setTimeout(updateCurrentThemeDisplay, 100);
+          });
+        }
       });
 
       // Carousel preview functionality
@@ -2854,6 +3592,15 @@
       // Theme handling
       function setTheme(theme) {
         document.documentElement.setAttribute("data-theme", theme);
+
+        // Update theme text if function exists
+        if (typeof updateThemeText === "function") {
+          updateThemeText();
+        }
+
+        // Update theme icons in bottom nav
+        updateThemeIcons();
+
         try {
           // Try to persist theme preference via plugin
           parent.postMessage(
@@ -2867,6 +3614,68 @@
           );
         } catch (e) {
           console.warn("Could not save theme preference");
+        }
+      }
+
+      // Update theme icons in bottom nav
+      function updateThemeIcons() {
+        const themeToggleNav = document.getElementById("themeToggleNav");
+        if (themeToggleNav) {
+          const currentTheme =
+            document.documentElement.getAttribute("data-theme") || "dark";
+          const sunIcon = themeToggleNav.querySelector(".sun-icon");
+          const moonIcon = themeToggleNav.querySelector(".moon-icon");
+
+          if (sunIcon && moonIcon) {
+            if (currentTheme === "light") {
+              sunIcon.style.display = "none";
+              moonIcon.style.display = "block";
+            } else {
+              sunIcon.style.display = "block";
+              moonIcon.style.display = "none";
+            }
+          }
+        }
+      }
+
+      // Function to scroll to More Works section
+      function scrollToMoreWorks() {
+        // First, switch to the help tab
+        const helpTab = document.querySelector('[data-tab="help"]');
+        if (helpTab) {
+          helpTab.click();
+
+          // Wait a moment for the tab to switch, then scroll to More Works
+          setTimeout(() => {
+            const moreWorksSection = document.querySelector(
+              '[data-target="more-works-content"]'
+            );
+            if (moreWorksSection) {
+              // Expand the section if it's collapsed
+              const content = document.getElementById("more-works-content");
+              if (content && content.style.display === "none") {
+                moreWorksSection.click();
+              }
+
+              // Scroll to the section
+              moreWorksSection.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+            }
+          }, 100);
+        }
+      }
+
+      // Initialize theme toggle event listener (only once)
+      function initThemeToggle() {
+        const themeToggleNav = document.getElementById("themeToggleNav");
+        if (themeToggleNav) {
+          themeToggleNav.addEventListener("click", () => {
+            const currentTheme =
+              document.documentElement.getAttribute("data-theme") || "dark";
+            setTheme(currentTheme === "light" ? "dark" : "light");
+          });
         }
       }
 
@@ -2899,6 +3708,9 @@
 
       // Initialize theme
       initTheme();
+
+      // Initialize theme toggle for bottom navigation
+      initThemeToggle();
 
       // Theme toggle button
       const themeToggle = document.getElementById("themeToggle");
