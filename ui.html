@@ -1519,13 +1519,42 @@
       .insta-btn {
         font-family: var(--font-family);
       }
+
+      /* Help section specific styles */
+      .section h3 {
+        font-size: var(--font-size-md);
+        font-weight: var(--font-weight-semibold);
+        color: var(--instagram-blue);
+        margin: var(--space-md) 0 var(--space-xs) 0;
+        letter-spacing: 0.02em;
+      }
+
+      .section h3:first-of-type {
+        margin-top: var(--space-xs);
+      }
+
+      .section p {
+        margin-bottom: var(--space-sm);
+        line-height: var(--line-height-relaxed);
+      }
+
+      .section p strong {
+        color: var(--text-primary);
+        font-weight: var(--font-weight-semibold);
+      }
+
+      /* Enhanced info message styling for help content */
+      .info-message strong {
+        color: var(--instagram-blue);
+        font-weight: var(--font-weight-semibold);
+      }
     </style>
   </head>
   <body>
     <div class="tab-container">
       <div class="tab active" data-tab="preview">Preview</div>
       <div class="tab" data-tab="create">Create</div>
-      <div class="tab" data-tab="convert">Convert</div>
+      <div class="tab" data-tab="help">Help</div>
     </div>
 
     <div class="version-info">v1.0.1</div>
@@ -1770,9 +1799,7 @@
           <button id="create" class="insta-btn">Create Carousel</button>
         </div>
       </div>
-    </div>
 
-    <div class="tab-content" id="convert-tab">
       <div class="section">
         <div class="section-title">Convert Existing Frame</div>
 
@@ -1794,6 +1821,88 @@
           <button id="check-compatibility" class="insta-btn secondary">
             Check Compatibility
           </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="help-tab">
+      <div class="section">
+        <div class="section-title">📖 How to Use</div>
+
+        <h3>Creating Carousels</h3>
+        <p>
+          1. <strong>Create New:</strong> Choose a resolution and number of
+          frames, then click "Create Carousel" to generate a new carousel frame
+          with visual guides.
+        </p>
+
+        <p>
+          2. <strong>Convert Existing:</strong> Select any frame in your design
+          and click "Convert to Carousel" to add slide guides to it.
+        </p>
+
+        <h3>Working with Guides</h3>
+        <p>• Blue vertical lines mark slide boundaries</p>
+        <p>• Slide numbers help you organize content</p>
+        <p>• Guides are automatically hidden during export</p>
+        <p>• Guidance layers are locked to prevent accidental edits</p>
+
+        <h3>Exporting</h3>
+        <p>
+          Use the "Export Slides" button to create individual image slices for
+          each slide. Then use Figma's File > Export to save them.
+        </p>
+      </div>
+
+      <div class="section">
+        <div class="section-title">📏 Instagram Formats</div>
+
+        <div class="info-message">
+          <strong>Square (1080×1080):</strong> Classic Instagram post format,
+          works great for most content types.
+        </div>
+
+        <div class="info-message">
+          <strong>Portrait (1080×1350):</strong> Taller format that takes up
+          more space in the feed, great for detailed content.
+        </div>
+
+        <div class="info-message">
+          <strong>Story (1080×1920):</strong> Full-screen vertical format for
+          Instagram Stories.
+        </div>
+
+        <div class="info-message">
+          <strong>Landscape (1080×608):</strong> Wide format, good for panoramic
+          content or when you need more horizontal space.
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">ℹ️ About</div>
+
+        <p><strong>Instagram Carousel Creator v1.0.1</strong></p>
+        <p>
+          A Figma plugin designed to help you create perfect Instagram carousel
+          posts with proper dimensions and visual guides.
+        </p>
+
+        <h3>Features</h3>
+        <p>• Multiple Instagram format presets</p>
+        <p>• Visual slide guides and boundaries</p>
+        <p>• Real-time preview with navigation</p>
+        <p>• Smart frame conversion</p>
+        <p>• Export-ready slide generation</p>
+        <p>• Light and dark theme support</p>
+
+        <h3>Tips</h3>
+        <p>• Keep important content away from slide edges</p>
+        <p>• Use consistent spacing between slides</p>
+        <p>• Test your carousel flow in the preview</p>
+        <p>• Consider the swipe direction when designing</p>
+
+        <div class="info-message">
+          Made with ❤️ for designers who create amazing carousel content.
         </div>
       </div>
     </div>
