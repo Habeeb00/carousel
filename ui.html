@@ -255,7 +255,11 @@
       }
 
       button {
-        background: linear-gradient(135deg, var(--instagram-blue), #0077d4) !important;
+        background: linear-gradient(
+          135deg,
+          var(--instagram-blue),
+          #0077d4
+        ) !important;
         color: white !important;
         border: 1px solid rgba(0, 149, 246, 0.3) !important;
         border-radius: var(--border-radius-sm);
@@ -1534,7 +1538,11 @@
 
       /* Instagram-style button for all main actions */
       .insta-btn {
-        background: linear-gradient(135deg, var(--instagram-blue), #0077d4) !important;
+        background: linear-gradient(
+          135deg,
+          var(--instagram-blue),
+          #0077d4
+        ) !important;
         color: #fff !important;
         border: 1.5px solid rgba(0, 149, 246, 0.3) !important;
         border-radius: var(--border-radius-sm);
@@ -1868,7 +1876,8 @@
         }
       }
 
-      h3, .info-message {
+      h3,
+      .info-message {
         display: none;
       }
 
@@ -1895,7 +1904,8 @@
         padding: 24px;
         max-width: 380px;
         width: calc(100% - 32px);
-        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2),
+          0 4px 12px rgba(0, 0, 0, 0.1);
         position: relative;
         overflow: hidden;
         animation: scaleIn 0.3s ease-out;
@@ -1905,7 +1915,8 @@
       [data-theme="light"] .feedback-content {
         background: #ffffff;
         border: 1px solid rgba(0, 0, 0, 0.12);
-        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15), 0 8px 16px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15),
+          0 8px 16px rgba(0, 0, 0, 0.1);
       }
 
       .feedback-content::before {
@@ -2167,7 +2178,8 @@
             </div>
           </div>
 
-          <div class="post-actions">          <div class="action-buttons">
+          <div class="post-actions">
+            <div class="action-buttons">
               <div class="action-group">
                 <button class="action-button" id="likeButton">
                   <svg
@@ -2358,13 +2370,27 @@
       </div>
 
       <div class="section">
-        <div class="section-title collapsible" data-target="theme-settings-content">
+        <div
+          class="section-title collapsible"
+          data-target="theme-settings-content"
+        >
           🎨 Theme <span class="toggle-icon">▼</span>
         </div>
-        <div class="collapsible-content" id="theme-settings-content" style="display: none">
+        <div
+          class="collapsible-content"
+          id="theme-settings-content"
+          style="display: none"
+        >
           <h3>Theme</h3>
           <p>Choose your preferred theme for the plugin interface:</p>
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              gap: 12px;
+              margin-bottom: 16px;
+            "
+          >
             <button id="inlineThemeToggle" class="theme-toggle-inline">
               <svg
                 class="sun-icon"
@@ -2411,15 +2437,39 @@
       </div>
 
       <div class="section">
-        <div class="section-title collapsible" data-target="feedback-bugs-content">
+        <div
+          class="section-title collapsible"
+          data-target="feedback-bugs-content"
+        >
           🐞 Feedback & Bug Reports <span class="toggle-icon">▼</span>
         </div>
-        <div class="collapsible-content" id="feedback-bugs-content" style="display: none">
+        <div
+          class="collapsible-content"
+          id="feedback-bugs-content"
+          style="display: none"
+        >
           <h3>Feedback & Bug Reports</h3>
           <p>Help improve this plugin by sharing your feedback:</p>
-          <div style="display: flex; flex-direction: column; gap: 8px; margin: 12px 0;">
-            <button class="insta-btn secondary" onclick="window.open('mailto:rahmanhabeeb360@gmail.com', '_blank')">🐛 Report a Bug</button>
-            <button class="insta-btn secondary" onclick="window.open('https://github.com/Habeeb00/carousel/discussions', '_blank')">💬 Feature Request</button>
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              gap: 8px;
+              margin: 12px 0;
+            "
+          >
+            <button
+              class="insta-btn secondary"
+              onclick="window.open('mailto:rahmanhabeeb360@gmail.com', '_blank')"
+            >
+              🐛 Report a Bug
+            </button>
+            <button
+              class="insta-btn secondary"
+              onclick="window.open('https://github.com/Habeeb00/carousel/discussions', '_blank')"
+            >
+              💬 Feature Request
+            </button>
           </div>
         </div>
       </div>
@@ -2429,29 +2479,59 @@
           ℹ️ About <span class="toggle-icon">▼</span>
         </div>
 
-        <div class="collapsible-content" id="about-content" style="display: none">
+        <div
+          class="collapsible-content"
+          id="about-content"
+          style="display: none"
+        >
           <div class="info-message">
             <strong>🎉 Instagram Carousel Creator v2.0</strong><br />
-            <strong>Released:</strong> July 2025 | <strong>Major UI/UX Update</strong>
+            <strong>Released:</strong> July 2025 |
+            <strong>Major UI/UX Update</strong>
           </div>
 
           <p>
-            Welcome to <strong>version 2.0</strong> of Instagram Carousel Creator! This major update brings a completely redesigned interface and enhanced functionalities to make creating Instagram carousels easier and more enjoyable than ever.
+            Welcome to <strong>version 2.0</strong> of Instagram Carousel
+            Creator! This major update brings a completely redesigned interface
+            and enhanced functionalities to make creating Instagram carousels
+            easier and more enjoyable than ever.
           </p>
-          
+
           <h4>✨ What's New in v2.0</h4>
-          <div style="margin-left: 16px; margin-bottom: 16px;">
-            <p>• <strong>Complete UI Redesign:</strong> Modern, cohesive interface with blue gradient theme and improved visual hierarchy</p>
-            <p>• <strong>Enhanced Preview System:</strong> Real-time Instagram-style preview with interactive navigation, slide indicators, and drag controls</p>
-            <p>• <strong>Smart Export Features:</strong> Success notifications, feedback prompts, and user-friendly guidance</p>
-            <p>• <strong>Improved Theme Support:</strong> Better dark/light mode with enhanced contrast and accessibility</p>
-            <p>• <strong>Organized Settings:</strong> Clean, collapsible sections for better navigation and user experience</p>
-            <p>• <strong>Better Feedback Integration:</strong> Community-driven improvements with easy rating and feedback options</p>
+          <div style="margin-left: 16px; margin-bottom: 16px">
+            <p>
+              • <strong>Complete UI Redesign:</strong> Modern, cohesive
+              interface with blue gradient theme and improved visual hierarchy
+            </p>
+            <p>
+              • <strong>Enhanced Preview System:</strong> Real-time
+              Instagram-style preview with interactive navigation, slide
+              indicators, and drag controls
+            </p>
+            <p>
+              • <strong>Smart Export Features:</strong> Success notifications,
+              feedback prompts, and user-friendly guidance
+            </p>
+            <p>
+              • <strong>Improved Theme Support:</strong> Better dark/light mode
+              with enhanced contrast and accessibility
+            </p>
+            <p>
+              • <strong>Organized Settings:</strong> Clean, collapsible sections
+              for better navigation and user experience
+            </p>
+            <p>
+              • <strong>Better Feedback Integration:</strong> Community-driven
+              improvements with easy rating and feedback options
+            </p>
           </div>
 
           <h4>🚀 Core Features</h4>
-          <div style="margin-left: 16px; margin-bottom: 16px;">
-            <p>• Support for all Instagram formats (Post, Story, Portrait, Landscape)</p>
+          <div style="margin-left: 16px; margin-bottom: 16px">
+            <p>
+              • Support for all Instagram formats (Post, Story, Portrait,
+              Landscape)
+            </p>
             <p>• Visual guides for perfect Instagram carousel creation</p>
             <p>• One-click export with automatic guide removal</p>
             <p>• Smart frame conversion and compatibility checking</p>
@@ -2460,7 +2540,10 @@
           </div>
 
           <div class="info-message">
-            <strong>Built with passion by the design community, for the design community.</strong><br />
+            <strong
+              >Built with passion by the design community, for the design
+              community.</strong
+            ><br />
             Thank you for using Instagram Carousel Creator v2.0! 💙
           </div>
         </div>
@@ -2525,7 +2608,8 @@
             <div class="work-item">
               <h3>⚡ Variable Detacher</h3>
               <p>
-                Detach different types of variables in frames with one click and preview before detaching.
+                Detach different types of variables in frames with one click and
+                preview before detaching.
               </p>
               <button
                 class="insta-btn secondary"
@@ -2538,7 +2622,9 @@
             <div class="work-item">
               <h3>� SaveFrame</h3>
               <p>
-                Figma frames reimagined! Custom frames, organized beautifully. Save, share, and manage your favorite frame collections with ease.
+                Figma frames reimagined! Custom frames, organized beautifully.
+                Save, share, and manage your favorite frame collections with
+                ease.
               </p>
               <!-- Updated SaveFrame icon -->
               <style>
@@ -2556,9 +2642,7 @@
 
             <div class="work-item">
               <h3>� Instagram Carousel Creator</h3>
-              <p>
-                Create perfect Instagram carousel posts .
-              </p>
+              <p>Create perfect Instagram carousel posts .</p>
               <button
                 class="insta-btn secondary"
                 onclick="window.open('#', '_blank')"
@@ -2570,7 +2654,8 @@
             <div class="work-item">
               <h3>⚡ More Coming Soon</h3>
               <p>
-                Stay tuned for more amazing Figma plugins and design tools to enhance your workflow and creativity.
+                Stay tuned for more amazing Figma plugins and design tools to
+                enhance your workflow and creativity.
               </p>
               <button
                 class="insta-btn secondary"
@@ -2918,7 +3003,7 @@
               { pluginMessage: { type: "export-carousel" } },
               "*"
             );
-            
+
             // Show export guidance message after a short delay
             setTimeout(() => {
               showExportMessage();
@@ -2929,14 +3014,14 @@
         // Function to show export success message
         function showExportMessage() {
           // Remove any existing export message
-          const existingMessage = document.getElementById('export-message');
+          const existingMessage = document.getElementById("export-message");
           if (existingMessage) {
             existingMessage.remove();
           }
 
           // Create success message
-          const message = document.createElement('div');
-          message.id = 'export-message';
+          const message = document.createElement("div");
+          message.id = "export-message";
           message.style.cssText = `
             position: fixed;
             bottom: 65px;
@@ -2960,16 +3045,16 @@
             gap: 6px;
             font-family: var(--font-family);
           `;
-          
+
           message.innerHTML = `
             <span style="font-size: 12px; color: #10b981;">✅</span>
             <span style="font-size: 12px;">Slides exported! Use Export panel to download.</span>
           `;
 
           // Add animation styles if not already added
-          if (!document.getElementById('export-message-styles')) {
-            const style = document.createElement('style');
-            style.id = 'export-message-styles';
+          if (!document.getElementById("export-message-styles")) {
+            const style = document.createElement("style");
+            style.id = "export-message-styles";
             style.textContent = `
               @keyframes slideUp {
                 from {
@@ -3001,7 +3086,8 @@
           // Auto-remove after 5 seconds
           setTimeout(() => {
             if (document.body.contains(message)) {
-              message.style.animation = 'slideOut 0.3s cubic-bezier(0.4, 0, 0.6, 1)';
+              message.style.animation =
+                "slideOut 0.3s cubic-bezier(0.4, 0, 0.6, 1)";
               setTimeout(() => {
                 if (document.body.contains(message)) {
                   document.body.removeChild(message);
@@ -3069,7 +3155,7 @@
                 content.classList.remove("expanded");
                 header.classList.remove("expanded");
                 content.style.display = "none";
-                
+
                 // Remove expanded class from help tab container
                 const helpTab = document.getElementById("help-tab");
                 if (helpTab) {
@@ -3078,13 +3164,13 @@
               } else {
                 // Expand current section
                 content.style.display = "block";
-                
+
                 // Add expanded class to help tab container to allow height expansion
                 const helpTab = document.getElementById("help-tab");
                 if (helpTab) {
                   helpTab.classList.add("has-expanded-section");
                 }
-                
+
                 // Small delay to ensure display change is applied
                 setTimeout(() => {
                   content.classList.add("expanded");
@@ -3182,7 +3268,11 @@
         // Function to show feedback popup
         function showFeedbackPopup() {
           // Don't show if user has already dismissed feedback or clicked comment button in this session
-          if (window.feedbackDismissed || window.feedbackShown || window.feedbackClicked) {
+          if (
+            window.feedbackDismissed ||
+            window.feedbackShown ||
+            window.feedbackClicked
+          ) {
             return;
           }
 
@@ -3190,15 +3280,15 @@
           window.feedbackShown = true;
 
           // Remove any existing feedback popup
-          const existingPopup = document.getElementById('feedback-popup');
+          const existingPopup = document.getElementById("feedback-popup");
           if (existingPopup) {
             existingPopup.remove();
           }
 
           // Create feedback popup
-          const popup = document.createElement('div');
-          popup.id = 'feedback-popup';
-          popup.className = 'feedback-modal';
+          const popup = document.createElement("div");
+          popup.id = "feedback-popup";
+          popup.className = "feedback-modal";
           popup.innerHTML = `
             <div class="feedback-content">
               <button class="feedback-close" id="feedback-close-btn">×</button>
@@ -3225,24 +3315,24 @@
           document.body.appendChild(popup);
 
           // Add event listeners for better reliability
-          const closeBtn = popup.querySelector('#feedback-close-btn');
-          const dismissBtn = popup.querySelector('#feedback-dismiss-btn');
-          const commentBtn = popup.querySelector('#feedback-comment-btn');
+          const closeBtn = popup.querySelector("#feedback-close-btn");
+          const dismissBtn = popup.querySelector("#feedback-dismiss-btn");
+          const commentBtn = popup.querySelector("#feedback-comment-btn");
 
           if (closeBtn) {
-            closeBtn.addEventListener('click', closeFeedbackPopup);
+            closeBtn.addEventListener("click", closeFeedbackPopup);
           }
 
           if (dismissBtn) {
-            dismissBtn.addEventListener('click', dismissFeedback);
+            dismissBtn.addEventListener("click", dismissFeedback);
           }
 
           if (commentBtn) {
-            commentBtn.addEventListener('click', trackFeedbackClick);
+            commentBtn.addEventListener("click", trackFeedbackClick);
           }
 
           // Close on backdrop click
-          popup.addEventListener('click', (e) => {
+          popup.addEventListener("click", (e) => {
             if (e.target === popup) {
               closeFeedbackPopup();
             }
@@ -3251,9 +3341,9 @@
 
         // Function to close feedback popup
         function closeFeedbackPopup() {
-          const popup = document.getElementById('feedback-popup');
+          const popup = document.getElementById("feedback-popup");
           if (popup) {
-            popup.style.animation = 'fadeIn 0.2s ease-in reverse';
+            popup.style.animation = "fadeIn 0.2s ease-in reverse";
             setTimeout(() => {
               if (document.body.contains(popup)) {
                 document.body.removeChild(popup);
