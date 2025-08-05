@@ -3,18 +3,12 @@
   "id": "1513044148483173528",
   "api": "1.0.0",
   "main": "code.js",
-  "capabilities": [
-    "inspect"
-  ],
+  "capabilities": [],
   "enableProposedApi": false,
   "documentAccess": "dynamic-page",
-  "editorType": [
-    "figma","dev"
-  ],
+  "editorType": ["figma"],
   "ui": "ui.html",
   "networkAccess": {
-    "allowedDomains": [
-      "none"
-    ]
+    "allowedDomains": ["none"]
   }
 }
